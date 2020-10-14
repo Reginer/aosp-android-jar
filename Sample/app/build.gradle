@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android-extensions'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion AppConfig.compileSdkVersion
+    buildToolsVersion AppConfig.buildToolsVersion
+
+    defaultConfig {
+        applicationId AppConfig.applicationId
+        minSdkVersion AppConfig.minSdkVersion
+        targetSdkVersion AppConfig.targetSdkVersion
+        versionCode AppConfig.versionCode
+        versionName AppConfig.versionName
+        resConfigs "zh", "en"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file(AppConfig.storeFile)
+            storePassword AppConfig.storePassword
+            keyAlias AppConfig.keyAlias
+            keyPassword AppConfig.storePassword
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation(DependenciesExt.kotlin)
+
+    implementation(DependenciesExt.appcompat)
+    implementation(DependenciesExt.constraintlayout)
+    implementation(DependenciesExt.material)
+    implementation(DependenciesExt.recyclerViewAdapter)
+    implementation project(path: ':impl')
+    testImplementation(DependenciesExt.junit)
+    androidTestImplementation(DependenciesExt.extUnit)
+    androidTestImplementation(DependenciesExt.espresso)
+}
