@@ -6,7 +6,6 @@ import android.content.pm.IPackageDeleteObserver
 import android.util.Log
 import com.orhanobut.logger.Logger
 import win.regin.sample.impl.m.ContextManager
-import java.lang.Exception
 
 /**
  * @author :Reginer in  2020/10/14 13:58.
@@ -47,11 +46,9 @@ open class BaseFuncImpl : IFunction {
                 }
             }
         }
-        try {
+        runCatching {
             mContext.packageManager.deletePackage(packageName, observer, 0)
-        } catch (e: Exception) {
-            Logger.e("error is:::" + Log.getStackTraceString(e))
-        }
+        }.onFailure { Logger.e("error is:::" + Log.getStackTraceString(it)) }
         return true
     }
 }
