@@ -3,8 +3,10 @@ package win.regin.sample.impl.a
 import android.annotation.SuppressLint
 import android.app.StatusBarManager
 import android.content.pm.IPackageDeleteObserver
+import android.util.Log
 import com.orhanobut.logger.Logger
 import win.regin.sample.impl.m.ContextManager
+import java.lang.Exception
 
 /**
  * @author :Reginer in  2020/10/14 13:58.
@@ -45,7 +47,11 @@ open class BaseFuncImpl : IFunction {
                 }
             }
         }
-        mContext.packageManager.deletePackage(packageName, observer, 0)
+        try {
+            mContext.packageManager.deletePackage(packageName, observer, 0)
+        } catch (e: Exception) {
+            Logger.e("error is:::" + Log.getStackTraceString(e))
+        }
         return true
     }
 }

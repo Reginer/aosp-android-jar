@@ -60,7 +60,7 @@ public class FuncManager implements IFunction {
      */
     @Override
     @FuncMethod(name = "卸载app")
-    public boolean uninstallPackage(@FuncParam(describe = "应用包名") String packageName) {
+    public boolean uninstallPackage(@FuncParam(defaultValue = "win.regin.mvvm",describe = "应用包名") String packageName) {
         return sFunction.uninstallPackage(packageName);
     }
 
