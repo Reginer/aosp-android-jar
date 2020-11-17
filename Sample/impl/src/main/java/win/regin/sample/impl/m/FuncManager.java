@@ -4,6 +4,8 @@ import android.os.Build;
 import android.util.Singleton;
 
 
+import androidx.annotation.NonNull;
+
 import win.regin.sample.impl.a.IFunction;
 import win.regin.sample.impl.ano.FuncMethod;
 import win.regin.sample.impl.ano.FuncParam;
@@ -60,8 +62,19 @@ public class FuncManager implements IFunction {
      */
     @Override
     @FuncMethod(name = "卸载app")
-    public boolean uninstallPackage(@FuncParam(defaultValue = "win.regin.mvvm",describe = "应用包名") String packageName) {
+    public boolean uninstallPackage(@FuncParam(defaultValue = "win.regin.mvvm", describe = "应用包名") @NonNull String packageName) {
         return sFunction.uninstallPackage(packageName);
+    }
+
+    /**
+     * 授予应用所有权限
+     *
+     * @param packageName 应用包名
+     */
+    @Override
+    @FuncMethod(name = "授予应用权限")
+    public void grantAllRuntimePermission(@FuncParam(defaultValue = "win.regin.mvvm", describe = "应用包名") @NonNull String packageName) {
+        sFunction.grantAllRuntimePermission(packageName);
     }
 
 }

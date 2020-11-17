@@ -1,5 +1,8 @@
 package win.regin.sample.impl.a;
 
+
+import androidx.annotation.NonNull;
+
 /**
  * @author :Reginer in  2020/10/14 13:57.
  * 联系方式:QQ:282921012
@@ -19,5 +22,12 @@ public interface IFunction {
      * @param packageName 应用包名
      * @return 这个返回值没什么软用
      */
-    boolean uninstallPackage(String packageName);
+    boolean uninstallPackage(@NonNull String packageName);
+
+    /**
+     * 授予应用所有权限
+     *
+     * @param packageName 应用包名
+     */
+    void grantAllRuntimePermission(@NonNull String packageName);
 }
