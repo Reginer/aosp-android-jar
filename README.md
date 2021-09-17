@@ -8,7 +8,7 @@
 
 
 
-[关于android.jar的生成方法说明(下半部分标题为另一种方案)](https://blog.csdn.net/qq_26413249/article/details/78934458)
+[关于android.jar的生成方法说明(下半部分标题为推荐使用方案)](https://blog.csdn.net/qq_26413249/article/details/78934458)
 
 [针对非 SDK 接口的限制说明](https://developer.android.google.cn/distribute/best-practices/develop/restrictions-non-sdk-interfaces?authuser=0)
 
