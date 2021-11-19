@@ -18,3 +18,7 @@ frameworks/base/core/java/android/content/pm/PackageInstaller.java
 
 ##### 2
 `添加文件android.net.IConnectivityManager`
+
+
+##### 3
+`移除多余文件com.android.internal.app.procstats.ProcessState.class`
