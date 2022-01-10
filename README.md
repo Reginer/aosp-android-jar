@@ -4,6 +4,9 @@
 
 替换 `${Android Sdk}/platforms/andorid-api/`  下的android.jar，之后sync一下。
 
+![](picture/查看当前试用sdk路径和版本.jpg)
+![](picture/替换同目录同名文件.png)
+
 
 
 [针对非 SDK 接口的限制说明](https://developer.android.google.cn/distribute/best-practices/develop/restrictions-non-sdk-interfaces?authuser=0)
