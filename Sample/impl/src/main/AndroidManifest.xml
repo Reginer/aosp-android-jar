@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="win.regin.sample.impl">
+    package="regin.reflect.impl">
 
-    <uses-permission
-        android:name="android.permission.STATUS_BAR"
-        tools:ignore="ProtectedPermissions" />
-
-    <uses-permission
-        android:name="android.permission.DELETE_PACKAGES"
-        tools:ignore="ProtectedPermissions" />
-
-    <application>
-        <provider
-            android:name=".a.FuncProvider"
-            android:authorities="${applicationId}.sample.func.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" />
-
-    </application>
 </manifest>

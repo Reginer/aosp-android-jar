@@ -50,9 +50,9 @@ dependencies {
     implementation(DependenciesExt.appcompat)
     implementation(DependenciesExt.constraintlayout)
     implementation(DependenciesExt.material)
-    implementation(DependenciesExt.recyclerViewAdapter)
-    implementation project(path: ':impl')
+
     testImplementation(DependenciesExt.junit)
     androidTestImplementation(DependenciesExt.extUnit)
     androidTestImplementation(DependenciesExt.espresso)
+    //    implementation project(path: ':impl')
 }

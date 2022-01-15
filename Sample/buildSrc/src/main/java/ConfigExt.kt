@@ -32,7 +32,7 @@ object Version {
 }
 
 object DependenciesExt {
-    const val buildGradle = "com.android.tools.build:gradle:4.0.2"
+    const val buildGradle = "com.android.tools.build:gradle:7.0.3"
     const val kotlinGradlePlugin =
             "org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlinVersion}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.kotlinVersion}"
