@@ -1,0 +1,12 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsLibcoreTestCases",
+      "options": [
+        {
+          "include-filter": "libcore.dalvik.system"
+        }
+      ]
+    }
+  ]
+}
