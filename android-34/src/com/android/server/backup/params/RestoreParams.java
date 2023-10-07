@@ -1,0 +1,160 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
+
+package com.android.server.backup.params;
+
+import android.annotation.Nullable;
+import android.app.backup.IBackupManagerMonitor;
+import android.app.backup.IRestoreObserver;
+import android.content.pm.PackageInfo;
+
+import com.android.server.backup.internal.OnTaskFinishedListener;
+import com.android.server.backup.transport.TransportConnection;
+import com.android.server.backup.utils.BackupEligibilityRules;
+
+public class RestoreParams {
+    public final TransportConnection mTransportConnection;
+    public final IRestoreObserver observer;
+    public final IBackupManagerMonitor monitor;
+    public final long token;
+    @Nullable public final PackageInfo packageInfo;
+    public final int pmToken; // in post-install restore, the PM's token for this transaction
+    public final boolean isSystemRestore;
+    @Nullable public final String[] filterSet;
+    public final OnTaskFinishedListener listener;
+    public final BackupEligibilityRules backupEligibilityRules;
+
+    /**
+     * No kill after restore.
+     */
+    public static RestoreParams createForSinglePackage(
+            TransportConnection transportConnection,
+            IRestoreObserver observer,
+            IBackupManagerMonitor monitor,
+            long token,
+            PackageInfo packageInfo,
+            OnTaskFinishedListener listener,
+            BackupEligibilityRules eligibilityRules) {
+        return new RestoreParams(
+                transportConnection,
+                observer,
+                monitor,
+                token,
+                packageInfo,
+                /* pmToken */ 0,
+                /* isSystemRestore */ false,
+                /* filterSet */ null,
+                listener,
+                eligibilityRules);
+    }
+
+    /**
+     * Kill after restore.
+     */
+    public static RestoreParams createForRestoreAtInstall(
+            TransportConnection transportConnection,
+            IRestoreObserver observer,
+            IBackupManagerMonitor monitor,
+            long token,
+            String packageName,
+            int pmToken,
+            OnTaskFinishedListener listener,
+            BackupEligibilityRules backupEligibilityRules) {
+        String[] filterSet = {packageName};
+        return new RestoreParams(
+                transportConnection,
+                observer,
+                monitor,
+                token,
+                /* packageInfo */ null,
+                pmToken,
+                /* isSystemRestore */ false,
+                filterSet,
+                listener,
+                backupEligibilityRules);
+    }
+
+    /**
+     * This is the form that Setup Wizard or similar restore UXes use.
+     */
+    public static RestoreParams createForRestoreAll(
+            TransportConnection transportConnection,
+            IRestoreObserver observer,
+            IBackupManagerMonitor monitor,
+            long token,
+            OnTaskFinishedListener listener,
+            BackupEligibilityRules backupEligibilityRules) {
+        return new RestoreParams(
+                transportConnection,
+                observer,
+                monitor,
+                token,
+                /* packageInfo */ null,
+                /* pmToken */ 0,
+                /* isSystemRestore */ true,
+                /* filterSet */ null,
+                listener,
+                backupEligibilityRules);
+    }
+
+    /**
+     * Caller specifies whether is considered a system-level restore.
+     */
+    public static RestoreParams createForRestorePackages(
+            TransportConnection transportConnection,
+            IRestoreObserver observer,
+            IBackupManagerMonitor monitor,
+            long token,
+            String[] filterSet,
+            boolean isSystemRestore,
+            OnTaskFinishedListener listener,
+            BackupEligibilityRules backupEligibilityRules) {
+        return new RestoreParams(
+                transportConnection,
+                observer,
+                monitor,
+                token,
+                /* packageInfo */ null,
+                /* pmToken */ 0,
+                isSystemRestore,
+                filterSet,
+                listener,
+                backupEligibilityRules);
+    }
+
+    private RestoreParams(
+            TransportConnection transportConnection,
+            IRestoreObserver observer,
+            IBackupManagerMonitor monitor,
+            long token,
+            @Nullable PackageInfo packageInfo,
+            int pmToken,
+            boolean isSystemRestore,
+            @Nullable String[] filterSet,
+            OnTaskFinishedListener listener,
+            BackupEligibilityRules backupEligibilityRules) {
+        this.mTransportConnection = transportConnection;
+        this.observer = observer;
+        this.monitor = monitor;
+        this.token = token;
+        this.packageInfo = packageInfo;
+        this.pmToken = pmToken;
+        this.isSystemRestore = isSystemRestore;
+        this.filterSet = filterSet;
+        this.listener = listener;
+        this.backupEligibilityRules = backupEligibilityRules;
+    }
+}
