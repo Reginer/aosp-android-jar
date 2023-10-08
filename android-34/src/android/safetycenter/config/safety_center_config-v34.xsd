@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2021 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!-- This file contains comments that define constraints that cannot be covered by the XSD language -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            version="1.0">
+
+    <xsd:element name="safety-center-config" type="safety-center-config"/>
+
+    <xsd:complexType name="safety-center-config">
+        <xsd:sequence>
+            <xsd:element name="safety-sources-config" type="safety-sources-config"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="safety-sources-config">
+        <xsd:sequence>
+            <xsd:element
+                name="safety-sources-group" type="safety-sources-group"
+                minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="safety-sources-group">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="dynamic-safety-source" type="dynamic-safety-source"/>
+            <xsd:element name="static-safety-source" type="static-safety-source"/>
+            <xsd:element name="issue-only-safety-source" type="issue-only-safety-source"/>
+        </xsd:choice>
+        <!-- id must be unique among safety sources groups -->
+        <xsd:attribute name="id" type="idOrStringResourceName" use="required"/>
+        <!-- title is required unless the group contains issue only and/or internal sources -->
+        <xsd:attribute name="title" type="runtimeStringResourceName"/>
+        <xsd:attribute name="summary" type="runtimeStringResourceName"/>
+        <xsd:attribute name="statelessIconType" type="statelessIconTypeOrStringResourceName"
+                       default="none"/>
+        <!-- type is inferred from other attributes and the group content if omitted -->
+        <xsd:attribute name="type" type="groupTypeOrStringResourceName"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="dynamic-safety-source">
+        <!-- id must be unique among safety sources -->
+        <xsd:attribute name="id" type="idOrStringResourceName" use="required"/>
+        <xsd:attribute name="packageName" type="stringOrStringResourceName" use="required"/>
+        <!-- optional comma-separated set of certficate hashes, if provided will be used for validation. -->
+        <xsd:attribute name="packageCertificateHashes" type="stringOrStringResourceName"/>
+        <!-- title is required if initialDisplayState is not set to hidden or if searchTerms are provided -->
+        <xsd:attribute name="title" type="runtimeStringResourceName"/>
+        <!-- titleForWork is required if profile is set to all_profiles, and initialDisplayState is not set to hidden or if searchTerms are provided -->
+        <!-- titleForWork is prohibited if profile is set to primary_profile_only -->
+        <xsd:attribute name="titleForWork" type="runtimeStringResourceName"/>
+        <!-- summary is required if initialDisplayState is not set to hidden -->
+        <xsd:attribute name="summary" type="runtimeStringResourceName"/>
+        <!-- intentAction is required if initialDisplayState is set to enabled -->
+        <xsd:attribute name="intentAction" type="stringOrStringResourceName"/>
+        <xsd:attribute name="profile" type="profile" use="required"/>
+        <xsd:attribute name="initialDisplayState" type="initialDisplayStateOrStringResourceName"
+                       default="enabled"/>
+        <xsd:attribute name="maxSeverityLevel" type="intOrStringResourceName" default="2147483647"/>
+        <xsd:attribute name="searchTerms" type="runtimeStringResourceName"/>
+        <xsd:attribute name="loggingAllowed" type="booleanOrStringResourceName" default="true"/>
+        <xsd:attribute name="refreshOnPageOpenAllowed" type="booleanOrStringResourceName"
+                       default="false"/>
+        <xsd:attribute name="notificationsAllowed" type="booleanOrStringResourceName"
+                       default="false"/>
+        <xsd:attribute name="deduplicationGroup" type="stringOrStringResourceName"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="issue-only-safety-source">
+        <!-- id must be unique among safety sources -->
+        <xsd:attribute name="id" type="idOrStringResourceName" use="required"/>
+        <xsd:attribute name="packageName" type="stringOrStringResourceName" use="required"/>
+        <!-- optional comma-separated set of certficate hashes, if provided will be used for validation. -->
+        <xsd:attribute name="packageCertificateHashes" type="stringOrStringResourceName"/>
+        <xsd:attribute name="profile" type="profileOrStringResourceName" use="required"/>
+        <xsd:attribute name="maxSeverityLevel" type="intOrStringResourceName" default="2147483647"/>
+        <xsd:attribute name="loggingAllowed" type="booleanOrStringResourceName" default="true"/>
+        <xsd:attribute name="refreshOnPageOpenAllowed" type="booleanOrStringResourceName"
+                       default="false"/>
+        <xsd:attribute name="notificationsAllowed" type="booleanOrStringResourceName"
+                       default="false"/>
+        <xsd:attribute name="deduplicationGroup" type="stringOrStringResourceName"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="static-safety-source">
+        <!-- id must be unique among safety sources -->
+        <xsd:attribute name="id" type="idOrStringResourceName" use="required"/>
+        <xsd:attribute name="packageName" type="stringOrStringResourceName"/>
+        <xsd:attribute name="title" type="runtimeStringResourceName" use="required"/>
+        <!-- titleForWork is required if profile is set to all_profiles -->
+        <!-- titleForWork is prohibited if profile is set to primary_profile_only -->
+        <xsd:attribute name="titleForWork" type="runtimeStringResourceName"/>
+        <xsd:attribute name="summary" type="runtimeStringResourceName"/>
+        <xsd:attribute name="intentAction" type="stringOrStringResourceName" use="required"/>
+        <xsd:attribute name="profile" type="profileOrStringResourceName" use="required"/>
+        <xsd:attribute name="searchTerms" type="runtimeStringResourceName"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="intOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type xsd:int. -->
+        <xsd:union memberTypes="stringResourceName xsd:int"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="booleanOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type xsd:boolean. -->
+        <xsd:union memberTypes="stringResourceName xsd:boolean"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="stringOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type xsd:string. -->
+        <xsd:union memberTypes="stringResourceName xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="idOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type xsd:string. -->
+        <xsd:union memberTypes="stringResourceName id"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="id">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9a-zA-Z_-]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="statelessIconTypeOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type statelessIconType. -->
+        <xsd:union memberTypes="stringResourceName statelessIconType"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="statelessIconType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="none"/>
+            <xsd:enumeration value="privacy"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="profileOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type profile. -->
+        <xsd:union memberTypes="stringResourceName profile"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="profile">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="primary_profile_only"/>
+            <xsd:enumeration value="all_profiles"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="initialDisplayStateOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type initialDisplayState. -->
+        <xsd:union memberTypes="stringResourceName initialDisplayState"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="initialDisplayState">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="enabled"/>
+            <xsd:enumeration value="disabled"/>
+            <xsd:enumeration value="hidden"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="groupTypeOrStringResourceName">
+        <!-- String resource names will be resolved only once at parse time. -->
+        <!-- Locale changes and device config changes will be ignored. -->
+        <!-- The value of the string resource must be of type groupType. -->
+        <xsd:union memberTypes="stringResourceName groupType"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="groupType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="stateless"/>
+            <xsd:enumeration value="stateful"/>
+            <xsd:enumeration value="hidden"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="runtimeStringResourceName">
+        <!-- String resource names will be resolved at runtime whenever the string value is used. -->
+        <xsd:union memberTypes="stringResourceName"/>
+    </xsd:simpleType>
+
+    <!-- String resource names will be ignored for any attribute not directly or indirectly marked as stringResourceName. -->
+    <!-- A stringResourceName is a fully qualified resource name of the form "@package:string/entry". Package is required. -->
+    <xsd:simpleType name="stringResourceName">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="@([a-z]+\.)*[a-z]+:string/.+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

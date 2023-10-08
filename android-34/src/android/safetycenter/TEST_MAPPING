@@ -1,0 +1,7 @@
+{
+  "imports": [
+    {
+      "path": "packages/modules/Permission/SafetyCenter"
+    }
+  ]
+}
