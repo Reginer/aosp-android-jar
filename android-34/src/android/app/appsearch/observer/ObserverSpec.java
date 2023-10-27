@@ -76,7 +76,7 @@ public final class ObserverSpec {
         return mFilterSchemas;
     }
 
-    /** Builder for {@link ObserverSpec} instances. */
+    /** Builder for ObserverSpec instances. */
     public static final class Builder {
         private ArrayList<String> mFilterSchemas = new ArrayList<>();
         private boolean mBuilt = false;

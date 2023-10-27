@@ -66,12 +66,7 @@ public class AdServicesCommon {
     // The AdExtServices APK package name suffix is android.ext.services.
     public static final String ADSERVICES_APK_PACKAGE_NAME_SUFFIX = "android.adservices";
 
-    /** The package name suffix of the AdServices APK within the ExtServices apex on R/S */
-    public static final String ADEXTSERVICES_PACKAGE_NAME_SUFFIX = "android.ext.adservices.api";
-
-    /**
-     * Suffix for the ExtServices APEX Package name. Used to figure out the installed apex version.
-     */
+    // Suffix for the ExtServices APEX Package name. Used to figure out the installed apex version.
     public static final String EXTSERVICES_APEX_NAME_SUFFIX = "android.extservices";
 
     /** The package name of the active AdServices APK on this device. */

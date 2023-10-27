@@ -133,7 +133,7 @@ public class DeletionRequest {
          * records using the same origin only, i.e. subdomains won't match. E.g. If originUri is
          * {@code https://a.example.com}, then {@code https://a.example.com} will match; {@code
          * https://example.com}, {@code https://b.example.com} and {@code https://abcexample.com}
-         * will NOT match.
+         * will NOT match. A null or empty list will match everything.
          */
         public @NonNull Builder setOriginUris(@Nullable List<Uri> originUris) {
             mOriginUris = originUris;
@@ -145,6 +145,7 @@ public class DeletionRequest {
          * records using the same domain or any subdomains. E.g. If domainUri is {@code
          * https://example.com}, then {@code https://a.example.com}, {@code https://example.com} and
          * {@code https://b.example.com} will match; {@code https://abcexample.com} will NOT match.
+         * A null or empty list will match everything.
          */
         public @NonNull Builder setDomainUris(@Nullable List<Uri> domainUris) {
             mDomainUris = domainUris;

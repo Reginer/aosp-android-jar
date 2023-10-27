@@ -671,11 +671,9 @@ public final class SecurityParams implements Parcelable {
 
         params.mAllowedPairwiseCiphers.set(PairwiseCipher.CCMP);
         params.mAllowedPairwiseCiphers.set(PairwiseCipher.TKIP);
-        params.mAllowedPairwiseCiphers.set(PairwiseCipher.GCMP_256);
 
         params.mAllowedGroupCiphers.set(GroupCipher.CCMP);
         params.mAllowedGroupCiphers.set(GroupCipher.TKIP);
-        params.mAllowedGroupCiphers.set(GroupCipher.GCMP_256);
         return params;
     }
 
@@ -703,10 +701,8 @@ public final class SecurityParams implements Parcelable {
         params.mAllowedProtocols.set(Protocol.RSN);
 
         params.mAllowedPairwiseCiphers.set(PairwiseCipher.CCMP);
-        params.mAllowedPairwiseCiphers.set(PairwiseCipher.GCMP_256);
 
         params.mAllowedGroupCiphers.set(GroupCipher.CCMP);
-        params.mAllowedGroupCiphers.set(GroupCipher.GCMP_256);
 
         return params;
     }

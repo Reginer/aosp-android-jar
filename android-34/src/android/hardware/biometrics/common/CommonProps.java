@@ -1,0 +1,80 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ */
+package android.hardware.biometrics.common;
+/** @hide */
+public class CommonProps implements android.os.Parcelable
+{
+  public int sensorId = 0;
+  public byte sensorStrength = android.hardware.biometrics.common.SensorStrength.CONVENIENCE;
+  public int maxEnrollmentsPerUser = 0;
+  public android.hardware.biometrics.common.ComponentInfo[] componentInfo;
+  @Override
+   public final int getStability() { return android.os.Parcelable.PARCELABLE_STABILITY_VINTF; }
+  public static final android.os.Parcelable.Creator<CommonProps> CREATOR = new android.os.Parcelable.Creator<CommonProps>() {
+    @Override
+    public CommonProps createFromParcel(android.os.Parcel _aidl_source) {
+      CommonProps _aidl_out = new CommonProps();
+      _aidl_out.readFromParcel(_aidl_source);
+      return _aidl_out;
+    }
+    @Override
+    public CommonProps[] newArray(int _aidl_size) {
+      return new CommonProps[_aidl_size];
+    }
+  };
+  @Override public final void writeToParcel(android.os.Parcel _aidl_parcel, int _aidl_flag)
+  {
+    int _aidl_start_pos = _aidl_parcel.dataPosition();
+    _aidl_parcel.writeInt(0);
+    _aidl_parcel.writeInt(sensorId);
+    _aidl_parcel.writeByte(sensorStrength);
+    _aidl_parcel.writeInt(maxEnrollmentsPerUser);
+    _aidl_parcel.writeTypedArray(componentInfo, _aidl_flag);
+    int _aidl_end_pos = _aidl_parcel.dataPosition();
+    _aidl_parcel.setDataPosition(_aidl_start_pos);
+    _aidl_parcel.writeInt(_aidl_end_pos - _aidl_start_pos);
+    _aidl_parcel.setDataPosition(_aidl_end_pos);
+  }
+  public final void readFromParcel(android.os.Parcel _aidl_parcel)
+  {
+    int _aidl_start_pos = _aidl_parcel.dataPosition();
+    int _aidl_parcelable_size = _aidl_parcel.readInt();
+    try {
+      if (_aidl_parcelable_size < 4) throw new android.os.BadParcelableException("Parcelable too small");;
+      if (_aidl_parcel.dataPosition() - _aidl_start_pos >= _aidl_parcelable_size) return;
+      sensorId = _aidl_parcel.readInt();
+      if (_aidl_parcel.dataPosition() - _aidl_start_pos >= _aidl_parcelable_size) return;
+      sensorStrength = _aidl_parcel.readByte();
+      if (_aidl_parcel.dataPosition() - _aidl_start_pos >= _aidl_parcelable_size) return;
+      maxEnrollmentsPerUser = _aidl_parcel.readInt();
+      if (_aidl_parcel.dataPosition() - _aidl_start_pos >= _aidl_parcelable_size) return;
+      componentInfo = _aidl_parcel.createTypedArray(android.hardware.biometrics.common.ComponentInfo.CREATOR);
+    } finally {
+      if (_aidl_start_pos > (Integer.MAX_VALUE - _aidl_parcelable_size)) {
+        throw new android.os.BadParcelableException("Overflow in the size of parcelable");
+      }
+      _aidl_parcel.setDataPosition(_aidl_start_pos + _aidl_parcelable_size);
+    }
+  }
+  @Override
+  public int describeContents() {
+    int _mask = 0;
+    _mask |= describeContents(componentInfo);
+    return _mask;
+  }
+  private int describeContents(Object _v) {
+    if (_v == null) return 0;
+    if (_v instanceof Object[]) {
+      int _mask = 0;
+      for (Object o : (Object[]) _v) {
+        _mask |= describeContents(o);
+      }
+      return _mask;
+    }
+    if (_v instanceof android.os.Parcelable) {
+      return ((android.os.Parcelable) _v).describeContents();
+    }
+    return 0;
+  }
+}

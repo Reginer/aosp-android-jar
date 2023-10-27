@@ -94,15 +94,13 @@ public final class SearchSpec {
     /**
      * Query terms will only match exact tokens in the index.
      *
-     * <p>For example, a query term "foo" will only match indexed token "foo", and not "foot" or
-     * "football".
+     * <p>Ex. A query term "foo" will only match indexed token "foo", and not "foot" or "football".
      */
     public static final int TERM_MATCH_EXACT_ONLY = 1;
     /**
      * Query terms will match indexed tokens when the query term is a prefix of the token.
      *
-     * <p>For example, a query term "foo" will match indexed tokens like "foo", "foot", and
-     * "football".
+     * <p>Ex. A query term "foo" will match indexed tokens like "foo", "foot", and "football".
      */
     public static final int TERM_MATCH_PREFIX = 2;
 
@@ -201,7 +199,6 @@ public final class SearchSpec {
     /**
      * Results should be grouped together by schema type for the purpose of enforcing a limit on the
      * number of results returned per schema type.
-     *
      * @hide
      */
     public static final int GROUPING_TYPE_PER_SCHEMA = 1 << 2;
@@ -500,7 +497,7 @@ public final class SearchSpec {
         private boolean mBuilt = false;
 
         /**
-         * Sets how the query terms should match {@code TermMatchCode} in the index.
+         * Indicates how the query terms should match {@code TermMatchCode} in the index.
          *
          * <p>If this method is not called, the default term match type is {@link
          * SearchSpec#TERM_MATCH_PREFIX}.
@@ -706,12 +703,10 @@ public final class SearchSpec {
          *       document, where type must be evaluated to an integer from 1 to 2. Type 1 refers to
          *       usages reported by {@link AppSearchSession#reportUsage}, and type 2 refers to
          *       usages reported by {@link GlobalSearchSession#reportSystemUsage}.
-         *   <li>this.childrenRankingSignals()
-         *       <p>Returns a list of children ranking signals calculated by scoring the joined
-         *       documents using the ranking strategy specified in the nested {@link SearchSpec}.
-         *       Currently, a document can only be a child of another document in the context of
-         *       joins. If this function is called without the Join API enabled, a type error will
-         *       be raised.
+         *   <li>this.childrenScores()
+         *       <p>Returns a list of children document scores. Currently, a document can only be a
+         *       child of another document in the context of joins. If this function is called
+         *       without the Join API enabled, a type error will be raised.
          *   <li>this.propertyWeights()
          *       <p>Returns a list of the normalized weights of the matched properties for the
          *       current document being scored. Property weights come from what's specified in
@@ -734,7 +729,7 @@ public final class SearchSpec {
          *
          * <ul>
          *   <li>"sin(2, 3)" - wrong number of arguments for the sin function
-         *   <li>"this.childrenRankingSignals() + 1" - cannot add a list with a number
+         *   <li>"this.childrenScores() + 1" - cannot add a list with a number
          *   <li>"this.propertyWeights()" - the final type of the overall expression cannot be a
          *       list, which can be fixed by "max(this.propertyWeights())"
          *   <li>"abs(this.propertyWeights())" - the abs function does not support list type
@@ -774,7 +769,7 @@ public final class SearchSpec {
         }
 
         /**
-         * Sets the order of returned search results, the default is {@link #ORDER_DESCENDING},
+         * Indicates the order of returned search results, the default is {@link #ORDER_DESCENDING},
          * meaning that results with higher scores come first.
          *
          * <p>This order field will be ignored if RankingStrategy = {@code RANKING_STRATEGY_NONE}.
@@ -790,8 +785,8 @@ public final class SearchSpec {
         }
 
         /**
-         * Sets the {@code snippetCount} such that the first {@code snippetCount} documents based on
-         * the ranking strategy will have snippet information provided.
+         * Only the first {@code snippetCount} documents based on the ranking strategy will have
+         * snippet information provided.
          *
          * <p>The list returned from {@link SearchResult#getMatchInfos} will contain at most this
          * many entries.
@@ -841,11 +836,11 @@ public final class SearchSpec {
          * maxSnippetSize/2} bytes after the middle of the matching token. It respects token
          * boundaries, therefore the returned window may be smaller than requested.
          *
-         * <p>Setting {@code maxSnippetSize} to 0 will disable windowing and an empty String will be
+         * <p>Setting {@code maxSnippetSize} to 0 will disable windowing and an empty string will be
          * returned. If matches enabled is also set to false, then snippeting is disabled.
          *
-         * <p>For example, {@code maxSnippetSize} = 16. "foo bar baz bat rat" with a query of "baz"
-         * will return a window of "bar baz bat" which is only 11 bytes long.
+         * <p>Ex. {@code maxSnippetSize} = 16. "foo bar baz bat rat" with a query of "baz" will
+         * return a window of "bar baz bat" which is only 11 bytes long.
          */
         @CanIgnoreReturnValue
         @NonNull
@@ -966,12 +961,12 @@ public final class SearchSpec {
          * Sets the maximum number of results to return for each group, where groups are defined by
          * grouping type.
          *
-         * <p>Calling this method will override any previous calls. So calling {@code
-         * setResultGrouping(GROUPING_TYPE_PER_PACKAGE, 7)} and then calling {@code
-         * setResultGrouping(GROUPING_TYPE_PER_PACKAGE, 2)} will result in only the latter, a limit
-         * of two results per package, being applied. Or calling {@code setResultGrouping
-         * (GROUPING_TYPE_PER_PACKAGE, 1)} and then calling {@code setResultGrouping
-         * (GROUPING_TYPE_PER_PACKAGE | GROUPING_PER_NAMESPACE, 5)} will result in five results per
+         * <p>Calling this method will override any previous calls. So calling
+         * setResultGrouping(GROUPING_TYPE_PER_PACKAGE, 7) and then calling
+         * setResultGrouping(GROUPING_TYPE_PER_PACKAGE, 2) will result in only the latter, a limit
+         * of two results per package, being applied. Or calling setResultGrouping
+         * (GROUPING_TYPE_PER_PACKAGE, 1) and then calling setResultGrouping
+         * (GROUPING_TYPE_PER_PACKAGE | GROUPING_PER_NAMESPACE, 5) will result in five results per
          * package per namespace.
          *
          * @param groupingTypeFlags One or more combination of grouping types.
@@ -1122,8 +1117,8 @@ public final class SearchSpec {
          *     AppSearchSchema.StringPropertyConfig#TOKENIZER_TYPE_VERBATIM} and all other verbatim
          *     search features within the query language that allows clients to search using the
          *     verbatim string operator.
-         *     <p>For example, The verbatim string operator '"foo/bar" OR baz' will ensure that
-         *     'foo/bar' is treated as a single 'verbatim' token.
+         *     <p>Ex. The verbatim string operator '"foo/bar" OR baz' will ensure that 'foo/bar' is
+         *     treated as a single 'verbatim' token.
          */
         @NonNull
         public Builder setVerbatimSearchEnabled(boolean enabled) {

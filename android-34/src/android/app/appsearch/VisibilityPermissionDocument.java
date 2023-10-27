@@ -31,9 +31,7 @@ import java.util.Set;
  */
 public class VisibilityPermissionDocument extends GenericDocument {
 
-    /**
-     * The Schema type for documents that hold AppSearch's metadata, such as visibility settings.
-     */
+    /** The Schema type for documents that hold AppSearch's metadata, e.g. visibility settings. */
     public static final String SCHEMA_TYPE = "VisibilityPermissionType";
 
     /** Property that holds the required permissions to access the schema. */

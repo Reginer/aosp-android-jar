@@ -61,17 +61,13 @@ public final class WebSourceRegistrationRequest implements Parcelable {
 
     /**
      * App destination of the source. It is the android app {@link Uri} where corresponding
-     * conversion is expected. This field is compared with the corresponding field in Source
-     * Registration Response, if matching fails the registration is rejected. If null is provided,
-     * no destination matching will be performed.
+     * conversion is expected. At least one of app destination or web destination is required.
      */
     @Nullable private final Uri mAppDestination;
 
     /**
      * Web destination of the source. It is the website {@link Uri} where corresponding conversion
-     * is expected. This field is compared with the corresponding field in Source Registration
-     * Response, if matching fails the registration is rejected. If null is provided, no destination
-     * matching will be performed.
+     * is expected. At least one of app destination or web destination is required.
      */
     @Nullable private final Uri mWebDestination;
 

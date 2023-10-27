@@ -21,7 +21,6 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -248,51 +247,6 @@ public class WifiEnterpriseConfig implements Parcelable {
     };
 
     /**
-     * Maximum length of a certificate.
-     */
-    private static final int CERTIFICATE_MAX_LENGTH = 8192;
-
-    /**
-     * Maximum length of the {@link #mKeyChainAlias} field.
-     */
-    private static final int KEYCHAIN_ALIAS_MAX_LENGTH = 256;
-
-    /**
-     * Maximum number of elements in a client certificate chain.
-     */
-    private static final int CLIENT_CERTIFICATE_CHAIN_MAX_ELEMENTS = 5;
-
-    /**
-     * Maximum number of elements in a list of CA certificates.
-     */
-    private static final int CA_CERTIFICATES_MAX_ELEMENTS = 100;
-
-    /**
-     * Fields that are supported in {@link #mFields}.
-     * Each entry includes the supported field's key and its maximum allowed length.
-     */
-    private static final Map<String, Integer> SUPPORTED_FIELDS = new HashMap<>() {{
-            put(ALTSUBJECT_MATCH_KEY, 256);
-            put(ANON_IDENTITY_KEY, 1024);
-            put(CA_CERT_KEY, CERTIFICATE_MAX_LENGTH);
-            put(CA_PATH_KEY, 4096);
-            put(CLIENT_CERT_KEY, CERTIFICATE_MAX_LENGTH);
-            put(DECORATED_IDENTITY_PREFIX_KEY, 256);
-            put(DOM_SUFFIX_MATCH_KEY, 256);
-            put(EAP_ERP, 1);
-            put(ENGINE_KEY, 1);
-            put(ENGINE_ID_KEY, 64);
-            put(IDENTITY_KEY, 256);
-            put(OPP_KEY_CACHING, 1);
-            put(PASSWORD_KEY, 256);
-            put(PLMN_KEY, 16);
-            put(PRIVATE_KEY_ID_KEY, 256);
-            put(REALM_KEY, 256);
-            put(SUBJECT_MATCH_KEY, 256);
-            put(WAPI_CERT_SUITE_KEY, CERTIFICATE_MAX_LENGTH);
-        }};
-
-    /**
      * Fields that have unquoted values in {@link #mFields}.
      */
     private static final List<String> UNQUOTED_KEYS = Arrays.asList(ENGINE_KEY, OPP_KEY_CACHING,
@@ -364,66 +318,6 @@ public class WifiEnterpriseConfig implements Parcelable {
     }
 
     /**
-     * Check whether a key is supported by {@link #mFields}.
-     * @return true if the key is supported, false otherwise.
-     */
-    private static boolean isKeySupported(String key) {
-        return SUPPORTED_FIELDS.containsKey(key);
-    }
-
-    /**
-     * Check whether a value from {@link #mFields} has a valid length.
-     * @return true if the length is valid, false otherwise.
-     */
-    private static boolean isFieldLengthValid(String key, String value) {
-        int maxLength = SUPPORTED_FIELDS.getOrDefault(key, 0);
-        return isFieldLengthValid(value, maxLength);
-    }
-
-    private static boolean isFieldLengthValid(String value, int maxLength) {
-        if (value == null) return true;
-        return value.length() <= maxLength;
-    }
-
-    /**
-     * Check whether a key/value pair from {@link #mFields} is valid.
-     * @return true if the key/value pair is valid, false otherwise.
-     */
-    private static boolean isFieldValid(String key, String value) {
-        return isKeySupported(key) && isFieldLengthValid(key, value);
-    }
-
-    /**
-     * Convert the {@link #mFields} map to a Bundle for parceling.
-     * Unsupported keys will not be included in the Bundle.
-     */
-    private Bundle fieldMapToBundle() {
-        Bundle bundle = new Bundle();
-        for (Map.Entry<String, String> entry : mFields.entrySet()) {
-            if (isFieldValid(entry.getKey(), entry.getValue())) {
-                bundle.putString(entry.getKey(), entry.getValue());
-            }
-        }
-        return bundle;
-    }
-
-    /**
-     * Convert an unparceled Bundle to the {@link #mFields} map.
-     * Unsupported keys will not be included in the map.
-     */
-    private static HashMap<String, String> bundleToFieldMap(Bundle bundle) {
-        HashMap<String, String> fieldMap = new HashMap<>();
-        if (bundle == null) return fieldMap;
-        for (String key : bundle.keySet()) {
-            String value = bundle.getString(key);
-            if (isFieldValid(key, value)) {
-                fieldMap.put(key, value);
-            }
-        }
-        return fieldMap;
-    }
-
-    /**
      * Copy over the contents of the source WifiEnterpriseConfig object over to this object.
      *
      * @param source Source WifiEnterpriseConfig object.
@@ -433,14 +327,11 @@ public class WifiEnterpriseConfig implements Parcelable {
      */
     private void copyFrom(WifiEnterpriseConfig source, boolean ignoreMaskedPassword, String mask) {
         for (String key : source.mFields.keySet()) {
-            String value = source.mFields.get(key);
             if (ignoreMaskedPassword && key.equals(PASSWORD_KEY)
-                    && TextUtils.equals(value, mask)) {
+                    && TextUtils.equals(source.mFields.get(key), mask)) {
                 continue;
             }
-            if (isFieldValid(key, value)) {
-                mFields.put(key, source.mFields.get(key));
-            }
+            mFields.put(key, source.mFields.get(key));
         }
         if (source.mCaCerts != null) {
             mCaCerts = Arrays.copyOf(source.mCaCerts, source.mCaCerts.length);
@@ -498,7 +389,12 @@ public class WifiEnterpriseConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeBundle(fieldMapToBundle());
+        dest.writeInt(mFields.size());
+        for (Map.Entry<String, String> entry : mFields.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeString(entry.getValue());
+        }
+
         dest.writeInt(mEapMethod);
         dest.writeInt(mPhase2Method);
         ParcelUtil.writeCertificates(dest, mCaCerts);
@@ -518,44 +414,19 @@ public class WifiEnterpriseConfig implements Parcelable {
                 @Override
                 public WifiEnterpriseConfig createFromParcel(Parcel in) {
                     WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
-                    enterpriseConfig.mFields = bundleToFieldMap(in.readBundle());
+                    int count = in.readInt();
+                    for (int i = 0; i < count; i++) {
+                        String key = in.readString();
+                        String value = in.readString();
+                        enterpriseConfig.mFields.put(key, value);
+                    }
+
                     enterpriseConfig.mEapMethod = in.readInt();
                     enterpriseConfig.mPhase2Method = in.readInt();
-
-                    X509Certificate[] caCerts = ParcelUtil.readCertificates(in);
-                    if (caCerts != null && caCerts.length > CA_CERTIFICATES_MAX_ELEMENTS) {
-                        Log.e(TAG, "List of CA certificates with size "
-                                + caCerts.length + " received during unparceling");
-                        enterpriseConfig.mCaCerts = null;
-                    } else {
-                        enterpriseConfig.mCaCerts = caCerts;
-                    }
-
-                    PrivateKey privateKey = ParcelUtil.readPrivateKey(in);
-                    if (privateKey != null && privateKey.getEncoded() != null
-                            && privateKey.getEncoded().length > CERTIFICATE_MAX_LENGTH) {
-                        Log.e(TAG, "Invalid private key with size "
-                                + privateKey.getEncoded().length + " received during unparceling");
-                        enterpriseConfig.mClientPrivateKey = null;
-                    } else {
-                        enterpriseConfig.mClientPrivateKey = privateKey;
-                    }
-
-                    X509Certificate[] clientCertificateChain = ParcelUtil.readCertificates(in);
-                    if (clientCertificateChain != null
-                            && clientCertificateChain.length
-                                    > CLIENT_CERTIFICATE_CHAIN_MAX_ELEMENTS) {
-                        Log.e(TAG, "Client certificate chain with size "
-                                + clientCertificateChain.length + " received during unparceling");
-                        enterpriseConfig.mClientCertificateChain = null;
-                    } else {
-                        enterpriseConfig.mClientCertificateChain = clientCertificateChain;
-                    }
-
-                    String keyChainAlias = in.readString();
-                    enterpriseConfig.mKeyChainAlias =
-                            isFieldLengthValid(keyChainAlias, KEYCHAIN_ALIAS_MAX_LENGTH)
-                                    ? keyChainAlias : "";
+                    enterpriseConfig.mCaCerts = ParcelUtil.readCertificates(in);
+                    enterpriseConfig.mClientPrivateKey = ParcelUtil.readPrivateKey(in);
+                    enterpriseConfig.mClientCertificateChain = ParcelUtil.readCertificates(in);
+                    enterpriseConfig.mKeyChainAlias = in.readString();
                     enterpriseConfig.mIsAppInstalledDeviceKeyAndCert = in.readBoolean();
                     enterpriseConfig.mIsAppInstalledCaCert = in.readBoolean();
                     enterpriseConfig.mOcsp = in.readInt();
@@ -677,14 +548,10 @@ public class WifiEnterpriseConfig implements Parcelable {
                 || mEapMethod == WifiEnterpriseConfig.Eap.AKA
                 || mEapMethod == WifiEnterpriseConfig.Eap.AKA_PRIME;
         for (String key : mFields.keySet()) {
-            String value = mFields.get(key);
-            if (!isFieldValid(key, value)) {
-                continue;
-            }
             if (shouldNotWriteAnonIdentity && ANON_IDENTITY_KEY.equals(key)) {
                 continue;
             }
-            if (!saver.saveValue(key, value)) {
+            if (!saver.saveValue(key, mFields.get(key))) {
                 return false;
             }
         }
@@ -716,9 +583,7 @@ public class WifiEnterpriseConfig implements Parcelable {
     public void loadFromSupplicant(SupplicantLoader loader) {
         for (String key : SUPPLICANT_CONFIG_KEYS) {
             String value = loader.loadValue(key);
-            if (!isFieldValid(key, value)) {
-                continue;
-            } else if (value == null) {
+            if (value == null) {
                 mFields.put(key, EMPTY_VALUE);
             } else {
                 mFields.put(key, value);
@@ -1071,15 +936,10 @@ public class WifiEnterpriseConfig implements Parcelable {
      *
      * @param certs X.509 CA certificates
      * @throws IllegalArgumentException if any of the provided certificates is
-     *     not a CA certificate, or if too many CA certificates are provided
+     *     not a CA certificate
      */
     public void setCaCertificates(@Nullable X509Certificate[] certs) {
         if (certs != null) {
-            if (certs.length > CA_CERTIFICATES_MAX_ELEMENTS) {
-                mCaCerts = null;
-                throw new IllegalArgumentException("List of CA certificates contains more "
-                        + "than the allowed number of elements");
-            }
             X509Certificate[] newCerts = new X509Certificate[certs.length];
             for (int i = 0; i < certs.length; i++) {
                 if (certs[i].getBasicConstraints() >= 0) {
@@ -1234,10 +1094,6 @@ public class WifiEnterpriseConfig implements Parcelable {
             // We use this to judge whether the certificate is an end
             // certificate or a CA certificate.
             // https://cryptography.io/en/latest/x509/reference/
-            if (clientCertificateChain.length > CLIENT_CERTIFICATE_CHAIN_MAX_ELEMENTS) {
-                throw new IllegalArgumentException(
-                        "Certificate chain contains more than the allowed number of elements");
-            }
             if (clientCertificateChain[0].getBasicConstraints() != -1) {
                 throw new IllegalArgumentException(
                         "First certificate in the chain must be a client end certificate");
@@ -1255,13 +1111,8 @@ public class WifiEnterpriseConfig implements Parcelable {
             if (privateKey == null) {
                 throw new IllegalArgumentException("Client cert without a private key");
             }
-            byte[] encodedKey = privateKey.getEncoded();
-            if (encodedKey == null) {
+            if (privateKey.getEncoded() == null) {
                 throw new IllegalArgumentException("Private key cannot be encoded");
-            }
-            if (encodedKey.length > CERTIFICATE_MAX_LENGTH) {
-                throw new IllegalArgumentException(
-                        "Private key exceeds the maximum allowed length");
             }
         }
 
@@ -1282,9 +1133,6 @@ public class WifiEnterpriseConfig implements Parcelable {
     public void setClientKeyPairAlias(@NonNull String alias) {
         if (!SdkLevel.isAtLeastS()) {
             throw new UnsupportedOperationException();
-        }
-        if (!isFieldLengthValid(alias, KEYCHAIN_ALIAS_MAX_LENGTH)) {
-            throw new IllegalArgumentException();
         }
         mKeyChainAlias = alias;
     }
@@ -1561,10 +1409,8 @@ public class WifiEnterpriseConfig implements Parcelable {
      * @hide
      */
     private String getFieldValue(String key, String prefix) {
-        if (!isKeySupported(key)) {
-            return "";
-        }
-
+        // TODO: Should raise an exception if |key| is EAP_KEY or PHASE2_KEY since
+        // neither of these keys should be retrieved in this manner.
         String value = mFields.get(key);
         // Uninitialized or known to be empty after reading from supplicant
         if (TextUtils.isEmpty(value) || EMPTY_VALUE.equals(value)) return "";
@@ -1595,9 +1441,8 @@ public class WifiEnterpriseConfig implements Parcelable {
      * @hide
      */
     private void setFieldValue(String key, String value, String prefix) {
-        if (!isFieldValid(key, value)) {
-            return;
-        }
+        // TODO: Should raise an exception if |key| is EAP_KEY or PHASE2_KEY since
+        // neither of these keys should be set in this manner.
         if (TextUtils.isEmpty(value)) {
             mFields.put(key, EMPTY_VALUE);
         } else {
