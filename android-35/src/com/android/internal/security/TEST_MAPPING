@@ -1,0 +1,29 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests",
+      "options": [
+        {
+          "include-filter": "com.android.internal.security."
+        },
+        {
+          "include-annotation": "android.platform.test.annotations.Presubmit"
+        }
+      ]
+    },
+    {
+      "name": "UpdatableSystemFontTest",
+      "file_patterns": ["VerityUtils\\.java"]
+    },
+    {
+      "name": "CtsApkVerityInstallHostTestCases",
+      "file_patterns": ["VerityUtils\\.java"]
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "FsVerityTest",
+      "file_patterns": ["VerityUtils\\.java"]
+    }
+  ]
+}

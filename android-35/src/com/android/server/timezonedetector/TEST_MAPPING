@@ -1,0 +1,18 @@
+{
+  "presubmit": [
+   {
+      "name": "CtsTimeTestCases",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        }
+      ]
+    },
+    {
+      "name": "FrameworksTimeServicesTests"
+    },
+    {
+      "name": "CtsLocationTimeZoneManagerHostTest"
+    }
+  ]
+}

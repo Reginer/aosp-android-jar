@@ -1,0 +1,12 @@
+# Bug component: 44215
+
+# Android Accessibility Framework owners
+include /services/accessibility/OWNERS
+
+# Android members outside of Accessibility
+adamp@google.com #{LAST_RESORT_SUGGESTION}
+aurimas@google.com #{LAST_RESORT_SUGGESTION}
+jjaggi@google.com #{LAST_RESORT_SUGGESTION}
+ogunwale@google.com #{LAST_RESORT_SUGGESTION}
+romainguy@google.com #{LAST_RESORT_SUGGESTION}
+sumir@google.com #{LAST_RESORT_SUGGESTION}

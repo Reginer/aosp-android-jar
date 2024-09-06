@@ -1,0 +1,47 @@
+# Applications & Processes
+yamasani@google.com
+jsharkey@google.com
+hackbod@google.com
+omakoto@google.com
+ctate@google.com
+huiyu@google.com
+mwachens@google.com
+sudheersai@google.com
+suprabh@google.com
+varunshah@google.com
+bookatz@google.com
+jji@google.com
+
+# Windows & Activities
+ogunwale@google.com
+
+# Permissions & Packages
+patb@google.com
+per-file AccessCheckDelegateHelper.java = file:/core/java/android/permission/OWNERS
+
+# Battery Stats
+joeo@google.com
+per-file BatteryStats* = file:/BATTERY_STATS_OWNERS
+per-file BatteryExternalStats* = file:/BATTERY_STATS_OWNERS
+
+# Londoners
+michaelwr@google.com
+narayan@google.com
+
+# Voice Interaction
+per-file *Assist* = file:/core/java/android/service/voice/OWNERS
+per-file *Voice* = file:/core/java/android/service/voice/OWNERS
+
+per-file SettingsToPropertiesMapper.java = omakoto@google.com, yamasani@google.com, dzshen@google.com, zhidou@google.com, tedbauer@google.com
+
+per-file CarUserSwitchingDialog.java = file:platform/packages/services/Car:/OWNERS
+
+per-file ContentProviderHelper.java = varunshah@google.com, omakoto@google.com, jsharkey@google.com, yamasani@google.com
+
+per-file CachedAppOptimizer.java = file:/PERFORMANCE_OWNERS
+
+# Multiuser
+per-file User* = file:/MULTIUSER_OWNERS
+
+# Broadcasts
+per-file Broadcast* = file:/BROADCASTS_OWNERS

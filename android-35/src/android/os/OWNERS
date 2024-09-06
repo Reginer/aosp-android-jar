@@ -1,0 +1,114 @@
+# Haptics
+per-file *Vibration* = file:/services/core/java/com/android/server/vibrator/OWNERS
+per-file *Vibrator* = file:/services/core/java/com/android/server/vibrator/OWNERS
+
+# PowerManager
+per-file IPowerManager.aidl = file:/services/core/java/com/android/server/power/OWNERS
+per-file PowerManager.java = file:/services/core/java/com/android/server/power/OWNERS
+per-file PowerManagerInternal.java = file:/services/core/java/com/android/server/power/OWNERS
+
+# BatteryStats
+per-file *BatteryConsumer* = file:/BATTERY_STATS_OWNERS
+per-file BatteryManager* = file:/BATTERY_STATS_OWNERS
+per-file PowerMonitor* = file:/BATTERY_STATS_OWNERS
+per-file PowerComponents.java = file:/BATTERY_STATS_OWNERS
+per-file *Stats* = file:/BATTERY_STATS_OWNERS
+
+# Multiuser
+per-file IUser* = file:/MULTIUSER_OWNERS
+per-file User* = file:/MULTIUSER_OWNERS
+per-file NewUser* = file:/MULTIUSER_OWNERS
+
+# Binder
+per-file BadParcelableException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file Binder.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file BinderProxy.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file DeadObjectException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file IBinder.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file Parcel.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ParcelFileDescriptor.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ParcelFormatException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file Parcelable.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ParcelableException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ParcelableHolder.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ParcelableParcel.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file RemoteException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ServiceManager.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ServiceManagerNative.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file ServiceSpecificException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+per-file TransactionTooLargeException.java = file:platform/frameworks/native:/libs/binder/OWNERS
+
+# HwBinder
+per-file HwBinder.java = file:platform/system/libhwbinder:/OWNERS
+per-file HwBlob.java = file:platform/system/libhwbinder:/OWNERS
+per-file HwParcel.java = file:platform/system/libhwbinder:/OWNERS
+per-file HwParcel.java = file:platform/system/libhwbinder:/OWNERS
+per-file HwRemoteBinder.java = file:platform/system/libhwbinder:/OWNERS
+per-file IHwBinder.java = file:platform/system/libhwbinder:/OWNERS
+per-file IHwInterface.java = file:platform/system/libhwbinder:/OWNERS
+
+per-file GraphicsEnvironment.java = file:platform/frameworks/native:/opengl/OWNERS
+
+per-file *Network* = file:/services/core/java/com/android/server/net/OWNERS
+per-file *Power* = file:/services/core/java/com/android/server/power/OWNERS
+per-file *Telephony* = file:/telephony/OWNERS
+per-file *Zygote* = file:/ZYGOTE_OWNERS
+
+# Time
+per-file *Clock* = file:/services/core/java/com/android/server/timezonedetector/OWNERS
+
+# RecoverySystem
+per-file *Recovery* = file:/services/core/java/com/android/server/recoverysystem/OWNERS
+
+# Bugreporting
+per-file Bugreport* = file:/platform/frameworks/native:/cmds/dumpstate/OWNERS
+
+# UpdateEngine
+per-file *UpdateEngine* = file:/platform/system/update_engine:/OWNERS
+
+# VINTF
+per-file Vintf* = file:/platform/system/libvintf:/OWNERS
+
+# Tracing
+per-file Trace.java = file:/TRACE_OWNERS
+
+# PatternMatcher
+per-file PatternMatcher* = file:/PACKAGE_MANAGER_OWNERS
+
+# PermissionEnforcer
+per-file PermissionEnforcer.java = tweek@google.com, brufino@google.com
+
+# ART
+per-file ArtModuleServiceManager.java = file:platform/art:/OWNERS
+
+# DDM Protocol
+per-file DdmSyncState.java = sanglardf@google.com, rpaquay@google.com
+per-file DdmSyncStageUpdater.java = sanglardf@google.com, rpaquay@google.com
+
+# PerformanceHintManager
+per-file PerformanceHintManager.java = file:/ADPF_OWNERS
+per-file WorkDuration.java = file:/ADPF_OWNERS
+per-file IHintManager.aidl = file:/ADPF_OWNERS
+per-file IHintSession.aidl = file:/ADPF_OWNERS
+
+# IThermal interfaces
+per-file IThermal* = file:/THERMAL_OWNERS
+per-file CoolingDevice.java = file:/THERMAL_OWNERS
+per-file Temperature.java = file:/THERMAL_OWNERS
+
+# SecurityStateManager
+per-file *SecurityStateManager* = file:/SECURITY_STATE_OWNERS
+
+# SystemConfig
+per-file ISystemConfig.aidl = file:/PACKAGE_MANAGER_OWNERS
+per-file SystemConfigManager.java = file:/PACKAGE_MANAGER_OWNERS
+
+# ProfilingService
+per-file ProfilingServiceManager.java = file:/PERFORMANCE_OWNERS
+
+# Memory
+per-file OomKillRecord.java = file:/MEMORY_OWNERS
+
+# MessageQueue
+per-file MessageQueue.java = mfasheh@google.com, shayba@google.com
+per-file Message.java = mfasheh@google.com, shayba@google.com

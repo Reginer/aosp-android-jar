@@ -1,0 +1,3 @@
+# Bug component: 847766
+# System APIs for system server time zone detection plugins.
+include /services/core/java/com/android/server/timezonedetector/OWNERS

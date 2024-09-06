@@ -1,0 +1,61 @@
+{
+  "imports": [
+    {
+      "path": "cts/tests/tests/widget"
+    }
+  ],
+  "presubmit": [
+    {
+      "name": "CtsToastTestCases",
+      "file_patterns": ["Toast\\.java"]
+    },
+    {
+      "name": "CtsWindowManagerDeviceWindow",
+      "options": [
+        {
+          "include-filter": "android.server.wm.window.ToastWindowTest"
+        }
+      ],
+      "file_patterns": ["Toast\\.java"]
+    },
+    {
+      "name": "CtsAutoFillServiceTestCases",
+      "options": [
+        {
+          "include-filter": "android.autofillservice.cts.dropdown.LoginActivityTest"
+        },
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "android.platform.test.annotations.AppModeFull"
+        }
+      ]
+    },
+    {
+      "name": "CtsAutoFillServiceTestCases",
+      "options": [
+        {
+          "include-filter": "android.autofillservice.cts.dropdown.CheckoutActivityTest"
+        },
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "android.platform.test.annotations.AppModeFull"
+        }
+      ]
+    },
+    {
+      "name": "CtsTextTestCases",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "androidx.test.filters.LargeTest"
+        }
+      ]
+    }
+  ]
+}

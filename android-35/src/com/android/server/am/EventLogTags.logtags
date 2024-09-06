@@ -1,0 +1,143 @@
+# See system/logging/logcat/event.logtags for a description of the format of this file.
+
+option java_package com.android.server.am
+
+2719 configuration_changed (config mask|1|5)
+2721 cpu (total|1|6),(user|1|6),(system|1|6),(iowait|1|6),(irq|1|6),(softirq|1|6)
+
+# ActivityManagerService.systemReady() starts:
+3040 boot_progress_ams_ready (time|2|3)
+# ActivityManagerService calls enableScreenAfterBoot():
+3050 boot_progress_enable_screen (time|2|3)
+
+# Do not change these names without updating the checkin_events setting in
+# google3/googledata/wireless/android/provisioning/gservices.config !!
+#
+# Application Not Responding
+30008 am_anr (User|1|5),(pid|1|5),(Package Name|3),(Flags|1|5),(reason|3)
+
+# Application process bound to work
+30010 am_proc_bound (User|1|5),(PID|1|5),(Process Name|3)
+# Application process died
+30011 am_proc_died (User|1|5),(PID|1|5),(Process Name|3),(OomAdj|1|5),(ProcState|1|5)
+
+# Application process has been started
+30014 am_proc_start (User|1|5),(PID|1|5),(UID|1|5),(Process Name|3),(Type|3),(Component|3)
+# An application process has been marked as bad
+30015 am_proc_bad (User|1|5),(UID|1|5),(Process Name|3)
+# An application process that was bad is now marked as good
+30016 am_proc_good (User|1|5),(UID|1|5),(Process Name|3)
+# Reporting to applications that memory is low
+30017 am_low_memory (Num Processes|1|1)
+
+# Kill a process to reclaim memory.
+30023 am_kill (User|1|5),(PID|1|5),(Process Name|3),(OomAdj|1|5),(Reason|3),(Rss|2|2)
+# Discard an undelivered serialized broadcast (timeout/ANR/crash)
+30024 am_broadcast_discard_filter (User|1|5),(Broadcast|1|5),(Action|3),(Receiver Number|1|1),(BroadcastFilter|1|5)
+30025 am_broadcast_discard_app (User|1|5),(Broadcast|1|5),(Action|3),(Receiver Number|1|1),(App|3)
+# A service is being created
+30030 am_create_service (User|1|5),(Service Record|1|5),(Name|3),(UID|1|5),(PID|1|5)
+# A service is being destroyed
+30031 am_destroy_service (User|1|5),(Service Record|1|5),(PID|1|5)
+# A process has crashed too many times, it is being cleared
+30032 am_process_crashed_too_much (User|1|5),(Name|3),(PID|1|5)
+# An unknown process is trying to attach to the activity manager
+30033 am_drop_process (PID|1|5)
+# A service has crashed too many times, it is being stopped
+30034 am_service_crashed_too_much (User|1|5),(Crash Count|1|1),(Component Name|3),(PID|1|5)
+# A service is going to be restarted after its process went away
+30035 am_schedule_service_restart (User|1|5),(Component Name|3),(Time|2|3)
+# A client was waiting for a content provider, but its process was lost
+30036 am_provider_lost_process (User|1|5),(Package Name|3),(UID|1|5),(Name|3)
+# The activity manager gave up on a new process taking too long to start
+30037 am_process_start_timeout (User|1|5),(PID|1|5),(UID|1|5),(Process Name|3)
+
+# Unhandled exception
+30039 am_crash (User|1|5),(PID|1|5),(Process Name|3),(Flags|1|5),(Exception|3),(Message|3),(File|3),(Line|1|5),(Recoverable|1|5)
+# Log.wtf() called
+30040 am_wtf (User|1|5),(PID|1|5),(Process Name|3),(Flags|1|5),(Tag|3),(Message|3)
+
+# User switched
+30041 am_switch_user (id|1|5)
+
+# Running pre boot receiver
+30045 am_pre_boot (User|1|5),(Package|3)
+
+# Report collection of global memory state
+30046 am_meminfo (Cached|2|2),(Free|2|2),(Zram|2|2),(Kernel|2|2),(Native|2|2)
+# Report collection of memory used by a process
+30047 am_pss (Pid|1|5),(UID|1|5),(Process Name|3),(Pss|2|2),(Uss|2|2),(SwapPss|2|2),(Rss|2|2),(StatType|1|5),(ProcState|1|5),(TimeToCollect|2|2)
+
+# Report changing memory conditions (Values are ProcessStats.ADJ_MEM_FACTOR* constants)
+30050 am_mem_factor (Current|1|5),(Previous|1|5)
+
+# UserState has changed
+30051 am_user_state_changed (id|1|5),(state|1|5)
+
+# Note when any processes of a uid have started running
+30052 am_uid_running (UID|1|5)
+# Note when all processes of a uid have stopped.
+30053 am_uid_stopped (UID|1|5)
+# Note when the state of a uid has become active.
+30054 am_uid_active (UID|1|5)
+# Note when the state of a uid has become idle (background check enforced).
+30055 am_uid_idle (UID|1|5)
+# Note when a service is being forcibly stopped because its app went idle.
+30056 am_stop_idle_service (UID|1|5),(Component Name|3)
+
+# The task is being compacted
+30063 am_compact (Pid|1|5),(Process Name|3),(Action|3),(BeforeRssTotal|2|2),(BeforeRssFile|2|2),(BeforeRssAnon|2|2),(BeforeRssSwap|2|2),(DeltaRssTotal|2|2),(DeltaRssFile|2|2),(DeltaRssAnon|2|2),(DeltaRssSwap|2|2),(Time|2|3),(LastAction|1|2),(LastActionTimestamp|2|3),(setAdj|1|2),(procState|1|2),(BeforeZRAMFree|2|2),(DeltaZRAMFree|2|2)
+
+# The task is being frozen
+30068 am_freeze (Pid|1|5),(Process Name|3)
+
+# The task is being unfrozen
+30069 am_unfreeze (Pid|1|5),(Process Name|3)
+
+# User switch events
+30070 uc_finish_user_unlocking (userId|1|5)
+30071 uc_finish_user_unlocked (userId|1|5)
+30072 uc_finish_user_unlocked_completed (userId|1|5)
+30073 uc_finish_user_stopping (userId|1|5)
+30074 uc_finish_user_stopped (userId|1|5)
+30075 uc_switch_user (userId|1|5)
+30076 uc_start_user_internal (userId|1|5),(foreground|1),(displayId|1|5)
+30077 uc_unlock_user (userId|1|5)
+30078 uc_finish_user_boot (userId|1|5)
+30079 uc_dispatch_user_switch (oldUserId|1|5),(newUserId|1|5)
+30080 uc_continue_user_switch (oldUserId|1|5),(newUserId|1|5)
+30081 uc_send_user_broadcast (userId|1|5),(IntentAction|3)
+
+# Tags below are used by SystemServiceManager - although it's technically part of am, these are
+# also user switch events and useful to be analyzed together with events above.
+30082 ssm_user_starting (userId|1|5)
+30083 ssm_user_switching (oldUserId|1|5),(newUserId|1|5)
+30084 ssm_user_unlocking (userId|1|5)
+30085 ssm_user_unlocked (userId|1|5)
+30086 ssm_user_stopping (userId|1|5)
+30087 ssm_user_stopped (userId|1|5)
+30088 ssm_user_completed_event (userId|1|5),(eventFlag|1|5)
+
+# Similarly, tags below are used by UserManagerService
+30091 um_user_visibility_changed (userId|1|5),(visible|1)
+
+# Foreground service start/stop/denied/timed_out events.
+30100 am_foreground_service_start (User|1|5),(Component Name|3),(allowWhileInUse|1),(startReasonCode|3),(targetSdk|1|1),(callerTargetSdk|1|1),(notificationWasDeferred|1),(notificationShown|1),(durationMs|1|3),(startForegroundCount|1|1),(stopReason|3),(fgsType|1)
+30101 am_foreground_service_denied (User|1|5),(Component Name|3),(allowWhileInUse|1),(startReasonCode|3),(targetSdk|1|1),(callerTargetSdk|1|1),(notificationWasDeferred|1),(notificationShown|1),(durationMs|1|3),(startForegroundCount|1|1),(stopReason|3),(fgsType|1)
+30102 am_foreground_service_stop (User|1|5),(Component Name|3),(allowWhileInUse|1),(startReasonCode|3),(targetSdk|1|1),(callerTargetSdk|1|1),(notificationWasDeferred|1),(notificationShown|1),(durationMs|1|3),(startForegroundCount|1|1),(stopReason|3),(fgsType|1)
+30103 am_foreground_service_timed_out (User|1|5),(Component Name|3),(allowWhileInUse|1),(startReasonCode|3),(targetSdk|1|1),(callerTargetSdk|1|1),(notificationWasDeferred|1),(notificationShown|1),(durationMs|1|3),(startForegroundCount|1|1),(stopReason|3),(fgsType|1)
+
+# Report collection of cpu used by a process
+30104 am_cpu (Pid|2|5),(UID|2|5),(Base Name|3),(Uptime|2|3),(Stime|2|3),(Utime|2|3)
+
+# Intent Sender redirect for UserHandle.USER_CURRENT
+30110 am_intent_sender_redirect_user (userId|1|5)
+
+# Caller information to clear application data
+30120 am_clear_app_data_caller (pid|1),(uid|1),(package|3)
+
+30111 am_uid_state_changed (UID|1|5),(Seq|1|5),(UidState|1|5),(OldUidState|1|5),(Capability|1|5),(OldCapability|1|5),(Flags|1|5),(reason|3)
+30112 am_proc_state_changed (UID|1|5),(PID|1|5),(Seq|1|5),(ProcState|1|5),(OldProcState|1|5),(OomAdj|1|5),(OldOomAdj|1|5),(reason|3)
+
+# "Misc" events. See OomAdjusterDebugLogger.java
+30113 am_oom_adj_misc (Event|1|5),(UID|1|5),(PID|1|5),(Seq|1|5),(Arg1|1|5),(Arg2|1|5),(reason|3)

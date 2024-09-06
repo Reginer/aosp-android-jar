@@ -1,0 +1,14 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests",
+      "options": [
+        { "include-filter": "com.android.internal.os.BatteryStatsTests" },
+        { "exclude-annotation": "com.android.internal.os.SkipPresubmit" }
+      ]
+    },
+    {
+      "name": "PowerStatsTests"
+    }
+  ]
+}

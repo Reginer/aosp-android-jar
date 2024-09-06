@@ -1,0 +1,34 @@
+{
+    "presubmit-large": [
+        {
+            "name": "CtsDevicePolicyManagerTestCases",
+            "options": [
+                {
+                    "include-annotation": "com.android.cts.devicepolicy.annotations.LockSettingsTest"
+                },
+                {
+                    "exclude-annotation": "androidx.test.filters.FlakyTest"
+                }
+            ]
+        }
+    ],
+    "presubmit": [
+        {
+            "name": "FrameworksServicesTests",
+            "options": [
+                {
+                    "include-filter": "com.android.server.locksettings."
+                },
+                {
+                    "exclude-annotation": "androidx.test.filters.FlakyTest"
+                }
+            ]
+        }
+    ],
+    "postsubmit": [
+        {
+            // TODO(b/332974906): Promote in presubmit-large.
+            "name": "CtsDevicePolicyManagerTestCases_LockSettings_NoFlakes"
+        }
+    ]
+}

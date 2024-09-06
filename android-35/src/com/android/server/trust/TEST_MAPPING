@@ -1,0 +1,41 @@
+{
+    "presubmit": [
+      {
+        "name": "TrustTests",
+        "options": [
+          {
+            "include-filter": "android.trust.test"
+          },
+          {
+            "exclude-annotation": "androidx.test.filters.FlakyTest"
+          }
+        ]
+      }
+    ],
+    "postsubmit": [
+      {
+        "name": "FrameworksMockingServicesTests",
+        "options": [
+          {
+            "include-filter": "com.android.server.trust"
+          },
+          {
+            "exclude-annotation": "androidx.test.filters.FlakyTest"
+          }
+        ]
+      }
+    ],
+    "trust-tablet": [
+      {
+        "name": "TrustTests",
+        "options": [
+          {
+            "include-filter": "android.trust.test"
+          },
+          {
+            "exclude-annotation": "androidx.test.filters.FlakyTest"
+          }
+        ]
+      }
+    ]
+  }

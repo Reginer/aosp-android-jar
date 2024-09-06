@@ -1,0 +1,41 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests",
+      "options": [
+        {
+          "include-filter": "com.android.server.om"
+        }
+      ]
+    },
+    {
+      "name": "OverlayDeviceTests"
+    },
+    {
+      "name": "SelfTargetingOverlayDeviceTests"
+    },
+    {
+      "name": "OverlayHostTests"
+    },
+    {
+      "name": "CtsOverlayHostTestCases"
+    },
+    {
+      "name": "CtsResourcesTestCases",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "org.junit.Ignore"
+        },
+        {
+          "include-filter": "android.content.om.cts"
+        },
+        {
+          "include-filter": "android.content.res.loader.cts"
+        }
+      ]
+    }
+  ]
+}

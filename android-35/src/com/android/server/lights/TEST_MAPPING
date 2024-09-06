@@ -1,0 +1,19 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsHardwareTestCases",
+      "options": [
+        {"include-filter": "com.android.hardware.lights"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "androidx.test.filters.LargeTest"}
+      ]
+    },
+    {
+      "name": "FrameworksServicesTests",
+      "options": [
+        {"include-filter": "com.android.server.lights"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"}
+      ]
+    }
+  ]
+}
