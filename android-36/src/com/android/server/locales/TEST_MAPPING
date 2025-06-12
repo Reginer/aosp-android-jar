@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_locales"
+    },
+    {
+      "name": "CtsLocaleManagerHostTestCases"
+    },
+    {
+      "name": "CtsLocaleManagerTestCases"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+/*
+ * Copyright (C) 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.server.companion.virtual;
+
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.companion.virtual.IVirtualDevice;
+import android.companion.virtual.VirtualDevice;
+import android.companion.virtual.VirtualDeviceManager;
+import android.companion.virtual.VirtualDeviceParams;
+import android.companion.virtual.sensor.VirtualSensor;
+import android.content.Context;
+import android.hardware.display.IVirtualDisplayCallback;
+import android.os.LocaleList;
+import android.util.ArraySet;
+import android.window.DisplayWindowPolicyController;
+
+import java.util.Set;
+import java.util.function.Consumer;
+
+/**
+ * Virtual device manager local service interface.
+ * Only for use within system server.
+ */
+public abstract class VirtualDeviceManagerInternal {
+
+    /** Interface to listen to the changes on the list of app UIDs running on any virtual device. */
+    public interface AppsOnVirtualDeviceListener {
+        /** Notifies that running apps on any virtual device has changed */
+        void onAppsOnAnyVirtualDeviceChanged(Set<Integer> allRunningUids);
+    }
+
+    /** Register a listener for changes of running app UIDs on any virtual device. */
+    public abstract void registerAppsOnVirtualDeviceListener(
+            @NonNull AppsOnVirtualDeviceListener listener);
+
+    /** Unregister a listener for changes of running app UIDs on any virtual device. */
+    public abstract void unregisterAppsOnVirtualDeviceListener(
+            @NonNull AppsOnVirtualDeviceListener listener);
+
+    /** Register a listener for removal of persistent device IDs. */
+    public abstract void registerPersistentDeviceIdRemovedListener(
+            @NonNull Consumer<String> persistentDeviceIdRemovedListener);
+
+    /** Unregister a listener for the removal of persistent device IDs. */
+    public abstract void unregisterPersistentDeviceIdRemovedListener(
+            @NonNull Consumer<String> persistentDeviceIdRemovedListener);
+
+    /**
+     * Notifies that the set of apps running on virtual devices has changed.
+     * This method only notifies the listeners when the union of running UIDs on all virtual devices
+     * has changed.
+     */
+    public abstract void onAppsOnVirtualDeviceChanged();
+
+    /**
+     * Notifies that an authentication prompt is about to be shown for an app with the given uid.
+     */
+    public abstract void onAuthenticationPrompt(int uid);
+
+    /**
+     * Notifies the given persistent device IDs have been removed.
+     */
+    public abstract void onPersistentDeviceIdsRemoved(Set<String> removedPersistentDeviceIds);
+
+    /**
+     * Gets the owner uid for a deviceId.
+     *
+     * @param deviceId which device we're asking about
+     * @return the uid of the app which created and owns the VirtualDevice with the given deviceId,
+     * or {@link android.os.Process#INVALID_UID} if no such device exists.
+     */
+    public abstract int getDeviceOwnerUid(int deviceId);
+
+    /**
+     * Returns the VirtualSensor for the given deviceId and sensor handle, if any.
+     *
+     * @param deviceId the virtual device that owns the sensor
+     * @param handle the sensor handle
+     * @return the VirtualSensor with the given handle, or {@code null} if no such sensor exists.
+     */
+    public abstract @Nullable VirtualSensor getVirtualSensor(int deviceId, int handle);
+
+    /**
+     * Finds VirtualDevices where an app is running.
+     *
+     * @param uid - the app's uid
+     * @return a set of id's of VirtualDevices where the app with the given uid is running.
+     * *Note* this only checks VirtualDevices, and does not include information about whether
+     * the app is running on the default device or not.
+     */
+    public abstract @NonNull ArraySet<Integer> getDeviceIdsForUid(int uid);
+
+    /**
+     * Notifies that a virtual display was created.
+     *
+     * @param virtualDevice The virtual device that owns the virtual display.
+     * @param displayId     The display id of the created virtual display.
+     * @param callback      The callback of the virtual display.
+     * @param dwpc          The DisplayWindowPolicyController of the created virtual display.
+     */
+    public abstract void onVirtualDisplayCreated(IVirtualDevice virtualDevice, int displayId,
+            IVirtualDisplayCallback callback, DisplayWindowPolicyController dwpc);
+
+    /**
+     * Notifies that a virtual display is removed.
+     *
+     * @param virtualDevice The virtual device where the virtual display located.
+     * @param displayId     The display id of the removed virtual display.
+     */
+    public abstract void onVirtualDisplayRemoved(IVirtualDevice virtualDevice, int displayId);
+
+    /**
+     * Returns the flags that should be added to any virtual displays created on this virtual
+     * device.
+     */
+    public abstract int getBaseVirtualDisplayFlags(IVirtualDevice virtualDevice);
+
+    /**
+     * Returns the preferred locale hints of the Virtual Device on which the given app is running,
+     * or {@code null} if the hosting virtual device doesn't have a virtual keyboard or the app is
+     * not on any virtual device.
+     *
+     * If an app is on multiple virtual devices, the locale of the virtual device created the
+     * earliest will be returned.
+     *
+     * See {@link android.hardware.input.VirtualKeyboardConfig#setLanguageTag() for how the locale
+     * is specified for virtual keyboard.
+     */
+    @Nullable
+    public abstract LocaleList getPreferredLocaleListForUid(int uid);
+
+    /**
+     * Returns true if the given {@code uid} is currently running on any virtual devices. This is
+     * determined by whether the app has any activities in the task stack on a virtual-device-owned
+     * display.
+     */
+    public abstract boolean isAppRunningOnAnyVirtualDevice(int uid);
+
+    /**
+     * @return whether the input device with the given id was created by a virtual device.
+     */
+    public abstract boolean isInputDeviceOwnedByVirtualDevice(int inputDeviceId);
+
+    /**
+     * Gets the ids of VirtualDisplays owned by a VirtualDevice.
+     *
+     * @param deviceId which device we're asking about
+     * @return the set of display ids for all VirtualDisplays owned by the device
+     */
+    public abstract @NonNull ArraySet<Integer> getDisplayIdsForDevice(int deviceId);
+
+    /**
+     * Checks whether the passed {@code deviceId} is a valid virtual device ID or not.
+     *
+     * <p>{@link Context#DEVICE_ID_DEFAULT} is not valid as it is the ID of the default
+     * device which is not a virtual device.</p>
+     */
+    public abstract boolean isValidVirtualDeviceId(int deviceId);
+
+    /**
+     * Returns the ID of the device which owns the display with the given ID.
+     *
+     * <p>In case the virtual display ID is invalid or doesn't belong to a virtual device, then
+     * {@link android.content.Context#DEVICE_ID_DEFAULT} is returned.</p>
+     */
+    public abstract int getDeviceIdForDisplayId(int displayId);
+
+    /** Returns the dim duration for the displays of the device with the given ID. */
+    public abstract long getDimDurationMillisForDeviceId(int deviceId);
+
+    /** Returns the screen off timeout of the displays of the device with the given ID. */
+    public abstract long getScreenOffTimeoutMillisForDeviceId(int deviceId);
+
+    /**
+     * Gets the persistent ID for the VirtualDevice with the given device ID.
+     *
+     * @param deviceId which device we're asking about
+     * @return the persistent ID for this device, or {@code null} if no such ID exists.
+     *
+     * @see VirtualDevice#getPersistentDeviceId()
+     */
+    public abstract @Nullable String getPersistentIdForDevice(int deviceId);
+
+    /**
+     * Returns all current persistent device IDs, including the ones for which no virtual device
+     * exists, as long as one may have existed or can be created.
+     */
+    public abstract @NonNull Set<String> getAllPersistentDeviceIds();
+
+    /**
+     * Creates a virtual device where applications can launch and receive input events injected by
+     * the creator.
+     *
+     * <p>A Companion Device Manager association is not required. Only the system may create such
+     * virtual devices.</p>
+     */
+    public abstract @NonNull VirtualDeviceManager.VirtualDevice createVirtualDevice(
+            @NonNull VirtualDeviceParams params);
+
+    /**
+     * Returns the details of the virtual device with the given ID, if any.
+     *
+     * <p>The returned object is a read-only representation of the virtual device that expose its
+     * properties.</p>
+     *
+     * <p>Note that if the virtual device is closed and becomes invalid, the returned object will
+     * not be updated and may contain stale values. Use a {@link VirtualDeviceListener} for real
+     * time updates of the availability of virtual devices.</p>
+     *
+     * @return the virtual device with the requested ID, or {@code null} if no such device exists or
+     *   it has already been closed.
+     */
+    @Nullable
+    public abstract VirtualDevice getVirtualDevice(int deviceId);
+}

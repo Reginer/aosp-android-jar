@@ -1,0 +1,9 @@
+package: "android.view.flags"
+container: "system"
+
+flag {
+    name: "enable_dispatch_on_scroll_changed"
+    namespace: "toolkit"
+    description: "Feature flag for enabling the dispatchOnScrollChanged method in ViewTreeObserver."
+    bug: "238109286"
+}

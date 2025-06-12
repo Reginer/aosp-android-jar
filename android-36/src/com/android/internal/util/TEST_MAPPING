@@ -1,0 +1,16 @@
+{
+  "presubmit": [
+    {
+      "name": "ScreenshotHelperTests",
+      "file_patterns": ["ScreenshotHelper"]
+    },
+    {
+      "name": "FrameworksCoreTests_xml",
+      "file_patterns": ["Xml"]
+    },
+    {
+      "name": "FrameworksCoreTests_internal_util_latency_tracker",
+      "file_patterns": ["LatencyTracker.java"]
+    }
+  ]
+}

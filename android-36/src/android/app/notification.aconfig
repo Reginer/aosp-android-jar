@@ -1,0 +1,397 @@
+package: "android.app"
+container: "system"
+
+# Note: When adding a new flag here, consider including the word "notification(s)" in the flag name
+# when appropriate, as it's not currently part of the namespace so it may not be obvious what the
+# flag relates to.
+
+flag {
+  name: "notifications_redesign_app_icons"
+  namespace: "systemui"
+  description: "Notifications Redesign: Use app icons in notification rows"
+  bug: "371174789"
+}
+
+flag {
+  name: "notifications_redesign_themed_app_icons"
+  namespace: "systemui"
+  description: "Notifications Redesign: Experiment to make app icons in notifications themed"
+  bug: "371174789"
+}
+
+flag {
+  name: "notifications_redesign_templates"
+  namespace: "systemui"
+  description: "Notifications Redesign: Update notification templates"
+  bug: "378660052"
+}
+
+# Flag for finalized API: In Nextfood but exported (and therefore must stay).
+flag {
+  name: "modes_api"
+  is_exported: true
+  namespace: "systemui"
+  description: "This flag controls new and updated DND apis"
+  bug: "300477976"
+}
+
+flag {
+  name: "modes_ui"
+  namespace: "systemui"
+  description: "This flag controls new and updated DND UIs; dependent on flag modes_api"
+  bug: "270703654"
+}
+
+flag {
+  name: "modes_ui_icons"
+  namespace: "systemui"
+  description: "Shows current Priority Mode icon in lockscreen, status bar, and QS; dependent on flags modes_api and modes_ui"
+  bug: "360399800"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "modes_ui_empty_shade"
+  namespace: "systemui"
+  description: "Shows mode that is currently blocking notifications in the empty shade; dependent on flags modes_api and modes_ui"
+  bug: "366003631"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "modes_ui_dnd_tile"
+  namespace: "systemui"
+  description: "Shows a dedicated tile for the DND mode; dependent on modes_ui"
+  bug: "401217520"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "modes_hsum"
+  namespace: "systemui"
+  description: "Fixes for modes (and DND/Zen in general) with HSUM or secondary users"
+  bug: "366203070"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "modes_multiuser"
+  namespace: "systemui"
+  description: "Fixes for modes (and DND/Zen in general) when callers are not the current user"
+  bug: "323163267"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "modes_cleanup_implicit"
+  namespace: "systemui"
+  description: "Deletes implicit modes if never customized and not used for some time. Depends on MODES_UI"
+  bug: "394087495"
+}
+
+flag {
+  name: "api_tvextender"
+  is_exported: true
+  namespace: "systemui"
+  description: "Guards new android.app.Notification.TvExtender api"
+  bug: "308164892"
+  is_fixed_read_only: true
+}
+
+flag {
+  name: "lifetime_extension_refactor"
+  is_exported: true
+  namespace: "systemui"
+  description: "Enables moving notification lifetime extension management from SystemUI to "
+      "Notification Manager Service"
+  bug: "299448097"
+}
+
+flag {
+  name: "check_autogroup_before_post"
+  namespace: "systemui"
+  description: "Does a check to see if notification should be autogrouped before posting, and if so groups before post."
+  bug: "330214226"
+}
+
+flag {
+  name: "notification_expansion_optional"
+  namespace: "systemui"
+  description: "Experiment to restore the pre-S behavior where standard notifications are not expandable unless they have actions."
+  bug: "339523906"
+}
+
+flag {
+  name: "notification_no_custom_view_conversations"
+  namespace: "systemui"
+  description: "Ensures that conversations are not allowed to use Custom Views."
+  bug: "368817201"
+}
+
+flag {
+  name: "keyguard_private_notifications"
+  namespace: "systemui"
+  description: "Fixes the behavior of KeyguardManager#setPrivateNotificationsAllowed()"
+  bug: "309920145"
+}
+
+flag {
+  name: "category_voicemail"
+  is_exported: true
+  namespace: "wear_sysui"
+  description: "Adds a new voicemail category for notifications"
+  bug: "322806700"
+}
+
+flag {
+  name: "notification_channel_vibration_effect_api"
+  is_exported: true
+  namespace: "systemui"
+  description: "This flag enables the API to allow setting VibrationEffect for NotificationChannels"
+  bug: "241732519"
+}
+
+flag {
+  name: "notif_channel_crop_vibration_effects"
+  namespace: "systemui"
+  description: "Limits the size of vibration effects that can be stored in a NotificationChannel"
+  bug: "345881518"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "notif_channel_estimate_effect_size"
+  namespace: "systemui"
+  description: "When reading vibration effects from parcel, estimate size instead of unnecessarily serializing to XML"
+  bug: "391908451"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "evenly_divided_call_style_action_layout"
+  namespace: "systemui"
+  description: "Evenly divides horizontal space for action buttons in CallStyle notifications."
+  bug: "268733030"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "secure_allowlist_token"
+  namespace: "systemui"
+  description: "Prevents allowlist_token from leaking out and foreign tokens from being accepted"
+  bug: "328254922"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "sort_section_by_time"
+  namespace: "systemui"
+  description: "Changes notification sort order to be by time within a section"
+  bug: "330193582"
+}
+
+flag {
+  name: "restrict_audio_attributes_call"
+  namespace: "systemui"
+  description: "Only CallStyle notifs can use USAGE_NOTIFICATION_RINGTONE"
+  bug: "331793339"
+}
+
+flag {
+  name: "restrict_audio_attributes_alarm"
+  namespace: "systemui"
+  description: "Only alarm category notifs can use USAGE_ALARM"
+  bug: "331793339"
+}
+
+flag {
+  name: "restrict_audio_attributes_media"
+  namespace: "systemui"
+  description: "No notifs can use USAGE_UNKNOWN or USAGE_MEDIA"
+  bug: "331793339"
+}
+
+flag {
+  name: "clean_up_spans_and_new_lines"
+  namespace: "systemui"
+  description: "Cleans up spans and unnecessary new lines from standard notification templates"
+  bug: "313439845"
+}
+
+flag {
+  name: "compact_heads_up_notification"
+  namespace: "systemui"
+  description: "[Minimal HUN] Enables the compact heads up notification feature"
+  bug: "270709257"
+}
+
+flag {
+  name: "compact_heads_up_notification_reply"
+  namespace: "systemui"
+  description: "[Minimal HUN] Enables the compact heads up notification reply capability for Conversation Notifications"
+  bug: "336229954"
+}
+
+flag {
+  name: "remove_remote_views"
+  namespace: "systemui"
+  description: "Removes all custom views"
+  bug: "342602960"
+}
+
+flag {
+  name: "redact_sensitive_content_notifications_on_lockscreen"
+  namespace: "systemui"
+  description: "redacts notifications on the lockscreen if they have the 'sensitiveContent' flag"
+  bug: "343631648"
+}
+
+flag {
+  name: "redaction_on_lockscreen_metrics"
+  namespace: "systemui"
+  description: "enables metrics when redacting notifications on the lockscreen"
+  bug: "343631648"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "expanding_public_view"
+  namespace: "systemui"
+  description: "enables user expanding the public view of a notification"
+  bug: "398853084"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+ }
+flag {
+  name: "notif_entry_creation_time_use_elapsed_realtime"
+  namespace: "systemui"
+  description: "makes the notification entry expect its creation time to be elapsedRealtime, not uptimeMillis"
+  bug: "389606876"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "api_rich_ongoing"
+  is_exported: true
+  namespace: "systemui"
+  description: "[RONs] Guards new RON-related APIs, including Notification.ProgressStyle"
+  bug: "337261753"
+}
+
+flag {
+  name: "ui_rich_ongoing"
+  is_exported: true
+  namespace: "systemui"
+  description: "[RONs] Guards new promotion logic and UI, including AOD notification and Colorization"
+  bug: "367705002"
+}
+
+flag {
+  name: "backup_restore_logging"
+  namespace: "systemui"
+  description: "Adds logging for notification/modes backup and restore events"
+  bug: "289524803"
+}
+
+flag {
+  name: "notification_classification_ui"
+  namespace: "systemui"
+  description: "Adds UI for NAS classification of notifications"
+  bug: "367996732"
+}
+
+flag {
+  name: "nm_binder_perf_permission_check"
+  namespace: "systemui"
+  description: "Use PermissionManager for areNotificationsEnabled() instead of NMS"
+  bug: "362981561"
+}
+
+flag {
+  name: "nm_binder_perf_cache_channels"
+  namespace: "systemui"
+  description: "Use IpcDataCache for notification channel/group lookups"
+  bug: "362981561"
+}
+
+flag {
+  name: "nm_binder_perf_throttle_notify"
+  namespace: "systemui"
+  description: "Rate-limit calls to enqueueNotificationWithTag client-side"
+  bug: "362981561"
+}
+
+flag {
+  name: "nm_binder_perf_log_nm_throttling"
+  namespace: "systemui"
+  description: "Log throttled operations (notify, cancel) to statsd. This flag will NOT be pushed past Trunkfood."
+  bug: "389918945"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "nm_binder_perf_get_apps_with_channels"
+  namespace: "systemui"
+  description: "Use a single binder call to get the set of apps with channels for a user"
+  bug: "362981561"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "no_sbnholder"
+  namespace: "systemui"
+  description: "removes sbnholder from NLS"
+  bug: "378128805"
+}
+
+flag {
+  name: "nm_summarization"
+  namespace: "systemui"
+  description: "Allows the NAS to summarize notifications"
+  bug: "390417189"
+  is_exported: true
+}
+
+flag {
+  name: "nm_summarization_ui"
+  namespace: "systemui"
+  description: "Shows summarized notifications in the UI"
+  bug: "390217880"
+}
+
+flag {
+  name: "nm_collapsed_lines"
+  namespace: "systemui"
+  description: "Shows 2 lines for collapsed notifications by default"
+  bug: "390217880"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}

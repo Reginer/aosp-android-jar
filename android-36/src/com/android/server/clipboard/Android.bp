@@ -1,0 +1,18 @@
+aconfig_declarations {
+    name: "clipboard_flags",
+    package: "com.android.server.clipboard",
+    container: "system",
+    srcs: ["*.aconfig"],
+}
+
+java_aconfig_library {
+    name: "clipboard_flags_lib",
+    aconfig_declarations: "clipboard_flags",
+}
+
+java_aconfig_library {
+    name: "clipboard_flags_host_lib",
+    host_supported: true,
+    libs: ["fake_device_config"],
+    aconfig_declarations: "clipboard_flags",
+}

@@ -1,0 +1,303 @@
+# See system/logging/logcat/event.logtags for a description of the format of this file.
+
+option java_package com.android.server
+
+# ---------------------------
+# BatteryService.java
+# ---------------------------
+2722 battery_level (level|1|6),(voltage|1|1),(temperature|1|1)
+2723 battery_status (status|1|5),(health|1|5),(present|1|5),(plugged|1|5),(technology|3)
+# This is logged when battery goes from discharging to charging.
+# It lets us count the total amount of time between charges and the discharge level
+2730 battery_discharge (duration|2|3),(minLevel|1|6),(maxLevel|1|6)
+
+
+# ---------------------------
+# PowerManagerService.java
+# ---------------------------
+# This is logged when the device is being forced to sleep (typically by
+# the user pressing the power button).
+2724 power_sleep_requested (wakeLocksCleared|1|1)
+# This is logged when the screen on broadcast has completed
+2725 power_screen_broadcast_send (wakelockCount|1|1)
+# This is logged when the screen broadcast has completed
+2726 power_screen_broadcast_done (on|1|5),(broadcastDuration|2|3),(wakelockCount|1|1)
+# This is logged when the screen on broadcast has completed
+2727 power_screen_broadcast_stop (which|1|5),(wakelockCount|1|1)
+# This is logged when the screen is turned on or off.
+2728 power_screen_state (offOrOn|1|5),(becauseOfUser|1|5),(totalTouchDownTime|2|3),(touchCycles|1|1),(latency|1|3)
+# This is logged when the partial wake lock (keeping the device awake
+# regardless of whether the screen is off) is acquired or released.
+2729 power_partial_wake_state (releasedorAcquired|1|5),(tag|3)
+# The device is being asked to go into a soft sleep (typically by the ungaze gesture).
+# It logs the time remaining before the device would've normally gone to sleep without the request.
+2731 power_soft_sleep_requested (savedwaketimems|2)
+# Power save state has changed. See BatterySaverController.java for the details.
+2739 battery_saver_mode (fullPrevOffOrOn|1|5),(adaptivePrevOffOrOn|1|5),(fullNowOffOrOn|1|5),(adaptiveNowOffOrOn|1|5),(interactive|1|5),(features|3|5),(reason|1|5)
+27390 battery_saving_stats (batterySaver|1|5),(interactive|1|5),(doze|1|5),(delta_duration|2|3),(delta_battery_drain|1|1),(delta_battery_drain_percent|1|6),(total_duration|2|3),(total_battery_drain|1|1),(total_battery_drain_percent|1|6)
+# Note when the user activity timeout has been overriden by ActivityManagerService
+27391 user_activity_timeout_override (override|2|3)
+27392 battery_saver_setting (threshold|1)
+
+
+# ---------------------------
+# ThermalManagerService.java
+# ---------------------------
+2737 thermal_changed (name|3),(type|1|5),(temperature|5),(sensor_status|1|5),(previous_system_status|1|5)
+
+#
+# Leave IDs through 2740 for more power logs (2730 used by battery_discharge above)
+#
+
+
+# ---------------------------
+# DeviceStorageMonitorService.java
+# ---------------------------
+# File on cache partition was deleted
+2748 cache_file_deleted (path|3)
+# Storage volume state and usable space in bytes
+2749 storage_state (uuid|3),(old_state|1),(new_state|1),(usable|2),(total|2)
+
+
+# ---------------------------
+# NotificationManagerService.java
+# ---------------------------
+# when a NotificationManager.notify is called. status: 0=post, 1=update, 2=ignored
+2750 notification_enqueue (uid|1|5),(pid|1|5),(pkg|3),(id|1|5),(tag|3),(userid|1|5),(notification|3),(status|1),(app_provided|1)
+# when someone tries to cancel a notification, the notification manager sometimes
+# calls this with flags too
+2751 notification_cancel (uid|1|5),(pid|1|5),(pkg|3),(id|1|5),(tag|3),(userid|1|5),(required_flags|1),(forbidden_flags|1),(reason|1|5),(listener|3)
+# when someone tries to cancel all of the notifications for a particular package
+2752 notification_cancel_all (uid|1|5),(pid|1|5),(pkg|3),(userid|1|5),(required_flags|1),(forbidden_flags|1),(reason|1|5),(listener|3)
+# when the notification panel is shown
+# Note: New tag range starts here since 2753+ have been used below.
+27500 notification_panel_revealed (items|1)
+# when the notification panel is hidden
+27501 notification_panel_hidden
+# when notifications are newly displayed on screen, or disappear from screen
+27510 notification_visibility_changed (newlyVisibleKeys|3),(noLongerVisibleKeys|3)
+# when notifications are expanded, or contracted
+27511 notification_expansion (key|3),(user_action|1),(expanded|1),(lifespan|1),(freshness|1),(exposure|1)
+# when a notification has been clicked
+27520 notification_clicked (key|3),(lifespan|1),(freshness|1),(exposure|1),(rank|1),(count|1)
+# when a notification action button has been clicked
+27521 notification_action_clicked (key|3),(piIdentifier|3),(pendingIntent|3),(action_index|1),(lifespan|1),(freshness|1),(exposure|1),(rank|1),(count|1)
+# when a notification has been canceled
+27530 notification_canceled (key|3),(reason|1),(lifespan|1),(freshness|1),(exposure|1),(rank|1),(count|1),(listener|3)
+# replaces 27510 with a row per notification
+27531 notification_visibility (key|3),(visibile|1),(lifespan|1),(freshness|1),(exposure|1),(rank|1)
+# a notification emited noise, vibration, or light
+27532 notification_alert (key|3),(buzz|1),(beep|1),(blink|1),(politeness|1),(mute_reason|1)
+# a notification was added to a autogroup
+27533 notification_autogrouped (key|3)
+# notification was removed from an autogroup
+275534 notification_unautogrouped (key|3)
+# when a notification is adjusted via assistant
+27535 notification_adjusted (key|3),(adjustment_type|3),(new_value|3)
+# when a notification cancellation is prevented by the system
+27536 notification_cancel_prevented (key|3)
+# when a summary notification is converted to a regular notification because of force autogrouping
+27537 notification_summary_converted (key|3)
+
+# ---------------------------
+# Watchdog.java
+# ---------------------------
+2802 watchdog (Service|3)
+2803 watchdog_proc_pss (Process|3),(Pid|1|5),(Pss|1|2)
+2804 watchdog_soft_reset (Process|3),(Pid|1|5),(MaxPss|1|2),(Pss|1|2),(Skip|3)
+2805 watchdog_hard_reset (Process|3),(Pid|1|5),(MaxPss|1|2),(Pss|1|2)
+2806 watchdog_pss_stats (EmptyPss|1|2),(EmptyCount|1|1),(BackgroundPss|1|2),(BackgroundCount|1|1),(ServicePss|1|2),(ServiceCount|1|1),(VisiblePss|1|2),(VisibleCount|1|1),(ForegroundPss|1|2),(ForegroundCount|1|1),(NoPssCount|1|1)
+2807 watchdog_proc_stats (DeathsInOne|1|1),(DeathsInTwo|1|1),(DeathsInThree|1|1),(DeathsInFour|1|1),(DeathsInFive|1|1)
+2808 watchdog_scheduled_reboot (Now|2|1),(Interval|1|3),(StartTime|1|3),(Window|1|3),(Skip|3)
+2809 watchdog_meminfo (MemFree|1|2),(Buffers|1|2),(Cached|1|2),(Active|1|2),(Inactive|1|2),(AnonPages|1|2),(Mapped|1|2),(Slab|1|2),(SReclaimable|1|2),(SUnreclaim|1|2),(PageTables|1|2)
+2810 watchdog_vmstat (runtime|2|3),(pgfree|1|1),(pgactivate|1|1),(pgdeactivate|1|1),(pgfault|1|1),(pgmajfault|1|1)
+2811 watchdog_requested_reboot (NoWait|1|1),(ScheduleInterval|1|3),(RecheckInterval|1|3),(StartTime|1|3),(Window|1|3),(MinScreenOff|1|3),(MinNextAlarm|1|3)
+
+# ---------------------------
+# RescueParty.java
+# ---------------------------
+2900 rescue_note (uid|1),(count|1),(window|2)
+2901 rescue_level (level|1),(trigger_uid|1)
+2902 rescue_success (level|1)
+2903 rescue_failure (level|1),(msg|3)
+
+# ---------------------------
+# BackupManagerService.java
+# ---------------------------
+2820 backup_data_changed (Package|3)
+2821 backup_start (Transport|3)
+2822 backup_transport_failure (Package|3)
+2823 backup_agent_failure (Package|3),(Message|3)
+2824 backup_package (Package|3),(Size|1|2)
+2825 backup_success (Packages|1|1),(Time|1|3)
+2826 backup_reset (Transport|3)
+2827 backup_initialize
+2828 backup_requested (Total|1|1),(Key-Value|1|1),(Full|1|1)
+2829 backup_quota_exceeded (Package|3)
+2830 restore_start (Transport|3),(Source|2|5)
+2831 restore_transport_failure
+2832 restore_agent_failure (Package|3),(Message|3)
+2833 restore_package (Package|3),(Size|1|2)
+2834 restore_success (Packages|1|1),(Time|1|3)
+
+2840 full_backup_package (Package|3)
+2841 full_backup_agent_failure (Package|3),(Message|3)
+2842 full_backup_transport_failure
+2843 full_backup_success (Package|3)
+2844 full_restore_package (Package|3)
+2845 full_backup_quota_exceeded (Package|3)
+2846 full_backup_cancelled (Package|3),(Message|3)
+
+2850 backup_transport_lifecycle (Transport|3),(Bound|1|1)
+2851 backup_transport_connection (Transport|3),(Connected|1|1)
+
+
+# ---------------------------
+# SystemServer.java
+# ---------------------------
+# SystemServer.run() starts:
+3010 boot_progress_system_run (time|2|3)
+3011 system_server_start (start_count|1),(uptime|2|3),(elapse_time|2|3)
+
+# ---------------------------
+# PackageManagerService.java
+# ---------------------------
+# Package Manager starts:
+3060 boot_progress_pms_start (time|2|3)
+# Package Manager .apk scan starts:
+3070 boot_progress_pms_system_scan_start (time|2|3)
+# Package Manager .apk scan starts:
+3080 boot_progress_pms_data_scan_start (time|2|3)
+# Package Manager .apk scan ends:
+3090 boot_progress_pms_scan_end (time|2|3)
+# Package Manager ready:
+3100 boot_progress_pms_ready (time|2|3)
+# + check activity_launch_time for Home app
+# Value of "unknown sources" setting at app install time
+3110 unknown_sources_enabled (value|1)
+# Package Manager critical info
+3120 pm_critical_info (msg|3)
+# Disk usage stats for verifying quota correctness
+3121 pm_package_stats (manual_time|2|3),(quota_time|2|3),(manual_data|2|2),(quota_data|2|2),(manual_cache|2|2),(quota_cache|2|2)
+# Snapshot statistics
+3130 pm_snapshot_stats (build_count|1|1),(reuse_count|1|1),(big_builds|1|1),(short_lived|1|1),(max_build_time|1|3),(cumm_build_time|2|3)
+# Snapshot rebuild instance
+3131 pm_snapshot_rebuild (build_time|1|3),(lifetime|1|3)
+# Caller information to clear application data
+3132 pm_clear_app_data_caller (pid|1),(uid|1),(package|3)
+
+# ---------------------------
+# InputMethodManagerService.java
+# ---------------------------
+# Re-connecting to input method service because we haven't received its interface
+32000 imf_force_reconnect_ime (IME|4),(Time Since Connect|2|3),(Showing|1|1)
+# Indicates server show input method
+32001 imf_show_ime (token|3),(window|3),(reason|3),(softInputMode|3)
+# Indicates server hide input method
+32002 imf_hide_ime (token|3),(window|3),(reason|3),(softInputMode|3)
+
+
+# ---------------------------
+# WallpaperManagerService.java
+# ---------------------------
+33000 wp_wallpaper_crashed (component|3)
+
+# ---------------------------
+# Device idle
+# ---------------------------
+34000 device_idle (state|1|5), (reason|3)
+34001 device_idle_step
+34002 device_idle_wake_from_idle (is_idle|1|5), (reason|3)
+34003 device_idle_on_start
+34004 device_idle_on_phase (what|3)
+34005 device_idle_on_complete
+34006 device_idle_off_start (reason|3)
+34007 device_idle_off_phase (what|3)
+34008 device_idle_off_complete
+34009 device_idle_light (state|1|5), (reason|3)
+34010 device_idle_light_step
+
+# ---------------------------
+# DisplayManagerService.java
+# ---------------------------
+# Auto-brightness adjustments by the user.
+35000 auto_brightness_adj (old_lux|5),(old_brightness|5),(new_lux|5),(new_brightness|5)
+
+# ---------------------------
+# Installer.java
+# ---------------------------
+# Caller Information to clear application data
+39000 installer_clear_app_data_caller (pid|1),(uid|1),(package|3),(flags|1)
+# Call stack to clear application data
+39001 installer_clear_app_data_call_stack (method|3),(class|3),(file|3),(line|1)
+
+# ---------------------------
+# ConnectivityService.java
+# ---------------------------
+# Connectivity state changed
+50020 connectivity_state_changed (type|1),(subtype|1),(state|1)
+
+
+# ---------------------------
+# NetworkStatsService.java
+# ---------------------------
+51100 netstats_mobile_sample (xt_rx_bytes|2|2),(xt_tx_bytes|2|2),(xt_rx_pkts|2|1),(xt_tx_pkts|2|1),(uid_rx_bytes|2|2),(uid_tx_bytes|2|2),(uid_rx_pkts|2|1),(uid_tx_pkts|2|1),(trusted_time|2|3)
+51101 netstats_wifi_sample (xt_rx_bytes|2|2),(xt_tx_bytes|2|2),(xt_rx_pkts|2|1),(xt_tx_pkts|2|1),(uid_rx_bytes|2|2),(uid_tx_bytes|2|2),(uid_rx_pkts|2|1),(uid_tx_pkts|2|1),(trusted_time|2|3)
+
+
+# ---------------------------
+# LockdownVpnTracker.java
+# ---------------------------
+51200 lockdown_vpn_connecting (egress_net|1)
+51201 lockdown_vpn_connected (egress_net|1)
+51202 lockdown_vpn_error (egress_net|1)
+
+# ---------------------------
+# ConfigUpdateInstallReceiver.java
+# ---------------------------
+51300 config_install_failed (dir|3)
+
+# ---------------------------
+# IntentFirewall.java
+# ---------------------------
+51400 ifw_intent_matched (Intent Type|1|5),(Component Name|3),(Caller Uid|1|5),(Caller Pkg Count|1|1),(Caller Pkgs|3),(Action|3),(MIME Type|3),(URI|3),(Flags|1|5)
+
+# ---------------------------
+# IdleMaintenanceService.java
+# ---------------------------
+51500 idle_maintenance_window_start (time|2|3), (lastUserActivity|2|3), (batteryLevel|1|6), (batteryCharging|1|5)
+51501 idle_maintenance_window_finish (time|2|3), (lastUserActivity|2|3), (batteryLevel|1|6), (batteryCharging|1|5)
+
+# ---------------------------
+# StorageManagerService.java
+# ---------------------------
+2755 fstrim_start (time|2|3)
+2756 fstrim_finish (time|2|3)
+
+# ---------------------------
+# Job scheduler
+# ---------------------------
+8000 job_deferred_execution (time|2|3)
+
+# AudioService.java
+# ---------------------------
+40000 volume_changed (stream|1), (prev_level|1), (level|1), (max_level|1), (caller|3)
+40001 stream_devices_changed (stream|1), (prev_devices|1), (devices|1)
+
+# ---------------------------
+# GestureLauncherService.java
+# ---------------------------
+40100 camera_gesture_triggered (gesture_on_time|2|3), (sensor1_on_time|2|3), (sensor2_on_time|2|3), (event_extra|1|1)
+
+# ---------------------------
+# timezone/RulesManagerService.java
+# ---------------------------
+51600 timezone_trigger_check (token|3)
+51610 timezone_request_install (token|3)
+51611 timezone_install_started (token|3)
+51612 timezone_install_complete (token|3), (result|1)
+51620 timezone_request_uninstall (token|3)
+51621 timezone_uninstall_started (token|3)
+51622 timezone_uninstall_complete (token|3), (result|1)
+51630 timezone_request_nothing (token|3)
+51631 timezone_nothing_complete (token|3)

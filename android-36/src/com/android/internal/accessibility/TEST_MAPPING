@@ -1,0 +1,10 @@
+{
+  "imports": [
+    {
+      "path": "frameworks/base/services/accessibility/TEST_MAPPING"
+    },
+    {
+      "path": "frameworks/base/packages/SystemUI/src/com/android/systemui/accessibility/TEST_MAPPING"
+    }
+  ]
+}

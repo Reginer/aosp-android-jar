@@ -1,0 +1,529 @@
+package: "com.android.server.display.feature.flags"
+container: "system"
+
+# Important: Flags must be accessed through DisplayManagerFlags.
+
+flag {
+    name: "is_always_on_available_api"
+    namespace: "display_manager"
+    description: "Allows querying of AOD availability"
+    bug: "324046664"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "enable_port_in_display_layout"
+    namespace: "display_manager"
+    description: "Allows refering to displays by port in display layout"
+    bug: "303058435"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "resolution_backup_restore"
+    namespace: "display_manager"
+    description: "Backup/Restore support for High Resolution setting"
+    bug: "321821289"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_power_throttling_clamper"
+    namespace: "display_manager"
+    description: "Feature flag for Power Throttling Clamper"
+    bug: "294777007"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_adaptive_tone_improvements_1"
+    namespace: "display_manager"
+    description: "Feature flag for Adaptive Tone Improvements"
+    bug: "299550755"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_adaptive_tone_improvements_2"
+    namespace: "display_manager"
+    description: "Feature flag for Further Adaptive Tone Improvements"
+    bug: "294762632"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_display_resolution_range_voting"
+    namespace: "display_manager"
+    description: "Feature flag to enable voting for ranges of resolutions"
+    bug: "299297058"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_user_preferred_mode_vote"
+    namespace: "display_manager"
+    description: "Feature flag to use voting for UserPreferredMode for display"
+    bug: "297018612"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_mode_limit_for_external_display"
+    namespace: "display_manager"
+    description: "Feature limiting external display resolution and refresh rate"
+    bug: "242093547"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "display_topology"
+    namespace: "display_manager"
+    description: "Display topology for moving cursors and windows between extended displays"
+    bug: "364906028"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_displays_refresh_rates_synchronization"
+    namespace: "display_manager"
+    description: "Enables synchronization of refresh rates across displays"
+    bug: "294015845"
+}
+
+flag {
+    name: "enable_display_offload"
+    namespace: "display_manager"
+    description: "Feature flag for DisplayOffload"
+    bug: "299521647"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_connected_display_error_handling"
+    namespace: "display_manager"
+    description: "Feature flag for connected display error handling"
+    bug: "283461472"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "back_up_smooth_display_and_force_peak_refresh_rate"
+    namespace: "display_manager"
+    description: "Feature flag for backing up Smooth Display and Force Peak Refresh Rate"
+    bug: "299552529"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "even_dimmer"
+    namespace: "display_manager"
+    description: "Feature flag for extending the brightness below traditional range"
+    bug: "294760970"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "brightness_int_range_user_perception"
+    namespace: "display_manager"
+    description: "Feature flag for converting the brightness integer range to the user perception scale"
+    bug: "319236956"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_restrict_display_modes"
+    namespace: "display_manager"
+    description: "Feature flag for restriction display modes api"
+    bug: "284866750"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_vsync_low_power_vote"
+    namespace: "display_manager"
+    description: "Feature flag for vsync low power vote"
+    bug: "314920284"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_vsync_low_light_vote"
+    namespace: "display_manager"
+    description: "Feature flag for vsync low light vote"
+    bug: "314921657"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "brightness_wear_bedtime_mode_clamper"
+    namespace: "display_manager"
+    description: "Feature flag for the Wear Bedtime mode brightness clamper"
+    bug: "293613040"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "auto_brightness_modes"
+    namespace: "display_manager"
+    description: "Feature flag for generic auto-brightness modes"
+    bug: "293613040"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "fast_hdr_transitions"
+    namespace: "display_manager"
+    description: "Feature flag for fast transitions into/out of HDR"
+    bug: "292124102"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "always_rotate_display_device"
+    namespace: "display_manager"
+    description: "Use rotation from WindowManager no matter whether FLAG_ROTATES_WITH_CONTENT is set or not"
+    bug: "302326003"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_pixel_anisotropy_correction"
+    namespace: "display_manager"
+    description: "Feature flag for enabling display anisotropy correction through LogicalDisplay upscaling"
+    bug: "317363416"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "sensor_based_brightness_throttling"
+    namespace: "display_manager"
+    description: "Feature flag for enabling brightness throttling using sensor from config."
+    bug: "294900859"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "refactor_display_power_controller"
+    namespace: "display_manager"
+    description: "Feature flag for refactoring   the DisplayPowerController and associated components"
+    bug: "294444204"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "idle_screen_refresh_rate_timeout"
+    namespace: "display_manager"
+    description: "Feature flag for reducing the refresh rate when the screen is idle after a timeout"
+    bug: "310026579"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "use_fusion_prox_sensor"
+    namespace: "display_manager"
+    description: "Feature flag to control usage of a Fusion Proximity sensor if configued."
+    bug: "306203895"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "highest_hdr_sdr_ratio_api"
+    namespace: "display_manager"
+    description: "Feature flag for an API to get the highest defined HDR/SDR ratio for a display."
+    bug: "335181559"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "doze_brightness_float"
+    namespace: "display_manager"
+    description: "Define doze brightness in the float scale [0, 1]."
+    bug: "343796384"
+}
+
+flag {
+    name: "normal_brightness_for_doze_parameter"
+    namespace: "wear_frameworks"
+    description: "Feature flag for the parameter specifying whether brightness should be adjusted while dozing."
+    bug: "343283838"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_peak_refresh_rate_physical_limit"
+    namespace: "display_manager"
+    description: "Flag for adding physical refresh rate limit if smooth display setting is on "
+    bug: "332413475"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "ignore_app_preferred_refresh_rate_request"
+    namespace: "display_manager"
+    description: "Feature flag for DisplayManager to ignore preferred refresh rate app request. It will be handled by SF only."
+    bug: "330810426"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_synthetic_60hz_modes"
+    namespace: "display_manager"
+    description: "Feature flag for DisplayManager to enable synthetic 60Hz modes for vrr displays"
+    bug: "338183249"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "offload_doze_override_holds_wakelock"
+    namespace: "display_manager"
+    description: "DisplayPowerController holds a suspend-blocker while changing the display state on behalf of offload doze override."
+    bug: "338403827"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "offload_session_cancel_block_screen_on"
+    namespace: "wear_frameworks"
+    description: "Flag for DisplayPowerController to start notifying DisplayOffloadSession about cancelling screen on blocker."
+    bug: "331725519"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "new_hdr_brightness_modifier"
+    namespace: "display_manager"
+    description: "Flag for new HDR brightness clamper."
+    bug: "331275392"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "virtual_display_limit"
+    namespace: "display_manager"
+    description: "Limit the number of virtual displays that can be created."
+    bug: "261791612"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "idle_screen_config_in_subscribing_light_sensor"
+    namespace: "display_manager"
+    description: "Account for Idle screen refresh rate configs while subscribing to light sensor"
+    bug: "358019330"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_waiting_confirmation_before_mirroring"
+    namespace: "display_manager"
+    description: "Allow ContentRecorder checking whether user confirmed mirroring after boot"
+    bug: "361698995"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_battery_stats_for_all_displays"
+    namespace: "display_manager"
+    description: "Flag to enable battery stats for all displays."
+    bug: "366112793"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_apply_display_changed_during_display_added"
+    namespace: "display_manager"
+    description: "Apply display changes after display added"
+    bug: "368131655"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "block_autobrightness_changes_on_stylus_usage"
+    namespace: "display_manager"
+    description: "Block the usage of ALS to control the display brightness when stylus is being used"
+    bug: "352411468"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_user_refresh_rate_for_external_display"
+    namespace: "display_manager"
+    description: "Apply refresh rate from user preferred display mode to external displays"
+    bug: "370657357"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_has_arr_support"
+    namespace: "core_graphics"
+    description: "Flag for an API to get whether display supports ARR or not"
+    bug: "361433651"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "auto_brightness_mode_bedtime_wear"
+    namespace: "wear_frameworks"
+    description: "Feature flag for loading and applying auto-brightness curve while wear bedtime mode enabled."
+    bug: "350617205"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_get_suggested_frame_rate"
+    namespace: "core_graphics"
+    description: "Flag for an API to get suggested frame rates"
+    bug: "361433796"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "display_listener_performance_improvements"
+    namespace: "display_manager"
+    description: "Feature flag for an API to let the apps subscribe to a specific property change of the Display."
+    bug: "372700957"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "enable_get_supported_refresh_rates"
+    namespace: "core_graphics"
+    description: "Flag to use the surfaceflinger rates for getSupportedRefreshRates"
+    bug: "365163968"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "enable_plugin_manager"
+    namespace: "display_manager"
+    description: "Flag to enable DisplayManager plugins"
+    bug: "354059797"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_hdr_override_plugin_type"
+    namespace: "display_manager"
+    description: "Enable hdr override plugin type"
+    bug: "389873155"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_display_content_mode_management"
+    namespace: "lse_desktop_experience"
+    description: "Enable switching the content mode of connected displays between mirroring and extended. Also change the default content mode to extended mode."
+    bug: "378385869"
+}
+
+flag {
+    name: "subscribe_granular_display_events"
+    namespace: "display_manager"
+    description: "Enable subscription to granular display change events."
+    bug: "379250634"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "base_density_for_external_displays"
+    namespace: "lse_desktop_experience"
+    description: "Feature flag for setting a base density for external displays."
+    bug: "382954433"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "framerate_override_triggers_rr_callbacks"
+    namespace: "display_manager"
+    description: "Feature flag to trigger the RR callbacks when framerate overridding happens."
+    bug: "390113266"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "refresh_rate_event_for_foreground_apps"
+    namespace: "display_manager"
+    description: "Send Refresh Rate events only for the apps in foreground."
+    bug: "390107600"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "display_category_built_in"
+    namespace: "windowing_sdk"
+    description: "Add a new category to get the built in displays."
+    bug: "293651324"
+    is_fixed_read_only: false
+}
+
+flag {
+    name: "committed_state_separate_event"
+    namespace: "display_manager"
+    description: "Move Display committed state into a separate event"
+    bug: "342192387"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+
+flag {
+    name: "separate_timeouts"
+    namespace: "lse_desktop_experience"
+    description: "Allow separate timeouts for different power groups"
+    bug: "402356291"
+}
+
+flag {
+    name: "delay_implicit_rr_registration_until_rr_accessed"
+    namespace: "display_manager"
+    description: "Feature flag for clients to subscribe to RR changes by either explicitly subscribing for refresh rate changes or request for refresh rate data"
+    bug: "391828526"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}

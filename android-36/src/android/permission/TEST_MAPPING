@@ -1,0 +1,15 @@
+{
+    "presubmit": [
+        {
+            "name": "CtsPermissionTestCases_Platform"
+        }
+    ],
+    "postsubmit": [
+        {
+            "name": "CtsVirtualDevicesAudioTestCases_audio_virtualaudiopermissiontest"
+        },
+        {
+            "name": "CtsVirtualDevicesAppLaunchTestCases_applaunch_virtualdevicepermissiontest"
+        }
+    ]
+}

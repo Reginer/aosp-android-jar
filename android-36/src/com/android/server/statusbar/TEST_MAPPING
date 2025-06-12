@@ -1,0 +1,10 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsTileServiceTestCases"
+    },
+    {
+      "name": "CtsAppTestCases_cts_requesttileserviceaddtest"
+    }
+  ]
+}

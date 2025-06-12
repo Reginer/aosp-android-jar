@@ -1,0 +1,22 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsGameManagerTestCases"
+    },
+    {
+      "name": "CtsStatsdAtomHostTestCases_statsdatom_gamemanager",
+      "file_patterns": [
+        "(/|^)GameManagerService.java"
+      ]
+    },
+    {
+      "name": "FrameworksMockingServicesTests_android_server_app"
+    },
+    {
+      "name": "FrameworksCoreGameManagerTests_android_app",
+      "file_patterns": [
+        "(/|^)GameManagerService.java", "(/|^)GameManagerSettings.java"
+      ]
+    }
+  ]
+}

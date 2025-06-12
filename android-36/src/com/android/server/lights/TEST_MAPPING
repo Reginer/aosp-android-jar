@@ -1,0 +1,10 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsHardwareTestCases_hardware_lights"
+    },
+    {
+      "name": "FrameworksServicesTests_android_server_lights"
+    }
+  ]
+}

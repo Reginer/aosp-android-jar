@@ -1,0 +1,8 @@
+{
+  "presubmit": [
+    // TODO(b/245615658): fix flaky CTS test CtsGameServiceTestCases and add it as presubmit
+    {
+      "name": "FrameworksMockingServicesTests_games_Presubmit"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_om"
+    },
+    {
+      "name": "OverlayDeviceTests"
+    },
+    {
+      "name": "OverlayHostTests"
+    },
+    {
+      "name": "CtsOverlayHostTestCases"
+    }
+  ],
+  "presubmit-large": [
+    {
+      "name": "OverlayRemountedTest"
+    }
+  ]
+}

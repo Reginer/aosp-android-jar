@@ -1,0 +1,43 @@
+package: "com.android.server.biometrics"
+container: "system"
+
+flag {
+  name: "face_vhal_feature"
+  namespace: "biometrics_framework"
+  description: "This flag controls tunscany virtual HAL feature"
+  bug: "294254230"
+}
+
+flag {
+  name: "use_vhal_for_testing"
+  namespace: "biometrics_framework"
+  description: "This flag controls whether virtual HAL is used for testing instead of TestHal "
+  bug: "294254230"
+}
+
+flag {
+  name: "notify_fingerprints_loe"
+  namespace: "biometrics_framework"
+  description: "This flag controls whether a notification should be sent to notify user when loss of enrollment happens"
+  bug: "351036558"
+  metadata {
+      purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "set_ignore_speed_up"
+  namespace: "biometrics_framework"
+  description: "This flag controls whether setIgnoreDisplayTouches is called directly on session from FingerprintProvider"
+  bug: "359289274"
+  metadata {
+      purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "frr_dialog_improvement"
+  namespace: "biometrics_framework"
+  description: "This flag controls FRR dialog improvement"
+  bug: "380800403"
+}

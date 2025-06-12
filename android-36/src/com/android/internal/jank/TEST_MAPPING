@@ -1,0 +1,11 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_internal_jank",
+      "file_patterns": [
+        "core/java/com/android/internal/jank/.*",
+        "core/tests/coretests/src/com/android/internal/jank/.*"
+      ]
+    }
+  ]
+}

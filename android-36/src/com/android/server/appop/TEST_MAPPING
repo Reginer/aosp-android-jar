@@ -1,0 +1,52 @@
+{
+    "presubmit": [
+        {
+            "name": "CtsAppOpsTestCases"
+        },
+        {
+            "name": "CtsAppOps2TestCases"
+        },
+        {
+            "name": "FrameworksServicesTests_android_server_appop"
+        },
+        {
+            "name": "FrameworksMockingServicesTests_android_server_appop"
+        },
+        {
+            "name": "CtsPermissionTestCases_Platform"
+        },
+        {
+            "name": "CtsAppTestCases_cts_activitymanagerapi29test"
+        },
+        {
+            "name": "CtsStatsdAtomHostTestCases",
+            "options": [
+                {
+                    "include-filter": "android.cts.statsdatom.appops.AppOpsTests#testAppOps"
+                }
+            ]
+        }        
+    ],
+    "postsubmit": [
+        {
+            "name": "CtsAppOpsTestCases"
+        },
+        {
+            "name": "CtsPermissionTestCases",
+            "options": [
+                {
+                    "include-filter": "android.permission.cts.BackgroundPermissionsTest"
+                },
+                {
+                    "include-filter": "android.permission.cts.SplitPermissionTest"
+                },
+                {
+                    "include-filter": "android.permission.cts.PermissionFlagsTest"
+                },
+                {
+                    "include-filter": "android.permission.cts.SharedUidPermissionsTest"
+                }
+            ]
+        }
+    ]
+}

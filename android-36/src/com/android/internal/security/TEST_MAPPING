@@ -1,0 +1,17 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_internal_security"
+    },
+    {
+      "name": "UpdatableSystemFontTest",
+      "file_patterns": ["VerityUtils\\.java"]
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "FsVerityTest",
+      "file_patterns": ["VerityUtils\\.java"]
+    }
+  ]
+}

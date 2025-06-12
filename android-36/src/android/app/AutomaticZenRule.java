@@ -1,0 +1,883 @@
+/**
+ * Copyright (c) 2015, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.app;
+
+import static com.android.internal.util.Preconditions.checkArgument;
+
+import android.annotation.DrawableRes;
+import android.annotation.IntDef;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.app.NotificationManager.InterruptionFilter;
+import android.content.ComponentName;
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.service.notification.Condition;
+import android.service.notification.ZenDeviceEffects;
+import android.service.notification.ZenPolicy;
+import android.view.WindowInsetsController;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.Objects;
+
+/**
+ * Rule instance information for a zen (aka DND or Attention Management) mode.
+ */
+public final class AutomaticZenRule implements Parcelable {
+    /* @hide */
+    private static final int ENABLED = 1;
+    /* @hide */
+    private static final int DISABLED = 0;
+
+    /**
+     * Rule is of an unknown type. This is the default value if not provided by the owning app,
+     * and the value returned if the true type was added in an API level higher than the calling
+     * app's targetSdk.
+     */
+    public static final int TYPE_UNKNOWN = -1;
+    /**
+     * Rule is of a known type, but not one of the specific types.
+     */
+    public static final int TYPE_OTHER = 0;
+    /**
+     * The type for rules triggered according to a time-based schedule.
+     */
+    public static final int TYPE_SCHEDULE_TIME = 1;
+    /**
+     * The type for rules triggered by calendar events.
+     */
+    public static final int TYPE_SCHEDULE_CALENDAR = 2;
+    /**
+     * The type for rules triggered by bedtime/sleeping, like time of day, or snore detection.
+     *
+     * <p>Only the 'Wellbeing' app may own rules of this type.
+     */
+    public static final int TYPE_BEDTIME = 3;
+    /**
+     * The type for rules triggered by driving detection, like Bluetooth connections or vehicle
+     * sounds.
+     */
+    public static final int TYPE_DRIVING = 4;
+    /**
+     * The type for rules triggered by the user entering an immersive activity, like opening an app
+     * using {@link WindowInsetsController#hide(int)}.
+     */
+    public static final int TYPE_IMMERSIVE = 5;
+    /**
+     * The type for rules that have a {@link ZenPolicy} that implies that the
+     * device should not make sound and potentially hide some visual effects; may be triggered
+     * when entering a location where silence is requested, like a theater.
+     */
+    public static final int TYPE_THEATER = 6;
+    /**
+     * The type for rules created and managed by a device owner. These rules may not be fully
+     * editable by the device user.
+     *
+     * <p>Only a 'Device Owner' app may own rules of this type.
+     */
+    public static final int TYPE_MANAGED = 7;
+
+    /** @hide */
+    @IntDef(prefix = { "TYPE_" }, value = {
+            TYPE_UNKNOWN, TYPE_OTHER, TYPE_SCHEDULE_TIME, TYPE_SCHEDULE_CALENDAR, TYPE_BEDTIME,
+            TYPE_DRIVING, TYPE_IMMERSIVE, TYPE_THEATER, TYPE_MANAGED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {}
+
+    /**
+     * Enum for the user-modifiable fields in this object.
+     * @hide
+     */
+    @IntDef(flag = true, prefix = { "FIELD_" }, value = {
+            FIELD_NAME,
+            FIELD_INTERRUPTION_FILTER,
+            FIELD_ICON
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ModifiableField {}
+
+    /**
+     * @hide
+     */
+    public static final int FIELD_NAME = 1 << 0;
+    /**
+     * @hide
+     */
+    public static final int FIELD_INTERRUPTION_FILTER = 1 << 1;
+    /**
+     * @hide
+     */
+    public static final int FIELD_ICON = 1 << 2;
+
+    private boolean enabled;
+    private String name;
+    private @InterruptionFilter int interruptionFilter;
+    private Uri conditionId;
+    private ComponentName owner;
+    private ComponentName configurationActivity;
+    private long creationTime;
+    private ZenPolicy mZenPolicy;
+    private ZenDeviceEffects mDeviceEffects;
+    private String mPkg;
+    private int mType = TYPE_UNKNOWN;
+    private int mIconResId;
+    private String mTriggerDescription;
+    private boolean mAllowManualInvocation;
+
+    /**
+     * The maximum string length for any string contained in this automatic zen rule. This pertains
+     * both to fields in the rule itself (such as its name) and items with sub-fields.
+     * @hide
+     */
+    public static final int MAX_STRING_LENGTH = 500;
+
+    /**
+     * The maximum string length for the trigger description rule, given UI constraints.
+     * @hide
+     */
+    public static final int MAX_DESC_LENGTH = 150;
+
+    /**
+     * Creates an automatic zen rule.
+     *
+     * @param name The name of the rule.
+     * @param owner The Condition Provider service that owns this rule.
+     * @param interruptionFilter The interruption filter defines which notifications are allowed to
+     *                           interrupt the user (e.g. via sound &amp; vibration) while this rule
+     *                           is active.
+     * @param enabled Whether the rule is enabled.
+     *
+     * @deprecated Use {@link AutomaticZenRule.Builder} to construct an {@link AutomaticZenRule}.
+     */
+    @Deprecated
+    public AutomaticZenRule(String name, ComponentName owner, Uri conditionId,
+            int interruptionFilter, boolean enabled) {
+        this(name, owner, null, conditionId, null, interruptionFilter, enabled);
+    }
+
+    /**
+     * Creates an automatic zen rule.
+     *
+     * <p>Note: Prefer {@link AutomaticZenRule.Builder} to construct an {@link AutomaticZenRule}.
+     *
+     * @param name The name of the rule.
+     * @param owner The Condition Provider service that owns this rule. This can be null if you're
+     *              using {@link NotificationManager#setAutomaticZenRuleState(String, Condition)}
+     *              instead of {@link android.service.notification.ConditionProviderService}.
+     * @param configurationActivity An activity that handles
+     *                              {@link NotificationManager#ACTION_AUTOMATIC_ZEN_RULE} that shows
+     *                              the user
+     *                              more information about this rule and/or allows them to
+     *                              configure it. This is required if you are not using a
+     *                              {@link android.service.notification.ConditionProviderService}.
+     *                              If you are, it overrides the information specified in your
+     *                              manifest.
+     * @param conditionId A representation of the state that should cause your app to apply the
+     *                    given interruption filter.
+     * @param interruptionFilter The interruption filter defines which notifications are allowed to
+     *                           interrupt the user (e.g. via sound &amp; vibration) while this rule
+     *                           is active.
+     * @param policy The policy defines which notifications are allowed to interrupt the user
+     *               while this rule is active. This overrides the global policy while this rule is
+     *               action ({@link Condition#STATE_TRUE}).
+     * @param enabled Whether the rule is enabled.
+     */
+    public AutomaticZenRule(@NonNull String name, @Nullable ComponentName owner,
+            @Nullable ComponentName configurationActivity, @NonNull Uri conditionId,
+            @Nullable ZenPolicy policy, int interruptionFilter, boolean enabled) {
+        this.name = getTrimmedString(name);
+        this.owner = getTrimmedComponentName(owner);
+        this.configurationActivity = getTrimmedComponentName(configurationActivity);
+        this.conditionId = getTrimmedUri(conditionId);
+        this.interruptionFilter = interruptionFilter;
+        this.enabled = enabled;
+        this.mZenPolicy = policy;
+    }
+
+    /**
+     * @hide
+     * @deprecated Do not add new usages; will be removed soon.
+     */
+    // TODO: b/368247671 - Remove when modes_ui is inlined (remaining usages are in obsolete tests)
+    @Deprecated
+    public AutomaticZenRule(String name, ComponentName owner, ComponentName configurationActivity,
+            Uri conditionId, ZenPolicy policy, int interruptionFilter, boolean enabled,
+            long creationTime) {
+        this(name, owner, configurationActivity, conditionId, policy, interruptionFilter, enabled);
+        this.creationTime = creationTime;
+    }
+
+    public AutomaticZenRule(Parcel source) {
+        enabled = source.readInt() == ENABLED;
+        if (source.readInt() == ENABLED) {
+            name = getTrimmedString(source.readString8());
+        }
+        interruptionFilter = source.readInt();
+        conditionId = getTrimmedUri(source.readParcelable(null, android.net.Uri.class));
+        owner = getTrimmedComponentName(
+                source.readParcelable(null, android.content.ComponentName.class));
+        configurationActivity = getTrimmedComponentName(
+                source.readParcelable(null, android.content.ComponentName.class));
+        creationTime = source.readLong();
+        mZenPolicy = source.readParcelable(null, ZenPolicy.class);
+        mPkg = source.readString8();
+        mDeviceEffects = source.readParcelable(null, ZenDeviceEffects.class);
+        mAllowManualInvocation = source.readBoolean();
+        mIconResId = source.readInt();
+        mTriggerDescription = getTrimmedString(source.readString8(), MAX_DESC_LENGTH);
+        mType = source.readInt();
+    }
+
+    /**
+     * Returns the {@link ComponentName} of the condition provider service that owns this rule.
+     */
+    public ComponentName getOwner() {
+        return owner;
+    }
+
+    /**
+     * Returns the {@link ComponentName} of the activity that shows configuration options
+     * for this rule.
+     */
+    public @Nullable ComponentName getConfigurationActivity() {
+        return configurationActivity;
+    }
+
+    /**
+     * Returns the representation of the state that causes this rule to become active.
+     */
+    public Uri getConditionId() {
+        return conditionId;
+    }
+
+    /**
+     * Returns the interruption filter that is applied when this rule is active.
+     */
+    public int getInterruptionFilter() {
+        return interruptionFilter;
+    }
+
+    /**
+     * Returns the name of this rule.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns whether this rule is enabled.
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Gets the {@link ZenPolicy} applied if {@link #getInterruptionFilter()} is
+     * {@link NotificationManager#INTERRUPTION_FILTER_PRIORITY}.
+     */
+    @Nullable
+    public ZenPolicy getZenPolicy() {
+        return mZenPolicy == null ? null : this.mZenPolicy.copy();
+    }
+
+    /** Gets the {@link ZenDeviceEffects} of this rule. */
+    @Nullable
+    public ZenDeviceEffects getDeviceEffects() {
+        return mDeviceEffects;
+    }
+
+    /**
+     * Returns the time this rule was created, represented as milliseconds since the epoch.
+     */
+    public long getCreationTime() {
+      return creationTime;
+    }
+
+    /**
+     * Sets the representation of the state that causes this rule to become active.
+     */
+    public void setConditionId(Uri conditionId) {
+        this.conditionId = getTrimmedUri(conditionId);
+    }
+
+    /**
+     * Sets the interruption filter that is applied when this rule is active.
+     *
+     * <ul>
+     *     <li>When {@link NotificationManager#INTERRUPTION_FILTER_PRIORITY}, the rule will use
+     *     the {@link ZenPolicy} supplied to {@link #setZenPolicy} (or a default one).
+     *     <li>When {@link NotificationManager#INTERRUPTION_FILTER_ALARMS} or
+     *     {@link NotificationManager#INTERRUPTION_FILTER_NONE}, the rule will use a fixed
+     *     {@link ZenPolicy} matching the filter.
+     *     <li>When {@link NotificationManager#INTERRUPTION_FILTER_ALL}, the rule will not block
+     *     notifications, but can still have {@link ZenDeviceEffects}.
+     * </ul>
+     *
+     * @param interruptionFilter The do not disturb mode to enter when this rule is active.
+     */
+    public void setInterruptionFilter(@InterruptionFilter int interruptionFilter) {
+        this.interruptionFilter = interruptionFilter;
+    }
+
+    /**
+     * Sets the name of this rule.
+     */
+    public void setName(String name) {
+        this.name = getTrimmedString(name);
+    }
+
+    /**
+     * Enables this rule.
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * Sets the {@link ZenPolicy} applied if {@link #getInterruptionFilter()} is
+     * {@link NotificationManager#INTERRUPTION_FILTER_PRIORITY}.
+     *
+     * <p>When updating an existing rule via {@link NotificationManager#updateAutomaticZenRule},
+     * a {@code null} value here means the previous policy is retained.
+     */
+    public void setZenPolicy(@Nullable ZenPolicy zenPolicy) {
+        this.mZenPolicy = (zenPolicy == null ? null : zenPolicy.copy());
+    }
+
+    /**
+     * Sets the {@link ZenDeviceEffects} associated to this rule. Device effects specify changes to
+     * the device behavior that should apply while the rule is active, but are not directly related
+     * to suppressing notifications (for example: disabling always-on display).
+     *
+     * <p>When updating an existing rule via {@link NotificationManager#updateAutomaticZenRule},
+     * a {@code null} value here means the previous set of effects is retained.
+     */
+    public void setDeviceEffects(@Nullable ZenDeviceEffects deviceEffects) {
+        mDeviceEffects = deviceEffects;
+    }
+
+    /**
+     * Sets the component name of the
+     * {@link android.service.notification.ConditionProviderService} that manages this rule
+     * (but note that {@link android.service.notification.ConditionProviderService} is
+     * deprecated in favor of using {@link NotificationManager#setAutomaticZenRuleState} to
+     * notify the system about the state of your rule).
+     *
+     * <p>This is exclusive with {@link #setConfigurationActivity}; rules where a configuration
+     * activity is set will not use the component set here to determine whether the rule
+     * should be active.
+     *
+     * @hide
+     */
+    public void setOwner(@Nullable ComponentName owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * Sets the configuration activity - an activity that handles
+     * {@link NotificationManager#ACTION_AUTOMATIC_ZEN_RULE} that shows the user more information
+     * about this rule and/or allows them to configure it. This is required to be non-null for rules
+     * that are not backed by a {@link android.service.notification.ConditionProviderService}.
+     *
+     * <p>This is exclusive with the {@code owner} supplied in the constructor; rules where a
+     * configuration activity is set will not use the
+     * {@link android.service.notification.ConditionProviderService} supplied there to determine
+     * whether the rule should be active.
+     */
+    public void setConfigurationActivity(@Nullable ComponentName componentName) {
+        this.configurationActivity = getTrimmedComponentName(componentName);
+    }
+
+    /**
+     * @hide
+     */
+    public void setPackageName(String pkgName) {
+        mPkg = pkgName;
+    }
+
+    /**
+     * @hide
+     */
+    public String getPackageName() {
+        return mPkg;
+    }
+
+    /**
+     * Gets the type of the rule.
+     */
+    public @Type int getType() {
+        return mType;
+    }
+
+    /**
+     * Sets the type of the rule.
+     * @hide
+     */
+    public void setType(@Type int type) {
+        mType = checkValidType(type);
+    }
+
+    /**
+     * Gets the user visible description of when this rule is active
+     * (see {@link Condition#STATE_TRUE}).
+     */
+    public @Nullable String getTriggerDescription() {
+        return mTriggerDescription;
+    }
+
+    /**
+     * Sets a user visible description of when this rule will be active
+     * (see {@link Condition#STATE_TRUE}).
+     *
+     * A description should be a (localized) string like "Mon-Fri, 9pm-7am" or
+     * "When connected to [Car Name]".
+     * @hide
+     */
+    public void setTriggerDescription(@Nullable String triggerDescription) {
+        mTriggerDescription = triggerDescription;
+    }
+
+    /**
+     * Gets the resource id of the drawable icon for this rule.
+     */
+    public @DrawableRes int getIconResId() {
+        return mIconResId;
+    }
+
+    /**
+     * Sets a resource id of a tintable vector drawable representing the rule in image form.
+     * @hide
+     */
+    public void setIconResId(int iconResId) {
+        mIconResId = iconResId;
+    }
+
+    /**
+     * Gets whether this rule can be manually activated by the user even when the triggering
+     * condition for the rule is not met.
+     */
+    public boolean isManualInvocationAllowed() {
+        return mAllowManualInvocation;
+    }
+
+    /**
+     * Sets whether this rule can be manually activated by the user even when the triggering
+     * condition for the rule is not met.
+     * @hide
+     */
+    public void setManualInvocationAllowed(boolean allowManualInvocation) {
+        mAllowManualInvocation = allowManualInvocation;
+    }
+
+    /** @hide */
+    public void validate() {
+        checkValidType(mType);
+        if (mDeviceEffects != null) {
+            mDeviceEffects.validate();
+        }
+    }
+
+    @Type
+    private static int checkValidType(@Type int type) {
+        checkArgument(type >= TYPE_UNKNOWN && type <= TYPE_MANAGED,
+                "Rule type must be one of TYPE_UNKNOWN, TYPE_OTHER, TYPE_SCHEDULE_TIME, "
+                        + "TYPE_SCHEDULE_CALENDAR, TYPE_BEDTIME, TYPE_DRIVING, TYPE_IMMERSIVE, "
+                        + "TYPE_THEATER, or TYPE_MANAGED");
+        return type;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(enabled ? ENABLED : DISABLED);
+        if (name != null) {
+            dest.writeInt(1);
+            dest.writeString8(name);
+        } else {
+            dest.writeInt(0);
+        }
+        dest.writeInt(interruptionFilter);
+        dest.writeParcelable(conditionId, 0);
+        dest.writeParcelable(owner, 0);
+        dest.writeParcelable(configurationActivity, 0);
+        dest.writeLong(creationTime);
+        dest.writeParcelable(mZenPolicy, 0);
+        dest.writeString8(mPkg);
+        dest.writeParcelable(mDeviceEffects, 0);
+        dest.writeBoolean(mAllowManualInvocation);
+        dest.writeInt(mIconResId);
+        dest.writeString8(mTriggerDescription);
+        dest.writeInt(mType);
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(AutomaticZenRule.class.getSimpleName())
+                .append('[')
+                .append("enabled=").append(enabled)
+                .append(",name=").append(name)
+                .append(",type=").append(mType)
+                .append(",interruptionFilter=").append(interruptionFilter)
+                .append(",pkg=").append(mPkg)
+                .append(",conditionId=").append(conditionId)
+                .append(",owner=").append(owner)
+                .append(",configActivity=").append(configurationActivity)
+                .append(",creationTime=").append(creationTime)
+                .append(",mZenPolicy=").append(mZenPolicy)
+                .append(",deviceEffects=").append(mDeviceEffects)
+                .append(",allowManualInvocation=").append(mAllowManualInvocation)
+                .append(",iconResId=").append(mIconResId)
+                .append(",triggerDescription=").append(mTriggerDescription)
+                .append(']')
+                .toString();
+    }
+
+    /** @hide */
+    public static String fieldsToString(@ModifiableField int bitmask) {
+        ArrayList<String> modified = new ArrayList<>();
+        if ((bitmask & FIELD_NAME) != 0) {
+            modified.add("FIELD_NAME");
+        }
+        if ((bitmask & FIELD_INTERRUPTION_FILTER) != 0) {
+            modified.add("FIELD_INTERRUPTION_FILTER");
+        }
+        if ((bitmask & FIELD_ICON) != 0) {
+            modified.add("FIELD_ICON");
+        }
+        return "{" + String.join(",", modified) + "}";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        if (!(o instanceof AutomaticZenRule)) return false;
+        if (o == this) return true;
+        final AutomaticZenRule other = (AutomaticZenRule) o;
+        return other.enabled == enabled
+                && Objects.equals(other.name, name)
+                && other.interruptionFilter == interruptionFilter
+                && Objects.equals(other.conditionId, conditionId)
+                && Objects.equals(other.owner, owner)
+                && Objects.equals(other.mZenPolicy, mZenPolicy)
+                && Objects.equals(other.configurationActivity, configurationActivity)
+                && Objects.equals(other.mPkg, mPkg)
+                && other.creationTime == creationTime
+                && Objects.equals(other.mDeviceEffects, mDeviceEffects)
+                && other.mAllowManualInvocation == mAllowManualInvocation
+                && other.mIconResId == mIconResId
+                && Objects.equals(other.mTriggerDescription, mTriggerDescription)
+                && other.mType == mType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(enabled, name, interruptionFilter, conditionId, owner,
+                configurationActivity, mZenPolicy, mDeviceEffects, creationTime,
+                mPkg, mAllowManualInvocation, mIconResId, mTriggerDescription, mType);
+    }
+
+    public static final @android.annotation.NonNull Parcelable.Creator<AutomaticZenRule> CREATOR
+            = new Parcelable.Creator<AutomaticZenRule>() {
+        @Override
+        public AutomaticZenRule createFromParcel(Parcel source) {
+            return new AutomaticZenRule(source);
+        }
+        @Override
+        public AutomaticZenRule[] newArray(int size) {
+            return new AutomaticZenRule[size];
+        }
+    };
+
+    /**
+     * If the package or class name of the provided ComponentName are longer than MAX_STRING_LENGTH,
+     * return a trimmed version that truncates each of the package and class name at the max length.
+     */
+    private static ComponentName getTrimmedComponentName(ComponentName cn) {
+        if (cn == null) return null;
+        return new ComponentName(getTrimmedString(cn.getPackageName()),
+                getTrimmedString(cn.getClassName()));
+    }
+
+    /**
+     * Returns a truncated copy of the string if the string is longer than MAX_STRING_LENGTH.
+     */
+    private static String getTrimmedString(String input) {
+        return getTrimmedString(input, MAX_STRING_LENGTH);
+    }
+
+    private static String getTrimmedString(String input, int length) {
+        if (input != null && input.length() > length) {
+            return input.substring(0, length);
+        }
+        return input;
+    }
+
+    /**
+     * Returns a truncated copy of the Uri by trimming the string representation to the maximum
+     * string length.
+     */
+    private static Uri getTrimmedUri(Uri input) {
+        if (input != null && input.toString().length() > MAX_STRING_LENGTH) {
+            return Uri.parse(getTrimmedString(input.toString()));
+        }
+        return input;
+    }
+
+    public static final class Builder {
+        private String mName;
+        private ComponentName mOwner;
+        private Uri mConditionId;
+        private int mInterruptionFilter = NotificationManager.INTERRUPTION_FILTER_PRIORITY;
+        private boolean mEnabled = true;
+        private ComponentName mConfigurationActivity = null;
+        private ZenPolicy mPolicy = null;
+        private ZenDeviceEffects mDeviceEffects = null;
+        private int mType = TYPE_UNKNOWN;
+        private String mDescription;
+        private int mIconResId;
+        private boolean mAllowManualInvocation;
+        private long mCreationTime;
+        private String mPkg;
+
+        public Builder(@NonNull AutomaticZenRule rule) {
+            mName = rule.getName();
+            mOwner = rule.getOwner();
+            mConditionId = rule.getConditionId();
+            mInterruptionFilter = rule.getInterruptionFilter();
+            mEnabled = rule.isEnabled();
+            mConfigurationActivity = rule.getConfigurationActivity();
+            mPolicy = rule.getZenPolicy();
+            mDeviceEffects = rule.getDeviceEffects();
+            mType = rule.getType();
+            mDescription = rule.getTriggerDescription();
+            mIconResId = rule.getIconResId();
+            mAllowManualInvocation = rule.isManualInvocationAllowed();
+            mCreationTime = rule.getCreationTime();
+            mPkg = rule.getPackageName();
+        }
+
+        public Builder(@NonNull String name, @NonNull Uri conditionId) {
+            mName = Objects.requireNonNull(name);
+            mConditionId = Objects.requireNonNull(conditionId);
+        }
+
+        /**
+         * Sets the name of this rule.
+         */
+        public @NonNull Builder setName(@NonNull String name) {
+            mName = name;
+            return this;
+        }
+
+        /**
+         * Sets the component name of the
+         * {@link android.service.notification.ConditionProviderService} that manages this rule
+         * (but note that {@link android.service.notification.ConditionProviderService} is
+         * deprecated in favor of using {@link NotificationManager#setAutomaticZenRuleState} to
+         * notify the system about the state of your rule).
+         *
+         * <p>This is exclusive with {@link #setConfigurationActivity}; rules where a configuration
+         * activity is set will not use the component set here to determine whether the rule
+         * should be active.
+         */
+        public @NonNull Builder setOwner(@Nullable ComponentName owner) {
+            mOwner = owner;
+            return this;
+        }
+
+        /**
+         * Sets the representation of the state that causes this rule to become active.
+         */
+        public @NonNull Builder setConditionId(@NonNull Uri conditionId) {
+            mConditionId = conditionId;
+            return this;
+        }
+
+        /**
+         * Sets the interruption filter that is applied when this rule is active.
+         */
+        public @NonNull Builder setInterruptionFilter(
+                @InterruptionFilter int interruptionFilter) {
+            mInterruptionFilter = interruptionFilter;
+            return this;
+        }
+
+        /**
+         * Enables this rule. Rules are enabled by default.
+         */
+        public @NonNull Builder setEnabled(boolean enabled) {
+            mEnabled = enabled;
+            return this;
+        }
+
+        /**
+         * Sets the configuration activity - an activity that handles
+         * {@link NotificationManager#ACTION_AUTOMATIC_ZEN_RULE} that shows the user more
+         * information about this rule and/or allows them to configure it. This is required to be
+         * non-null for rules that are not backed by a
+         * {@link android.service.notification.ConditionProviderService}.
+         *
+         * <p>This is exclusive with {@link #setOwner}; rules where a configuration
+         * activity is set will not use the
+         * {@link android.service.notification.ConditionProviderService} supplied there to determine
+         * whether the rule should be active.
+         */
+        public @NonNull Builder setConfigurationActivity(
+                @Nullable ComponentName configurationActivity) {
+            mConfigurationActivity = configurationActivity;
+            return this;
+        }
+
+        /**
+         * Sets the zen policy.
+         *
+         * <p>When updating an existing rule via {@link NotificationManager#updateAutomaticZenRule},
+         * a {@code null} value here means the previous policy is retained.
+         */
+        public @NonNull Builder setZenPolicy(@Nullable ZenPolicy policy) {
+            mPolicy = policy;
+            return this;
+        }
+
+        /**
+         * Sets the {@link ZenDeviceEffects} associated to this rule. Device effects specify changes
+         * to the device behavior that should apply while the rule is active, but are not directly
+         * related to suppressing notifications (for example: disabling always-on display).
+         *
+         * <p>When updating an existing rule via {@link NotificationManager#updateAutomaticZenRule},
+         * a {@code null} value here means the previous set of effects is retained.
+         */
+        @NonNull
+        public Builder setDeviceEffects(@Nullable ZenDeviceEffects deviceEffects) {
+            mDeviceEffects = deviceEffects;
+            return this;
+        }
+
+        /**
+         * Sets the type of the rule.
+         */
+        public @NonNull Builder setType(@Type int type) {
+            mType = checkValidType(type);
+            return this;
+        }
+
+        /**
+         * Sets a user visible description of when this rule will be active
+         * (see {@link Condition#STATE_TRUE}).
+         *
+         * <p>A description should be a (localized) string like "Mon-Fri, 9pm-7am" or
+         * "When connected to [Car Name]".
+         */
+        public @NonNull Builder setTriggerDescription(@Nullable String description) {
+            mDescription = description;
+            return this;
+        }
+
+        /**
+         * Sets a resource id of a tintable vector drawable representing the rule in image form.
+         */
+        public @NonNull Builder setIconResId(@DrawableRes int iconResId) {
+            mIconResId = iconResId;
+            return this;
+        }
+
+        /**
+         * Sets whether this rule can be manually activated by the user even when the triggering
+         * condition for the rule is not met.
+         */
+        public @NonNull Builder setManualInvocationAllowed(boolean allowManualInvocation) {
+            mAllowManualInvocation = allowManualInvocation;
+            return this;
+        }
+
+        /**
+         * Sets the time at which this rule was created, in milliseconds since epoch
+         * @hide
+         */
+        public @NonNull Builder setCreationTime(long creationTime) {
+            mCreationTime = creationTime;
+            return this;
+        }
+
+        /**
+         * Sets the package that owns this rule
+         * @hide
+         */
+        public @NonNull Builder setPackage(@NonNull String pkg) {
+            mPkg = pkg;
+            return this;
+        }
+
+        public @NonNull AutomaticZenRule build() {
+            AutomaticZenRule rule = new AutomaticZenRule(mName, mOwner, mConfigurationActivity,
+                    mConditionId, mPolicy, mInterruptionFilter, mEnabled);
+            rule.mDeviceEffects = mDeviceEffects;
+            rule.creationTime = mCreationTime;
+            rule.mType = mType;
+            rule.mTriggerDescription = mDescription;
+            rule.mIconResId = mIconResId;
+            rule.mAllowManualInvocation = mAllowManualInvocation;
+            rule.setPackageName(mPkg);
+
+            return rule;
+        }
+    }
+
+    /** @hide */
+    public static final class AzrWithId implements Parcelable {
+        public final String mId;
+        public final AutomaticZenRule mRule;
+
+        public AzrWithId(String id, AutomaticZenRule rule) {
+            mId = id;
+            mRule = rule;
+        }
+
+        public static final Creator<AzrWithId> CREATOR = new Creator<>() {
+            @Override
+            public AzrWithId createFromParcel(Parcel in) {
+                return new AzrWithId(
+                        in.readString8(),
+                        in.readParcelable(AutomaticZenRule.class.getClassLoader(),
+                                AutomaticZenRule.class));
+            }
+
+            @Override
+            public AzrWithId[] newArray(int size) {
+                return new AzrWithId[size];
+            }
+        };
+
+        @Override
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
+            dest.writeString8(mId);
+            dest.writeParcelable(mRule, flags);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+    }
+}

@@ -1,0 +1,219 @@
+package: "com.android.server.notification"
+container: "system"
+
+flag {
+  name: "expire_bitmaps"
+  namespace: "systemui"
+  description: "This flag controls removing expired notification bitmaps"
+  bug: "290381858"
+}
+
+flag {
+  name: "polite_notifications"
+  namespace: "systemui"
+  description: "This flag controls the polite notification feature"
+  bug: "270456865"
+}
+
+flag {
+  name: "refactor_attention_helper"
+  namespace: "systemui"
+  description: "This flag controls the refactoring of NMS to NotificationAttentionHelper"
+  bug: "291907312"
+}
+
+flag {
+  name: "cross_app_polite_notifications"
+  namespace: "systemui"
+  description: "This flag controls the cross-app effect of polite notifications"
+  bug: "270456865"
+}
+
+flag {
+  name: "vibrate_while_unlocked"
+  namespace: "systemui"
+  description: "This flag controls the vibrate while unlocked setting of polite notifications"
+  bug: "270456865"
+}
+
+flag {
+  name: "autogroup_summary_icon_update"
+  namespace: "systemui"
+  description: "This flag controls the fix for notifications autogroup summary icon updates"
+  bug: "227693160"
+}
+
+flag {
+    name: "screenshare_notification_hiding"
+    namespace: "systemui"
+    description: "Enable hiding of notifications during screenshare"
+    bug: "312784809"
+}
+
+flag {
+  name: "notification_test"
+  namespace: "systemui"
+  description: "Timing test, no functionality"
+  bug: "316931130"
+}
+
+flag {
+  name: "notification_custom_view_uri_restriction"
+  namespace: "systemui"
+  description: "This flag enables memory restriction of notifications holding custom views with Uri Bitmaps"
+  bug: "270553691"
+}
+
+flag {
+  name: "notification_hide_unused_channels"
+  namespace: "systemui"
+  description: "By default, hide non-blocked notification channels that haven't sent a notification in the last 2 weeks"
+  bug: "322536537"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "polite_notifications_attn_update"
+  namespace: "systemui"
+  description: "This flag controls the polite notification attention behavior updates as per UXR feedback"
+  bug: "270456865"
+}
+
+flag {
+  name: "all_notifs_need_ttl"
+  namespace: "systemui"
+  description: "This flag sets a TTL on all notifications that don't already have an app provided one"
+  bug: "331967355"
+}
+
+flag {
+  name: "persist_incomplete_restore_data"
+  namespace: "systemui"
+  description: "Stores restore data for not-yet-installed pkgs for 48 hours"
+  bug: "334999659"
+}
+
+flag {
+  name: "trace_cancel_events"
+  namespace: "systemui"
+  description: "Adds performance tracing for binder cancel calls"
+  bug: "331677193"
+  metadata {
+      purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "exit_invalid_cancel_early"
+  namespace: "systemui"
+  description: "aborts cancel binder events early if notif doesn't exist"
+  bug: "331677193"
+  metadata {
+      purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "use_ssm_user_switch_signal"
+  namespace: "systemui"
+  description: "This flag controls which signal is used to handle a user switch system event"
+  bug: "337077643"
+}
+
+flag {
+  name: "reject_old_notifications"
+  namespace: "systemui"
+  description: "This flag does not allow notifications older than 2 weeks old to be posted"
+  bug: "339833083"
+}
+
+flag {
+  name: "notification_minimalism"
+  namespace: "systemui"
+  description: "Minimize the notifications to show on the lockscreen."
+  bug: "330387368"
+}
+
+flag {
+  name: "notification_force_group_singletons"
+  namespace: "systemui"
+  description: "This flag enables forced auto-grouping singleton groups"
+  bug: "336488844"
+}
+
+flag {
+  name: "notification_force_group_conversations"
+  namespace: "systemui"
+  description: "This flag enables forced auto-grouping conversations"
+  bug: "336488844"
+}
+
+flag {
+  name: "notification_lock_screen_settings"
+  namespace: "systemui"
+  description: "This flag enables the new settings page for the notifications on lock screen."
+  bug: "367455695"
+}
+
+flag {
+  name: "notification_vibration_in_sound_uri"
+  namespace: "systemui"
+  description: "This flag enables sound uri with vibration source"
+  bug: "358524009"
+}
+
+flag {
+  name: "notification_vibration_in_sound_uri_for_channel"
+  namespace: "systemui"
+  description: "Enables sound uri with vibration source in notification channel"
+  bug: "351975435"
+}
+
+flag {
+  name: "nm_binder_perf_reduce_zen_broadcasts"
+  namespace: "systemui"
+  description: "Don't send duplicate zen-related (policy changed, etc) broadcasts"
+  bug: "324376849"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "nm_binder_perf_throttle_effects_suppressor_broadcast"
+  namespace: "systemui"
+  description: "Delay sending the ACTION_EFFECTS_SUPPRESSOR_CHANGED broadcast if it changes too often"
+  bug: "371776935"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "fix_calling_uid_from_cps"
+  namespace: "systemui"
+  description: "Correctly checks zen rule ownership when a CPS notifies with a Condition"
+  bug: "379722187"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "prevent_zen_device_effects_while_driving"
+  namespace: "systemui"
+  description: "Don't apply certain device effects (such as grayscale) from active zen rules, if a rule of TYPE_DRIVING is active"
+  bug: "390389174"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "managed_services_concurrent_multiuser"
+  namespace: "systemui"
+  description: "Enables ManagedServices to support Concurrent multi user environment"
+  bug: "380297485"
+}

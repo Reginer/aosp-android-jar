@@ -1,0 +1,10 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_battery_stats"
+    },
+    {
+      "name": "PowerStatsTests"
+    }
+  ]
+}

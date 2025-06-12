@@ -1,0 +1,149 @@
+{
+  "presubmit": [
+    {
+      "file_patterns": [
+        "[^/]*(Vibrator|Vibration)[^/]*\\.java",
+        "vibrator/.*"
+      ],
+      "name": "FrameworksVibratorCoreTests",
+      "options": [
+        {"exclude-annotation": "androidx.test.filters.LargeTest"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "org.junit.Ignore"}
+      ]
+    },
+    {
+      "file_patterns": [
+        "[^/]*(Vibrator|Vibration)[^/]*\\.java",
+        "vibrator/.*"
+      ],
+      "name": "FrameworksVibratorServicesTests",
+      "options": [
+        {"exclude-annotation": "androidx.test.filters.LargeTest"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "org.junit.Ignore"}
+      ]
+    },
+    {
+      "file_patterns": [
+        "[^/]*(Vibrator|Vibration)[^/]*\\.java",
+        "vibrator/.*"
+      ],
+      "name": "CtsVibratorTestCases",
+      "options": [
+        {"exclude-annotation": "androidx.test.filters.LargeTest"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "org.junit.Ignore"}
+      ]
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "BugreportManagerTestCases_android_server_os"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "CtsBugreportTestCases_android_server_os"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "ShellTests_android_server_os"
+    },
+    {
+      "file_patterns": [
+        "BatteryStats[^/]*\\.java",
+        "BatteryUsageStats[^/]*\\.java",
+        "PowerComponents\\.java",
+        "[^/]*BatteryConsumer[^/]*\\.java"
+      ],
+      "name": "FrameworksCoreTests_battery_stats"
+    },
+    {
+      "file_patterns": [
+        "BatteryStats[^/]*\\.java",
+        "BatteryUsageStats[^/]*\\.java",
+        "PowerComponents\\.java",
+        "[^/]*BatteryConsumer[^/]*\\.java"
+      ],
+      "name": "FrameworksServicesTests_battery_stats"
+    },
+    {
+      "file_patterns": [
+        "BatteryStats[^/]*\\.java",
+        "BatteryUsageStats[^/]*\\.java",
+        "PowerComponents\\.java",
+        "PowerMonitor[^/]*\\.java",
+        "[^/]*BatteryConsumer[^/]*\\.java"
+      ],
+      "name": "PowerStatsTests"
+    },
+    {
+      "file_patterns": [
+        "Parcel\\.java",
+        "[^/]*Bundle[^/]*\\.java"
+      ],
+      "name": "FrameworksMockingCoreTests_os_bundlerecyclingtest"
+    },
+    {
+      "file_patterns": [
+        "BatteryUsageStats[^/]*\\.java",
+        "PowerComponents\\.java",
+        "[^/]*BatteryConsumer[^/]*\\.java"
+      ],
+      "name": "PowerStatsTests"
+    },
+    {
+      "file_patterns": ["SharedMemory[^/]*\\.java"],
+      "name": "CtsOsTestCases_cts_sharedmemorytest"
+    },
+    {
+      "file_patterns": ["Environment[^/]*\\.java"],
+      "name": "FrameworksCoreTests_environment"
+    }
+  ],
+  "postsubmit": [
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "BugreportManagerTestCases"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "CtsBugreportTestCases"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "ShellTests"
+    },
+    {
+      "file_patterns": [
+        "CpuHeadroom[^/]*",
+        "GpuHeadroom[^/]*",
+        "health/SystemHealthManager\\.java"
+      ],
+      "name": "CtsOsTestCases",
+      "options": [
+        {"include-filter": "android.os.health.cts.HeadroomTest"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "org.junit.Ignore"}
+      ]
+    },
+    {
+      "file_patterns": [
+        "CpuHeadroom[^/]*",
+        "GpuHeadroom[^/]*",
+        "health/SystemHealthManager\\.java"
+      ],
+      "name": "FrameworksCoreTests",
+      "options": [
+        {"include-filter": "android.os.SystemHealthManagerUnitTest"},
+        {"exclude-annotation": "androidx.test.filters.FlakyTest"},
+        {"exclude-annotation": "org.junit.Ignore"}
+      ]
+    }
+  ],
+  "ravenwood-presubmit": [
+    {
+      "name": "CtsOsTestCasesRavenwood",
+      "host": true
+    }
+  ]
+}

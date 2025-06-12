@@ -1,0 +1,10 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksTimeCoreTests_android_service"
+    },
+    {
+      "name": "CtsLocationTimeZoneManagerHostTest"
+    }
+  ]
+}

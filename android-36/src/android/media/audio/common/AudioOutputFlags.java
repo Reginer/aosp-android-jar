@@ -1,0 +1,31 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=java --structured --version 4 --hash af71e6ae2c6861fc2b09bb477e7285e6777cd41c --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V4-java-source/gen/android/media/audio/common/AudioOutputFlags.java.d -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V4-java-source/gen -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/4 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/4/android/media/audio/common/AudioOutputFlags.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
+package android.media.audio.common;
+/** @hide */
+public @interface AudioOutputFlags {
+  public static final int DIRECT = 0;
+  public static final int PRIMARY = 1;
+  public static final int FAST = 2;
+  public static final int DEEP_BUFFER = 3;
+  public static final int COMPRESS_OFFLOAD = 4;
+  public static final int NON_BLOCKING = 5;
+  public static final int HW_AV_SYNC = 6;
+  public static final int TTS = 7;
+  public static final int RAW = 8;
+  public static final int SYNC = 9;
+  public static final int IEC958_NONAUDIO = 10;
+  public static final int DIRECT_PCM = 11;
+  public static final int MMAP_NOIRQ = 12;
+  public static final int VOIP_RX = 13;
+  public static final int INCALL_MUSIC = 14;
+  public static final int GAPLESS_OFFLOAD = 15;
+  public static final int SPATIALIZER = 16;
+  public static final int ULTRASOUND = 17;
+  public static final int BIT_PERFECT = 18;
+}

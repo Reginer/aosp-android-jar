@@ -1,0 +1,16 @@
+{
+    "presubmit": [
+        // Unit tests
+        {
+            "name": "FrameworksServicesTests_android_server_compat"
+        },
+        // Tests for the TestRule
+        {
+            "name": "PlatformCompatGating"
+        },
+        // CTS tests
+        {
+            "name": "CtsAppCompatHostTestCases"
+        }
+    ]
+}

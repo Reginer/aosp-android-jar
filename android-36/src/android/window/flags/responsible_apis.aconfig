@@ -1,0 +1,97 @@
+package: "com.android.window.flags"
+container: "system"
+
+flag {
+    name: "bal_require_opt_in_by_pending_intent_creator"
+    namespace: "responsible_apis"
+    description: "Require the PendingIntent creator to opt in starting with Android 15"
+    bug: "296478951"
+}
+
+flag {
+    name: "bal_dont_bring_existing_background_task_stack_to_fg"
+    namespace: "responsible_apis"
+    description: "When starting a PendingIntent with ONLY creator privileges, don't bring the existing task stack to foreground"
+    bug: "296478675"
+}
+
+flag {
+    name: "bal_show_toasts_blocked"
+    namespace: "responsible_apis"
+    description: "Enable toasts to indicate actual BAL blocking."
+    bug: "308059069"
+}
+
+flag {
+    name: "bal_improve_real_caller_visibility_check"
+    namespace: "responsible_apis"
+    description: "Prevent a task to restart based on a visible window during task switch."
+    bug: "171459802"
+}
+
+flag {
+    name: "bal_respect_app_switch_state_when_check_bound_by_foreground_uid"
+    namespace: "responsible_apis"
+    description: "Prevent BAL based on it is bound by foreground Uid but the app switch is stopped."
+    bug: "283801068"
+}
+
+flag {
+    name: "bal_improved_metrics"
+    namespace: "responsible_apis"
+    description: "Improved metrics."
+    bug: "339245692"
+}
+
+flag {
+    name: "bal_additional_start_modes"
+    namespace: "responsible_apis"
+    description: "Introduce additional start modes."
+    bug: "352182359"
+    is_exported: true
+}
+
+flag {
+    name: "bal_send_intent_with_options"
+    namespace: "responsible_apis"
+    description: "Add options parameter to IntentSender.sendIntent."
+    bug: "339720406"
+    is_exported: true
+}
+
+flag {
+    name: "bal_strict_mode_ro"
+    namespace: "responsible_apis"
+    description: "Strict mode flag"
+    bug: "324089586"
+    is_fixed_read_only: true
+    is_exported: true
+}
+
+flag {
+    name: "bal_reduce_grace_period"
+    namespace: "responsible_apis"
+    description: "Changes to reduce or ideally remove the grace period exemption."
+    bug: "362575865"
+}
+
+flag {
+    name: "bal_strict_mode_grace_period"
+    namespace: "responsible_apis"
+    description: "Strict mode violation triggered by grace period usage"
+    bug: "384807495"
+}
+
+flag {
+    name: "bal_clear_allowlist_duration"
+    namespace: "responsible_apis"
+    description: "Clear the allowlist duration when clearAllowBgActivityStarts is called"
+    bug: "322159724"
+}
+
+flag {
+    name: "bal_additional_logging"
+    namespace: "responsible_apis"
+    description: "Enable additional logging."
+    bug: "403398176"
+}

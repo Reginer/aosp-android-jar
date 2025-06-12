@@ -1,0 +1,21 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_hdmi_Presubmit"
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_hdmi"
+    }
+  ],
+  // Postsubmit tests for TV devices
+  "tv-postsubmit": [
+    {
+      "name": "HdmiCecTests_hardware_hdmi",
+      "file_patterns": [
+        "(/|^)DeviceFeature[^/]*", "(/|^)Hdmi[^/]*"
+      ]
+    }
+  ]
+}

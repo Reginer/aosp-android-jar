@@ -1,0 +1,135 @@
+package: "android.security"
+container: "system"
+
+flag {
+    name: "certificate_transparency_configuration"
+    is_exported: true
+    namespace: "network_security"
+    description: "Enable certificate transparency setting in the network security config"
+    bug: "28746284"
+}
+
+flag {
+    name: "fsverity_api"
+    is_exported: true
+    namespace: "hardware_backed_security"
+    description: "Feature flag for fs-verity API"
+    bug: "285185747"
+}
+
+flag {
+    name: "mgf1_digest_setter_v2"
+    is_exported: true
+    namespace: "hardware_backed_security"
+    description: "Feature flag for mgf1 digest setter in key generation and import parameters."
+    bug: "308378912"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "keyinfo_unlocked_device_required"
+    is_exported: true
+    namespace: "hardware_backed_security"
+    description: "Add the API android.security.keystore.KeyInfo#isUnlockedDeviceRequired()"
+    bug: "296475382"
+}
+
+flag {
+    name: "unlocked_storage_api"
+    namespace: "hardware_backed_security"
+    description: "Feature flag for unlocked-only storage API"
+    bug: "325129836"
+}
+
+flag {
+    name: "secure_array_zeroization"
+    namespace: "security"
+    description: "Enable secure array zeroization"
+    bug: "320392352"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "frp_enforcement"
+    is_exported: true
+    namespace: "hardware_backed_security"
+    description: "This flag controls whether PDB enforces FRP"
+    bug: "290312729"
+    is_fixed_read_only: true
+}
+
+flag {
+  name: "should_trust_manager_listen_for_primary_auth"
+  namespace: "biometrics"
+  description: "Causes TrustManagerService to listen for credential attempts and ignore reports from upstream"
+  bug: "323086607"
+}
+
+flag {
+    name: "clear_strong_auth_on_adding_primary_credential"
+    namespace: "biometrics"
+    description: "Clear StrongAuth on adding credential"
+    bug: "320817991"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "afl_api"
+    namespace: "hardware_backed_security"
+    description: "AFL feature"
+    bug: "365994454"
+    is_exported: true
+}
+
+flag {
+    name: "internal_log_event_listener"
+    namespace: "hardware_backed_security"
+    description: "Use internal callback to gather SecurityMonitor logs."
+    bug: "389732143"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "protect_device_config_flags"
+    namespace: "psap_ai"
+    description: "Feature flag to limit adb shell to allowlisted flags"
+    bug: "364083026"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "keystore_grant_api"
+    namespace: "hardware_backed_security"
+    description: "Feature flag for exposing KeyStore grant APIs"
+    bug: "351158708"
+    is_exported: true
+}
+
+flag {
+    name: "secure_lockdown"
+    namespace: "biometrics"
+    description: "Feature flag for Secure Lockdown feature"
+    bug: "373422357"
+    is_exported: true
+}
+
+flag {
+    name: "subscribe_to_keyguard_locked_state_perm_priv_flag"
+    namespace: "psap_ai"
+    description: "Feature flag to add the privileged flag to the SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE permission"
+    bug: "380120712"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "disable_adaptive_auth_counter_lock"
+    namespace: "biometrics"
+    description: "Flag to allow an adb secure setting to disable the adaptive auth lock"
+    bug: "371057865"
+}

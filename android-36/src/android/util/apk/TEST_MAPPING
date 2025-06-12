@@ -1,0 +1,20 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_util_apk"
+    }
+  ],
+  "presubmit-large": [
+    {
+      "name": "CtsPackageManagerTestCases",
+      "options": [
+        {
+          "include-filter": "android.content.pm.cts.PackageManagerShellCommandIncrementalTest"
+        },
+        {
+          "include-filter": "android.content.pm.cts.PackageManagerShellCommandInstallTest"
+        }
+      ]
+    }
+  ]
+}

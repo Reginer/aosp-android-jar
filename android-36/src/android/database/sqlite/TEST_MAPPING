@@ -1,0 +1,13 @@
+{
+    "presubmit": [
+        {
+            "name": "FrameworksCoreTests_sqlite",
+            "file_patterns": [
+                "(/|^)SQLiteRawStatement.java",
+                "(/|^)SQLiteDatabase.java",
+                "(/|^)SQLiteSession.java",
+                "(/|^)SQLiteConnection.java"
+            ]
+        }
+    ]
+}

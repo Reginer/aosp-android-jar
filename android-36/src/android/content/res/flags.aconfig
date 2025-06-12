@@ -1,0 +1,151 @@
+package: "android.content.res"
+container: "system"
+
+flag {
+    name: "default_locale"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for default locale in LocaleConfig"
+    bug: "117306409"
+    # fixed_read_only or device wont boot because of permission issues accessing flags during boot
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "font_scale_converter_public"
+    is_exported: true
+    namespace: "accessibility"
+    description: "Enables the public API for FontScaleConverter, including enabling thread-safe caching."
+    bug: "239736383"
+    # fixed_read_only or device wont boot because of permission issues accessing flags during boot
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "asset_file_descriptor_frro"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for passing in an AssetFileDescriptor to create an frro"
+    bug: "304478666"
+}
+
+flag {
+    name: "manifest_flagging"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for flagging manifest entries"
+    bug: "297373084"
+    # This flag is read in PackageParser at boot time, and in aapt2 which is a build tool.
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "nine_patch_frro"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for creating an frro from a 9-patch"
+    bug: "296324826"
+}
+
+flag {
+    name: "register_resource_paths"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for register resource paths for shared library"
+    bug: "306202569"
+    # This flag is read in ResourcesImpl at boot time.
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "handle_all_config_changes"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for allowing activities to handle all kinds of configuration changes"
+    bug: "180625460"
+    # This flag is read at boot time.
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "dimension_frro"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for passing a dimension to create an frro"
+    bug: "369672322"
+}
+
+flag {
+    name: "rro_constraints"
+    is_exported: false
+    namespace: "resource_manager"
+    description: "Feature flag for setting constraints for a RRO"
+    bug: "371801644"
+}
+
+flag {
+    name: "rro_control_for_android_no_overlayable"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Allow enabling and disabling RROs targeting android package with no overlayable"
+    bug: "364035303"
+}
+
+flag {
+    name: "system_context_handle_app_info_changed"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for allowing system context to handle application info changes"
+    bug: "362420029"
+    # This flag is read at boot time.
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "layout_readwrite_flags"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for allowing read/write flags in layout files"
+    bug: "377974898"
+    # This flag is used to control aapt2 behavior.
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "resources_minor_version_support"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Feature flag for supporting minor version in Resources"
+    bug: "373535266"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "self_targeting_android_resource_frro"
+    is_exported: true
+    namespace: "customization_picker"
+    description: "Fixes bug in Launcher preview by enabling overlays targeting 'android'"
+    bug: "377545987"
+}
+
+flag {
+    name: "always_false"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "flag always meant to be false, for testing resource flagging within cts tests"
+    bug: "377974898"
+}
+
+flag {
+    name: "use_new_aconfig_storage"
+    is_exported: true
+    namespace: "resource_manager"
+    description: "Retrieve flag values from new Aconfig flag storage in AconfigFlags.java"
+    bug: "352348353"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsAccelerationTestCases"
+    },
+    {
+      "name": "CtsOsTestCases_cts_strictmodetest_Presubmit",
+      "file_patterns": ["(/|^)ViewConfiguration.java", "(/|^)GestureDetector.java"]
+    },
+    {
+      "name": "CtsViewReceiveContentTestCases_Presubmit",
+      "file_patterns": ["ContentInfo\\.java", "OnReceiveContentListener\\.java", "View\\.java"]
+    }
+  ],
+  "imports": [
+    {
+      "path": "cts/tests/surfacecontrol"
+    },
+    {
+      "path": "cts/tests/tests/uirendering"
+    }
+  ]
+}

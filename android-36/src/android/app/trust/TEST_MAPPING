@@ -1,0 +1,12 @@
+{
+  "presubmit": [
+    {
+      "name": "TrustTests_trust_test"
+    }
+  ],
+  "trust-tablet": [
+    {
+      "name": "TrustTests_trust_test"
+    }
+  ]
+}

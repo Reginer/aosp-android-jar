@@ -1,0 +1,32 @@
+package: "android.view.flags"
+container: "system"
+
+flag {
+    namespace: "toolkit"
+    name: "scroll_feedback_api"
+    is_exported: true
+    description: "Enable the scroll feedback APIs"
+    bug: "239594271"
+}
+
+flag {
+    namespace: "toolkit"
+    name: "use_view_based_rotary_encoder_scroll_haptics"
+    description: "If enabled, the rotary encoder scroll haptic implementation in the View class will be used, and the HapticScrollFeedbackProvider logic for rotary encoder haptic will be muted."
+    bug: "299587011"
+}
+
+flag {
+    namespace: "wear_frameworks"
+    name: "enable_scroll_feedback_for_touch"
+    description: "Enables touchscreen haptic scroll feedback"
+    bug: "382135785"
+    is_fixed_read_only: true
+}
+
+flag {
+    namespace: "wear_frameworks"
+    name: "dynamic_view_rotary_haptics_configuration"
+    description: "Whether ScrollFeedbackProvider dynamically disables View-based rotary haptics."
+    bug: "377998870"
+}

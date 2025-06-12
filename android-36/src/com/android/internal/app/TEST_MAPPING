@@ -1,0 +1,11 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsSuspendAppsTestCases",
+      "file_patterns": ["(/|^)SuspendedAppActivity\\.java"]
+    },
+    {
+      "name": "FrameworksCoreTests_internal_app"
+    }
+  ]
+}

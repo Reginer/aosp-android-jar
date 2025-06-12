@@ -1,0 +1,32 @@
+package: "com.android.server.net"
+container: "system"
+
+flag {
+    name: "use_metered_firewall_chains"
+    namespace: "backstage_power"
+    description: "Use metered firewall chains to control access to metered networks"
+    bug: "336693007"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "use_different_delays_for_background_chain"
+    namespace: "backstage_power"
+    description: "Grant longer grace periods for sensitive process-states before blocking network using the background chain"
+    bug: "323963467"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "never_apply_rules_to_core_uids"
+    namespace: "backstage_power"
+    description: "Removes all rule bookkeeping and evaluation logic for core uids and uids without the internet permission"
+    bug: "356956588"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}

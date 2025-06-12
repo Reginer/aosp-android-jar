@@ -1,0 +1,16 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsLocationFineTestCases_android_server_location"
+    },
+    {
+      "name": "CtsLocationCoarseTestCases"
+    },
+    {
+      "name": "CtsLocationNoneTestCases"
+    },
+    {
+      "name": "FrameworksMockingServicesTests_location"
+    }
+  ]
+}

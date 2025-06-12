@@ -1,0 +1,231 @@
+package: "com.android.hardware.input"
+container: "system"
+
+# Project link: https://gantry.corp.google.com/projects/android_platform_input/changes
+
+# NOTE: the input_native namespace is deprecated. New flags should be added to the input namespace
+# instead.
+
+flag {
+    namespace: "input_native"
+    name: "keyboard_glyph_map"
+    description: "Allows system to provide keyboard specific key drawables and shortcuts via config files"
+    bug: "345440920"
+}
+
+flag {
+    namespace: "input_native"
+    name: "keyboard_a11y_mouse_keys"
+    description: "Controls if the mouse keys accessibility feature for physical keyboard is available to the user"
+    bug: "341799888"
+}
+
+flag {
+    namespace: "input_native"
+    name: "touchpad_visualizer"
+    description: "Enables a developer overlay that displays raw touchpad input data and gesture recognition status in real-time."
+    bug: "286551975"
+}
+
+flag {
+    name: "modifier_shortcut_dump"
+    namespace: "input"
+    description: "Dump keyboard shortcuts in dumpsys window"
+    bug: "351963350"
+}
+
+flag {
+    name: "modifier_shortcut_manager_refactor"
+    namespace: "input"
+    description: "Refactor ModifierShortcutManager internal representation of shortcuts."
+    bug: "358603902"
+}
+
+flag {
+    name: "input_manager_lifecycle_support"
+    namespace: "input"
+    description: "Add support for Lifecycle support in input manager"
+    bug: "362473586"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "input_native"
+    name: "manage_key_gestures"
+    description: "Manage key gestures through Input APIs"
+    is_exported: true
+    bug: "358569822"
+}
+
+flag {
+    namespace: "input_native"
+    name: "use_key_gesture_event_handler"
+    description: "Use KeyGestureEvent handler APIs to control system shortcuts and key gestures"
+    bug: "358569822"
+}
+
+flag {
+    namespace: "input"
+    name: "use_key_gesture_event_handler_multi_key_gestures"
+    description: "Use KeyGestureEvent handler APIs to control multi key press gestures"
+    bug: "358569822"
+}
+
+flag {
+    name: "keyboard_repeat_keys"
+    namespace: "input_native"
+    description: "Allow configurable timeout before key repeat and repeat delay rate for key repeats"
+    bug: "336585002"
+}
+
+flag {
+    name: "mouse_reverse_vertical_scrolling"
+    namespace: "input"
+    description: "Controls whether external mouse vertical scrolling can be reversed"
+    bug: "352598211"
+}
+
+flag {
+    name: "mouse_swap_primary_button"
+    namespace: "input"
+    description: "Controls whether the connected mice's primary buttons, left and right, can be swapped."
+    bug: "352598211"
+}
+
+flag {
+    name: "keyboard_a11y_shortcut_control"
+    namespace: "input"
+    description: "Adds shortcuts to toggle and control a11y keyboard features"
+    bug: "373458181"
+}
+
+flag {
+    name: "touchpad_system_gesture_disable"
+    namespace: "input"
+    description: "Adds an accessibility setting to disable system navigation gestures (3- and 4-finger swipes) on touchpads"
+    bug: "353947750"
+}
+
+flag {
+    name: "enable_customizable_input_gestures"
+    namespace: "input"
+    description: "Enables keyboard shortcut customization support"
+    bug: "365064144"
+}
+
+flag {
+    name: "enable_new_25q2_keycodes"
+    namespace: "input"
+    description: "Enables new 25Q2 keycodes"
+    bug: "365920375"
+    is_exported: true
+}
+
+flag {
+    name: "override_power_key_behavior_in_focused_window"
+    namespace: "wallet_integration"
+    description: "Allows privileged focused windows to override the power key double tap behavior."
+    bug: "357144512"
+}
+
+flag {
+    name: "touchpad_three_finger_tap_shortcut"
+    namespace: "input"
+    description: "Turns three-finger touchpad taps into a customizable shortcut."
+    bug: "365063048"
+}
+
+flag {
+    name: "enable_display_color_inversion_key_gestures"
+    namespace: "input"
+    description: "Adds key gestures for display color inversion for accessibility needs"
+    bug: "383730505"
+}
+
+flag {
+    name: "enable_talkback_and_magnifier_key_gestures"
+    namespace: "input"
+    description: "Adds key gestures for talkback and magnifier"
+    bug: "375277034"
+}
+
+flag {
+    name: "enable_voice_access_key_gestures"
+    namespace: "input"
+    description: "Adds key gestures for voice access"
+    bug: "383734125"
+}
+
+flag {
+    name: "can_window_override_power_gesture_api"
+    namespace: "wallet_integration"
+    description: "Adds new API in WindowManager class to check if the window can override the power key double tap behavior."
+    bug: "378736024"
+}
+
+flag {
+    name: "pointer_acceleration"
+    namespace: "input"
+    description: "Allows the user to disable pointer acceleration for mouse and touchpads."
+    bug: "349006858"
+}
+
+flag {
+    name: "mouse_scrolling_acceleration"
+    namespace: "input"
+    description: "Allows the user to disable input scrolling acceleration for mouse."
+    bug: "383555305"
+}
+
+flag {
+    name: "remove_fallback_modifiers"
+    namespace: "input"
+    description: "Removes modifiers from the original key event that activated the fallback, ensuring that only the intended fallback event is sent."
+    bug: "382545048"
+}
+
+flag {
+    name: "abort_slow_multi_press"
+    namespace: "wear_frameworks"
+    description: "If a press that's a part of a multipress takes too long, the multipress gesture will be cancelled."
+    bug: "370095426"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "key_event_activity_detection"
+    namespace: "input"
+    is_exported: true
+    description: "Key Event Activity Detection"
+    bug: "356412905"
+}
+
+flag {
+   name: "enable_backup_and_restore_for_input_gestures"
+   namespace: "input"
+   description: "Adds backup and restore support for custom input gestures"
+   bug: "382184249"
+   is_fixed_read_only: true
+}
+
+flag {
+    name: "request_key_capture_api"
+    namespace: "input"
+    description: "Adds support for key capture APIs"
+    bug: "375435312"
+}
+
+flag {
+    name: "fix_search_modifier_fallbacks"
+    namespace: "input"
+    description: "Fixes a bug in which fallbacks from Search based key combinations were not activating."
+    bug: "384113980"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}

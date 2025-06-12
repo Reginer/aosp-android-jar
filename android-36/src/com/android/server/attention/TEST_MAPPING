@@ -1,0 +1,7 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsVoiceInteractionTestCases_android_server_attention"
+    }
+  ]
+}

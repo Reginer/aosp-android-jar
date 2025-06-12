@@ -1,0 +1,424 @@
+# proto-file: build/make/tools/aconfig/aconfig_protos/protos/aconfig.proto
+# proto-message: flag_declarations
+
+package: "android.app.admin.flags"
+container: "system"
+
+# Fully rolled out and must not be used.
+flag {
+  name: "policy_engine_migration_v2_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "V2 of the policy engine migrations for Android V"
+  bug: "289520697"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "device_policy_size_tracking_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Add feature to track the total policy size and have a max threshold - public API changes"
+  bug: "281543351"
+}
+
+flag {
+  name: "onboarding_bugreport_v2_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Add feature to track required changes for enabled V2 of auto-capturing of onboarding bug reports."
+  bug: "302517677"
+}
+
+flag {
+  name: "cross_user_suspension_enabled_ro"
+  namespace: "enterprise"
+  description: "Allow holders of INTERACT_ACROSS_USERS_FULL to suspend apps in different users."
+  bug: "263464464"
+  is_fixed_read_only: true
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "dedicated_device_control_api_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "(API) Allow the device management role holder to control which platform features are available on dedicated devices."
+  bug: "281964214"
+}
+
+flag {
+  name: "permission_migration_for_zero_trust_api_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "(API) Migrate existing APIs to permission based, and enable DMRH to call them to collect Zero Trust signals."
+  bug: "289520697"
+}
+
+flag {
+  name: "device_theft_api_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Add new API for theft detection."
+  bug: "325073410"
+}
+
+flag {
+  name: "device_theft_impl_enabled"
+  namespace: "enterprise"
+  description: "Implementing new API for theft detection."
+  bug: "325073410"
+}
+
+flag {
+  name: "coexistence_migration_for_supervision_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Migrate existing APIs that are used by supervision (Kids Module) to be coexistable."
+  bug: "356894721"
+}
+
+flag {
+ name: "reset_password_with_token_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for resetPasswordWithToken and setResetPasswordToken."
+ bug: "359187209"
+}
+
+flag {
+ name: "set_keyguard_disabled_features_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setKeyguardDisabledFeatures."
+ bug: "359186276"
+}
+
+flag {
+ name: "set_application_restrictions_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setApplicationRestrictions."
+ bug: "359188153"
+}
+
+flag {
+ name: "set_auto_time_enabled_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setAutoTimeEnabled."
+ bug: "359188869"
+}
+
+flag {
+ name: "set_backup_service_enabled_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setBackupServiceEnabled."
+ bug: "359188483"
+}
+
+flag {
+ name: "set_auto_time_zone_enabled_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setAutoTimeZoneEnabled."
+ bug: "364338300"
+}
+
+flag {
+ name: "set_permission_grant_state_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for setPermissionGrantState."
+ bug: "364338410"
+}
+
+flag {
+ name: "lock_now_coexistence"
+ is_exported: true
+ namespace: "enterprise"
+ description: "Enables coexistence support for lockNow."
+ bug: "366559840"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "security_log_v2_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Improve access to security logging in the context of Zero Trust."
+  bug: "295324350"
+}
+
+flag {
+  name: "internal_log_event_listener"
+  namespace: "enterprise"
+  description: "Allow internal listeners to see unfiltered event stream"
+  bug: "385730709"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+    name: "allow_querying_profile_type"
+    is_exported: true
+    namespace: "enterprise"
+    description: "Public APIs to query if a user is a profile and what kind of profile type it is."
+    bug: "323001115"
+}
+
+flag {
+  name: "quiet_mode_credential_bug_fix"
+  namespace: "enterprise"
+  description: "Guards a bugfix that ends the credential input flow if the managed user has not stopped."
+  bug: "293441361"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "assist_content_user_restriction_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Prevent work data leakage by sending assist content to privileged apps."
+  bug: "322975406"
+}
+
+flag {
+    name: "default_sms_personal_app_suspension_fix_enabled"
+    namespace: "enterprise"
+    description: "Exempt the default sms app of the context user for suspension when calling setPersonalAppsSuspended"
+    bug: "309183330"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "backup_service_security_log_event_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Emit a security log event when DPM.setBackupServiceEnabled is called"
+  bug: "304999634"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "esim_management_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Enable APIs to provision and manage eSIMs"
+  bug: "295301164"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "headless_device_owner_single_user_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Add Headless DO support."
+  bug: "289515470"
+}
+
+# Fully rolled out and must not be used.
+flag {
+  name: "is_mte_policy_enforced"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Allow to query whether MTE is enabled or not to check for compliance for enterprise policy"
+  bug: "322777918"
+}
+
+flag {
+  name: "disallow_user_control_stopped_state_fix"
+  namespace: "enterprise"
+  description: "Ensure DPM.setUserControlDisabledPackages() clears FLAG_STOPPED for the app"
+  bug: "330688482"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "esim_management_ux_enabled"
+  namespace: "enterprise"
+  description: "Enable UX changes for esim management"
+  bug: "295301164"
+}
+
+flag {
+  name: "is_recursive_required_app_merging_enabled"
+  namespace: "enterprise"
+  description: "Guards a new flow for recursive required enterprise app list merging"
+  bug: "319084618"
+}
+
+flag {
+  name: "onboarding_bugreport_storage_bug_fix"
+  namespace: "enterprise"
+  description: "Add a separate storage limit for deferred bugreports"
+  bug: "330177040"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+    name: "unmanaged_mode_migration"
+    namespace: "enterprise"
+    description: "Migrate APIs for unmanaged mode"
+    bug: "335624297"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "suspend_packages_coexistence"
+    namespace: "enterprise"
+    description: "Migrate setPackagesSuspended for unmanaged mode"
+    bug: "335624297"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "unsuspend_not_suspended"
+    namespace: "enterprise"
+    description: "When admin unsuspends packages, pass previously not suspended packages to PM too"
+    bug: "378766314"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "backup_connected_apps_settings"
+    namespace: "enterprise"
+    description: "backup and restore connected work and personal apps user settings across devices"
+    bug: "175067666"
+}
+
+flag {
+    name: "headless_single_min_target_sdk"
+    namespace: "enterprise"
+    description: "Only allow DPCs targeting Android V to provision into single user mode"
+    bug: "338588825"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+  name: "onboarding_consentless_bugreports"
+  namespace: "enterprise"
+  description: "Allow subsequent bugreports to skip user consent within a time frame"
+  bug: "340439309"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+    name: "management_mode_policy_metrics"
+    namespace: "enterprise"
+    description: "Enabling management mode and password complexity policy metrics collection"
+    bug: "293091314"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "provisioning_context_parameter"
+    namespace: "enterprise"
+    description: "Add provisioningContext to store metadata about when the admin was set"
+    bug: "326525847"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "active_admin_cleanup"
+    namespace: "enterprise"
+    description: "Remove ActiveAdmin from EnforcingAdmin and related cleanups"
+    bug: "335663055"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "user_provisioning_same_state"
+    namespace: "enterprise"
+    description: "Handle exceptions while setting same provisioning state."
+    bug: "326441417"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "remove_managed_profile_enabled"
+    namespace: "enterprise"
+    description: "API that removes a given managed profile."
+    bug: "372652841"
+    is_exported: true
+}
+
+flag {
+    name: "set_mte_policy_coexistence"
+    is_exported: true
+    namespace: "enterprise"
+    description: "Enables coexistence support for Setting MTE policy."
+    bug: "376213673"
+}
+
+flag {
+    name: "enable_supervision_service_sync"
+    is_exported: true
+    namespace: "enterprise"
+    description: "Allows DPMS to enable or disable SupervisionService based on whether the device is being managed by the supervision role holder."
+    bug: "358134581"
+}
+
+flag {
+  name: "split_create_managed_profile_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Split up existing create and provision managed profile API."
+  bug: "375382324"
+  is_exported: true
+}
+
+flag {
+  name: "secondary_lockscreen_api_enabled"
+  is_exported: true
+  namespace: "enterprise"
+  description: "Add new API for secondary lockscreen"
+  bug: "336297680"
+}
+
+flag {
+  name: "remove_managed_esim_on_work_profile_deletion"
+  namespace: "enterprise"
+  description: "Remove managed eSIM when work profile is deleted"
+  bug: "347925470"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+  name: "use_policy_intersection_for_permitted_input_methods"
+  namespace: "enterprise"
+  description: "When deciding on permitted input methods, use policy intersection instead of last recorded policy."
+  bug: "340914586"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}

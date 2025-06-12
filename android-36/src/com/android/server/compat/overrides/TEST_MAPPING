@@ -1,0 +1,7 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksMockingServicesTests_android_server_compat_overrides"
+    }
+  ]
+}

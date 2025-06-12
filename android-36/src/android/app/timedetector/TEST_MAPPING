@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksTimeCoreTests_android_app"
+    },
+    {
+      "name": "CtsTimeTestCases"
+    },
+    {
+      "name": "FrameworksTimeServicesTests_server_timedetector"
+    }
+  ]
+}

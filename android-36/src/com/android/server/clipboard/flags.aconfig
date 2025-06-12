@@ -1,0 +1,9 @@
+package: "com.android.server.clipboard"
+container: "system"
+
+flag {
+    name: "clipboard_get_event_logging"
+    namespace: "backstage_power"
+    description: "Log the clipboard retrieval event in statsd"
+    bug: "402542624"
+}

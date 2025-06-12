@@ -1,0 +1,9 @@
+package: "com.android.server.selinux.flags"
+container: "system"
+
+flag {
+    name: "selinux_logs_collect"
+    namespace: "network_security"
+    description: "Enable collection of SELinux denials based on selinux_audit_job_enabled"
+    bug: "372950125"
+}

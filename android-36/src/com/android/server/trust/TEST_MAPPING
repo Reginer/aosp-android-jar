@@ -1,0 +1,17 @@
+{
+    "presubmit": [
+      {
+        "name": "TrustTests_trust_test"
+      }
+    ],
+    "postsubmit": [
+      {
+        "name": "FrameworksMockingServicesTests_android_server_trust"
+      }
+    ],
+    "trust-tablet": [
+      {
+        "name": "TrustTests_trust_test"
+      }
+    ]
+  }

@@ -1,0 +1,18 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_util_data_charset",
+      "file_patterns": ["CharsetUtils|FastData"]
+    },
+    {
+      "name": "FrameworksCoreTests_xml",
+      "file_patterns": ["Xml"]
+    }
+  ],
+  "ravenwood-presubmit": [
+    {
+      "name": "CtsUtilTestCasesRavenwood",
+      "host": true
+    }
+  ]
+}

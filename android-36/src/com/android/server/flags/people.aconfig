@@ -1,0 +1,12 @@
+package: "com.android.server.flags"
+container: "system"
+
+flag {
+    name: "early_data_manager_init"
+    namespace: "system_performance"
+    description: "Initialize DataManager earlier in boot"
+    bug: "394601872"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}

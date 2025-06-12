@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_textclassifier"
+    },
+    {
+      "name": "CtsTextClassifierTestCases"
+    },
+    {
+      "name": "TextClassifierServiceTest"
+    }
+  ]
+}

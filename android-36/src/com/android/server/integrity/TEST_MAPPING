@@ -1,0 +1,16 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_integrity"
+    },
+    {
+      "name": "GtsSecurityHostTestCases",
+      "keywords": ["internal"],
+      "options": [
+        {
+          "include-filter": "com.google.android.security.gts.AppIntegrityManagerTest"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+package: "android.hardware.serial.flags"
+container: "system"
+
+flag {
+    name: "enable_serial_api"
+    namespace: "serial"
+    description: "Feature flag to enable serial API"
+    bug: "369155426"
+    is_exported: true
+}

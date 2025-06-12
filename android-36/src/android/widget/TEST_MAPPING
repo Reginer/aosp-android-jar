@@ -1,0 +1,26 @@
+{
+  "imports": [
+    {
+      "path": "cts/tests/tests/widget"
+    }
+  ],
+  "presubmit": [
+    {
+      "name": "CtsToastTestCases",
+      "file_patterns": ["Toast\\.java"]
+    },
+    {
+      "name": "CtsWindowManagerDeviceWindow_window_toastwindowtest",
+      "file_patterns": ["Toast\\.java"]
+    },
+    {
+      "name": "CtsAutoFillServiceTestCases_dropdown_loginactivitytest"
+    },
+    {
+      "name": "CtsAutoFillServiceTestCases_dropdown_checkoutactivitytest"
+    },
+    {
+      "name": "CtsTextTestCases_text"
+    }
+  ]
+}

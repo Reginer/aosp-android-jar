@@ -1,0 +1,12 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_location_contexthub_Presubmit"
+    }
+  ],
+  "imports": [
+    {
+      "path": "frameworks/base/services/tests/servicestests/src/com/android/server/location/contexthub"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+   {
+      "name": "CtsTimeTestCases"
+    },
+    {
+      "name": "FrameworksTimeServicesTests"
+    },
+    {
+      "name": "CtsLocationTimeZoneManagerHostTest"
+    }
+  ]
+}

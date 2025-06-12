@@ -1,0 +1,12 @@
+{
+    "presubmit": [
+        {
+            "name": "DisplayServiceTests_server_display"
+        }
+    ],
+    "postsubmit": [
+        {
+            "name": "DisplayServiceTests_server_display"
+        }
+    ]
+}

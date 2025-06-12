@@ -1,0 +1,18 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_rollback"
+    }
+  ],
+  "imports": [
+    {
+      "path": "cts/tests/rollback"
+    },
+    {
+      "path": "cts/hostsidetests/rollback"
+    },
+    {
+      "path": "frameworks/base/tests/RollbackTest"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "presubmit-large": [
+    {
+      "name": "CtsHostsideNetworkPolicyTests"
+    }
+  ],
+  "presubmit": [
+    {
+      "name": "FrameworksServicesTests_android_server_net_Presubmit",
+      "file_patterns": ["(/|^)Network(Policy|Management)[^/]*\\.java"]
+    },
+    {
+      "name": "FrameworksVpnTests_android_server_connectivity",
+      "file_patterns": ["VpnManagerService\\.java"]
+    }
+  ]
+}

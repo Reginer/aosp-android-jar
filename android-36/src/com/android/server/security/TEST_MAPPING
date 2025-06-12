@@ -1,0 +1,8 @@
+{
+    "presubmit": [
+        {
+            "name": "CtsSecurityTestCases_cts_fileintegritymanagertest",
+            "file_patterns": ["FileIntegrity[^/]*\\.java"]
+        }
+    ]
+}

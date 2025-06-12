@@ -1,0 +1,7 @@
+{
+  "presubmit": [
+    {
+      "name": "WmTests_wm_utils_Presubmit"
+    }
+  ]
+}

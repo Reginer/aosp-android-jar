@@ -1,0 +1,22 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsWebkitTestCases"
+    },
+    {
+      "name": "CtsSdkSandboxWebkitTestCases"
+    },
+    {
+      "name": "CtsHostsideWebViewTests"
+    },
+    {
+      "name": "GtsWebViewTestCases",
+      "keywords": ["internal"],
+      "options": [
+        {
+          "exclude-annotation": "android.test.FlakyTest"
+        }
+      ]
+    }
+  ]
+}

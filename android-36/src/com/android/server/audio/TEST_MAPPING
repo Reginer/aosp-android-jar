@@ -1,0 +1,35 @@
+{
+    "presubmit": [
+        {
+            "name": "CtsMediaAudioTestCases",
+            "options": [
+                {
+                    "include-filter": "android.media.audio.cts.AudioManagerTest"
+                },
+                {
+                    "include-filter": "android.media.audio.cts.AudioFocusTest"
+                },
+                {
+                    "include-filter": "android.media.audio.cts.AudioPlaybackCaptureTest"
+                },
+                {
+                    "include-filter": "android.media.audio.cts.SpatializerTest"
+                }
+            ]
+        },
+        {
+            "name": "audiopolicytest",
+            "options": [
+                {
+                    "include-filter": "com.android.audiopolicytest.AudioPolicyDeathTest"
+                },
+                {
+                    "include-annotation": "android.platform.test.annotations.Presubmit"
+                }
+            ]
+        },
+        {
+            "name": "FrameworksServicesTests_android_server_audio"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+package: "android.net.platform.flags"
+container: "system"
+
+# This file contains aconfig flags used from platform code
+# Flags used for module APIs must be in aconfig files under each modules
+
+flag {
+    name: "powered_off_finding_platform"
+    namespace: "nearby"
+    description: "Controls whether the Powered Off Finding feature is enabled"
+    bug: "307898240"
+}
+
+flag {
+  name: "register_nsd_offload_engine"
+  is_exported: true
+  namespace: "android_core_networking"
+  description: "Flag for registerOffloadEngine API in NsdManager"
+  bug: "294777050"
+}
+
+flag {
+  name: "deprecate_network_policy_callback"
+  namespace: "backstage_power"
+  description: "Flag for deprecating NetworkPolicyCallback and related APIs"
+  bug: "353342610"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+  is_exported: true
+}
+
+flag {
+  name: "mdns_improvement_for_25q2"
+  is_exported: true
+  namespace: "android_core_networking"
+  description: "Flag for MDNS quality, reliability and performance improvement in 25Q2"
+  bug: "373270045"
+}
+
+flag {
+  name: "vpn_type_oem_service_and_legacy"
+  namespace: "android_core_networking"
+  is_exported: false
+  description: "Flags the TYPE_VPN_OEM_SERVICE and TYPE_VPN_OEM_LEGACY VpnManager API constants"
+  bug: "389829981"
+}

@@ -1,0 +1,79 @@
+package: "com.android.server.power.feature.flags"
+container: "system"
+
+# Important: Flags must be accessed through PowerManagerFlags.
+
+flag {
+    name: "enable_early_screen_timeout_detector"
+    namespace: "power"
+    description: "Feature flag for Early Screen Timeout detector"
+    bug: "309861917"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "enable_screen_timeout_policy_listener_api"
+    namespace: "power"
+    description: "Enables APIs that allow to listen to screen timeout policy changes"
+    bug: "363174979"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "wakelock_attribution_via_workchain"
+    namespace: "power"
+    description: "Enables the attribution of wakelocks via WorkChain for updateWakelockUids"
+    bug: "331304805"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "improve_wakelock_latency"
+    namespace: "power"
+    description: "Feature flag for tracking the optimizations to improve the latency of acquiring and releasing a wakelock."
+    bug: "339590565"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "per_display_wake_by_touch"
+    namespace: "power"
+    description: "Feature flag to enable per-display wake by touch"
+    bug: "343295183"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "framework_wakelock_info"
+    namespace: "power"
+    description: "Feature flag to enable statsd pulling of FrameworkWakelockInfo atoms"
+    bug: "380847722"
+}
+
+flag {
+    name: "policy_reason_in_display_power_request"
+    namespace: "wear_frameworks"
+    description: "Whether the policy reason is populted in DisplayPowerRequest."
+    bug: "364349703"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "move_wsc_logging_to_notifier"
+    namespace: "power"
+    description: "Feature flag to move logging of WakelockStateChanged atoms from BatteryStatsImpl to Notifier."
+    bug: "352602149"
+}
+
+flag {
+    name: "disable_frozen_process_wakelocks"
+    namespace: "power"
+    description: "Feature flag to disable/enable wakelocks of a process when it is frozen/unfrozen"
+    bug: "291115867"
+}

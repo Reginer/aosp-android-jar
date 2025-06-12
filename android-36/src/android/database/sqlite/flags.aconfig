@@ -1,0 +1,35 @@
+package: "android.database.sqlite"
+container: "system"
+
+flag {
+     name: "oneway_finalizer_close_fixed"
+     namespace: "system_performance"
+     is_fixed_read_only: true
+     description: "Make BuildCursorNative.close oneway if in the finalizer"
+     bug: "368221351"
+}
+
+flag {
+     name: "sqlite_apis_35"
+     is_exported: true
+     namespace: "system_performance"
+     is_fixed_read_only: true
+     description: "SQLite APIs held back for Android 15"
+     bug: "279043253"
+}
+
+flag {
+     name: "concurrent_open_helper"
+     is_exported: true
+     namespace: "system_performance"
+     is_fixed_read_only: false
+     description: "Make SQLiteOpenHelper thread-safe"
+     bug: "335904370"
+}
+
+flag {
+     name: "no_checkpoint_on_finalize"
+     namespace: "system_performance"
+     description: "Do not checkpoint WAL if closing in the finalizer"
+     bug: "397982577"
+}

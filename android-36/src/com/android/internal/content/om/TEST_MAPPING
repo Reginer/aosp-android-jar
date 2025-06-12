@@ -1,0 +1,27 @@
+{
+  "presubmit": [
+    {
+      "name": "FrameworksCoreTests_internal_content"
+    },
+    {
+      "name": "SelfTargetingOverlayDeviceTests"
+    },
+    {
+      "name": "CtsResourcesTestCases",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        },
+        {
+          "exclude-annotation": "org.junit.Ignore"
+        },
+        {
+          "include-filter": "android.content.om.cts"
+        },
+        {
+          "include-filter": "android.content.res.loader.cts"
+        }
+      ]
+    }
+  ]
+}

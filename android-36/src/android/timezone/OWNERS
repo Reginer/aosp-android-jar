@@ -1,0 +1,5 @@
+# Bug component: 24949
+# APIs originally intended to provide a stable API surface to access time zone rules data for use by
+# unbundled components like a telephony mainline module and the ART module. Not exposed, potentially
+# deletable if callers do not unbundle.
+include platform/libcore:/OWNERS

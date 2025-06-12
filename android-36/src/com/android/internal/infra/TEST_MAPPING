@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsRoleTestCases"
+    },
+    {
+      "name": "CtsPermissionTestCases_Platform"
+    },
+    {
+      "name": "FrameworksCoreTests_internal_infra"
+    }
+  ]
+}

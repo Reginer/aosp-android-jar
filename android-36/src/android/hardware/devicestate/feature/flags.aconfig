@@ -1,0 +1,53 @@
+package: "android.hardware.devicestate.feature.flags"
+container: "system"
+
+flag {
+    name: "device_state_property_api"
+    is_exported: true
+    namespace: "windowing_sdk"
+    description: "Updated DeviceState hasProperty API"
+    bug: "293636629"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "device_state_property_migration"
+    is_exported: true
+    namespace: "windowing_sdk"
+    description: "Client migration to updated DeviceStateManager API's"
+    bug: "336640888"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "device_state_requester_cancel_state"
+    is_exported: true
+    namespace: "windowing_sdk"
+    description: "Removes foreground requirement if process attempting to cancel a state request is the requester"
+    bug: "354772125"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "device_state_rdm_v2"
+    is_exported: true
+    namespace: "windowing_sdk"
+    description: "Enables Rear Display Mode V2, where the inner display shows the user a UI affordance for exiting the state"
+    bug: "372486634"
+    is_fixed_read_only: true
+}
+
+flag {
+    name: "device_state_configuration_flag"
+    is_exported: true
+    namespace: "windowing_sdk"
+    description: "Re-add flag parsing for device_state_configuration.xml configuration for devices that didn't update vendor images."
+    bug: "388366842"
+    is_fixed_read_only: true
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}

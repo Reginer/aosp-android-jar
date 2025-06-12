@@ -1,0 +1,7 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsAutoFillServiceTestCases_cts_inline_ExcludeAppModeFull"
+    }
+  ]
+}

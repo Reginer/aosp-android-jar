@@ -1,0 +1,18 @@
+{
+    "presubmit-large": [
+        {
+            "name": "CtsDevicePolicyManagerTestCases_LockSettingsTest"
+        }
+    ],
+    "presubmit": [
+        {
+            "name": "FrameworksServicesTests_android_server_locksettings"
+        }
+    ],
+    "postsubmit": [
+        {
+            // TODO(b/332974906): Promote in presubmit-large.
+            "name": "CtsDevicePolicyManagerTestCases_LockSettings_NoFlakes"
+        }
+    ]
+}

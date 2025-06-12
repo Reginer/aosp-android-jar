@@ -1,0 +1,37 @@
+{
+  "presubmit": [
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "BugreportManagerTestCases_android_server_os"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "CtsBugreportTestCases_android_server_os"
+    },
+    {
+      "name": "CtsUsbTests"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "ShellTests_android_server_os"
+    }
+  ],
+  "postsubmit": [
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "BugreportManagerTestCases"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "CtsBugreportTestCases"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "CtsRootBugreportTestCases"
+    },
+    {
+      "file_patterns": ["Bugreport[^/]*\\.java"],
+      "name": "ShellTests"
+    }
+  ]
+}

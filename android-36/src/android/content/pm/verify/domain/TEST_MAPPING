@@ -1,0 +1,13 @@
+{
+  "presubmit": [
+    {
+      "name": "PackageManagerServiceUnitTests_verify_domain"
+    },
+    {
+      "name": "CtsDomainVerificationDeviceStandaloneTestCases"
+    },
+    {
+      "name": "CtsDomainVerificationHostTestCases"
+    }
+  ]
+}
