@@ -4,7 +4,7 @@
 
 
 
-使用当前`android.jar`需要调高JDK，在`Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK`
+
 
 
 
